@@ -9,8 +9,12 @@ export const setItem = async (key:string, value:string): Promise<boolean> => {
   }
 }
 
-export const getItem = async (key:string): Promise<string> => {
-  const value = await AsyncStorage.getItem(key)
-  if (!value) return ""
-  return value
+export const getItem = async (key:string): Promise<any> => {
+  try {
+    const item = await AsyncStorage.getItem(key)
+    return item
+  } catch (e) {
+    console.error("NO ITEM", e)
+    return false
+  }
 }

@@ -62,3 +62,8 @@ buck-out/
 # Ruby / CocoaPods
 /ios/Pods/
 /vendor/bundle/
+
+# Docker
+/docker/bitcoin/[^.gitignore]*
+/docker/mempool/data/[^.gitignore]*
+/docker/mempool/mysql/data/[^.gitignore]*

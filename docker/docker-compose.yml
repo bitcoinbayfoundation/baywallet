@@ -1,0 +1,62 @@
+version: "3.7"
+
+services:
+  bitcoind:
+    image: kylemanna/bitcoind:latest
+    container_name: bitcoind
+    restart: on-failure
+    stop_grace_period: 1m
+    hostname: bitcoind
+    command: >-
+      bitcoind -server=1 -regtest=1
+      -rpcuser=baywallet -rpcpassword=baywallet
+      -debug=1 -zmqpubrawblock=tcp://0.0.0.0:28334
+      -zmqpubrawtx=tcp://0.0.0.0:28335 -txindex=1 -dnsseed=0 -upnp=0
+      -rpcbind=0.0.0.0 -rpcallowip=0.0.0.0/0 -rpcport=18443 -rest -listen=1
+      -listenonion=0 -fallbackfee=0.0002
+    volumes:
+      - ./bitcoin:/home/bitcoin/.bitcoin
+    expose:
+      - '18443'
+      - '28334'
+      - '28335'
+    ports:
+      - '18443:18443'
+      - '28334:28334'
+      - '29335:28335'
+    networks:
+      - baywallet
+  electrum:
+    image: ghcr.io/vulpemventures/electrs:latest
+    container_name: electrum
+    entrypoint:
+      - /build/electrs
+    command:
+      - -vvvv
+      - --network
+      - regtest
+      - --daemon-dir
+      - /config
+      - --daemon-rpc-addr
+      - bitcoind:18443
+      - --cookie
+      - baywallet:baywallet
+      - --http-addr
+      - 0.0.0.0:30000
+      - --electrum-rpc-addr
+      - 0.0.0.0:50000
+      - --cors
+      - "*"
+      - --jsonrpc-import
+    depends_on:
+      - bitcoind
+    ports:
+      - 50000:50000
+      - 30000:30000
+    volumes:
+      - ./bitcoin/:/config
+    restart: unless-stopped
+    networks:
+      - baywallet 
+networks:
+  baywallet:

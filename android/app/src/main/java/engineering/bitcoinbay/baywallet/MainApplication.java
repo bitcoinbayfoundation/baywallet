@@ -1,4 +1,4 @@
-package com.baywallet;
+package engineering.bitcoinbay.baywallet;
 
 import android.app.Application;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.baywallet;
+package engineering.bitcoinbay.baywallet;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

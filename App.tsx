@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, SafeAreaView, Text } from 'react-native';
-import { getBlockHeader } from './src/blocks/mempool';
+import { getLatestBlockHeader } from './src/blocks/electrs';
 import { createNewAccount, getAccount } from './src/accounts';
 
 const App = () => {
@@ -24,10 +24,10 @@ const App = () => {
     if (!nodeStarted) return
     let interval: NodeJS.Timer
 
-    getBlockHeader()
+    getLatestBlockHeader()
     interval = setInterval(() => {
-      getBlockHeader()
-    }, 60000)
+      getLatestBlockHeader()
+    }, 5000)
 
     return () => clearInterval(interval)
   }, [nodeStarted])

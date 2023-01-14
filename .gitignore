@@ -64,6 +64,4 @@ buck-out/
 /vendor/bundle/
 
 # Docker
-/docker/bitcoin/[^.gitignore]*
-/docker/mempool/data/[^.gitignore]*
-/docker/mempool/mysql/data/[^.gitignore]*
+/docker/bitcoin/regtest

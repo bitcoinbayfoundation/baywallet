@@ -8,8 +8,10 @@ import RNFS from 'react-native-fs';
 // } from '../electrum';
 import lm, {
 	DefaultTransactionDataShape,
+	ENetworks,
 	TAccount,
 	TAccountBackup,
+	TAvailableNetworks,
 	THeader,
 	TTransactionData,
 	TTransactionPosition,
@@ -24,3 +26,41 @@ import ldk from '@synonymdev/react-native-ldk/dist/ldk';
 // } from '../utils/helpers';
 // import { EAccount } from '../utils/types';
 import * as bitcoin from 'bitcoinjs-lib';
+import { selectedNetwork } from '@config';
+import { getBlockHashAtHeight, getBestBlock } from '../blocks/electrs';
+import { getAccount } from '../accounts';
+
+export const setupLdk = async () => {
+	try {
+		// await ldk.reset()
+		// const genesisHash = await getBlockHashAtHeight(1)
+		// const account = await getAccount()
+		// const bayWalletStorage = await lm.setBaseStoragePath(`${RNFS.DocumentDirectoryPath}/baywallet/`)
+
+		// const bayWalletStart = lm.start({
+		// 	account,
+		// 	genesisHash: genesisHash,
+		// 	getBestBlock,
+		// 	/*getTransactionData,*/
+		// 	/*getTransactionPosition,*/
+		// 	/*getAddress,*/
+		// 	/*getScriptPubKeyHistory,*/
+		// 	/*broadcastTransaction*/
+		// 	network: ldkNetwork(selectedNetwork),
+		// 	2
+		// })
+	} catch (e) {
+		console.error("FAILED TO SET UP LDK", e)
+	}
+}
+
+export const ldkNetwork = (network: TAvailableNetworks): ENetworks => {
+	switch (network) {
+		case 'bitcoinRegtest':
+			return ENetworks.regtest;
+		case 'bitcoinTestnet':
+			return ENetworks.testnet;
+		case 'bitcoin':
+			return ENetworks.mainnet;
+	}
+};

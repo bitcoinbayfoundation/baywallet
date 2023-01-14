@@ -2,6 +2,7 @@ import { TAccount } from '@synonymdev/react-native-ldk';
 import { getItem, setItem } from './storage';
 import { randomBytes } from "react-native-randombytes"
 import * as bip39 from "bip39"
+import * as bip32 from "bip32"
 
 export const createNewAccount = async (): Promise<any> => {
   try {
@@ -28,10 +29,9 @@ export const setAccount = async ({name, seed}: TAccount) => {
   await setItem(account.name, account.seed)
 }
 
-export const getAccount = async (name: string = "bay-wallet-0"): Promise<any> => {
-  const item = await getItem(name)
-  if (!item) return false
-  return item
+export const getAccount = async (name: string = "bay-wallet-0"): Promise<TAccount> => {
+    const item = await getItem(name).catch(e => console.log("COULD NOT GET ACCOUNT", e))
+    return item
 }
 
 const generateSeed = async () => {

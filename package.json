@@ -15,6 +15,7 @@
     "@synonymdev/react-native-ldk": "^0.0.77",
     "assert": "^1.5.0",
     "axios": "^1.2.2",
+    "bip32": "^3.1.0",
     "bip39": "^3.0.4",
     "buffer": "^4.9.2",
     "events": "^3.3.0",

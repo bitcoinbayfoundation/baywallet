@@ -2,7 +2,7 @@ import axios from "axios"
 import { getItem, setItem } from "../storage"
 import { getApiUrl } from "../util/config"
 import { THeader, TTransactionData, TVout } from "@synonymdev/react-native-ldk"
-import { convertElectrsVoutToLdkVout, ElectrsTransactionData } from "src/types/electrs"
+import { convertElectrsVoutToLdkVout, ElectrsTransactionData } from "../types/electrs"
 
 /**
  * Retrieves the latest block hex from electrum

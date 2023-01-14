@@ -25,29 +25,28 @@ import ldk from '@synonymdev/react-native-ldk/dist/ldk';
 // 	setAccount,
 // } from '../utils/helpers';
 // import { EAccount } from '../utils/types';
-import * as bitcoin from 'bitcoinjs-lib';
+// import * as bitcoin from 'bitcoinjs-lib';
 import { selectedNetwork } from '@config';
-import { getBlockHashAtHeight, getBestBlock } from '../blocks/electrs';
+import { getBlockHashAtHeight, getBestBlock, getTransactionData } from '../blocks/electrs';
 import { getAccount } from '../accounts';
 
 export const setupLdk = async () => {
 	try {
-		// await ldk.reset()
-		// const genesisHash = await getBlockHashAtHeight(1)
-		// const account = await getAccount()
-		// const bayWalletStorage = await lm.setBaseStoragePath(`${RNFS.DocumentDirectoryPath}/baywallet/`)
+		await ldk.reset()
+		const genesisHash = await getBlockHashAtHeight(1)
+		const account = await getAccount()
+		await lm.setBaseStoragePath(`${RNFS.DocumentDirectoryPath}/baywallet/`)
 
 		// const bayWalletStart = lm.start({
 		// 	account,
 		// 	genesisHash: genesisHash,
 		// 	getBestBlock,
-		// 	/*getTransactionData,*/
+		// 	getTransactionData,
 		// 	/*getTransactionPosition,*/
 		// 	/*getAddress,*/
 		// 	/*getScriptPubKeyHistory,*/
 		// 	/*broadcastTransaction*/
 		// 	network: ldkNetwork(selectedNetwork),
-		// 	2
 		// })
 	} catch (e) {
 		console.error("FAILED TO SET UP LDK", e)

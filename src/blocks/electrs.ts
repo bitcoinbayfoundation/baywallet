@@ -1,7 +1,8 @@
-import { THeader } from "@synonymdev/react-native-ldk"
 import axios from "axios"
 import { getItem, setItem } from "../storage"
 import { getApiUrl } from "../util/config"
+import { THeader, TTransactionData, TVout } from "@synonymdev/react-native-ldk"
+import { convertElectrsVoutToLdkVout, ElectrsTransactionData } from "src/types/electrs"
 
 /**
  * Retrieves the latest block hex from electrum
@@ -23,6 +24,12 @@ export const getTipHeight = async (): Promise<number> => {
   return Number(tip.data)
 }
 
+/**
+ * Returns the hash at a given block height.
+ * 
+ * @param height Bitcoin height
+ * @returns 
+ */
 export const getBlockHashAtHeight = async(height:number): Promise<string> => {
   const hash = await axios.get(`https://mempool.space/api/block-height/${height}`)
   return hash.data
@@ -69,4 +76,16 @@ export const getBestBlock = async (): Promise<THeader> => {
 export const updateHeader = async (header:string): Promise<boolean> => {
   const result = await setItem("header", header)
   return result
+}
+
+export const getTransactionData = async (transactionId:string) => {
+  const electrsResponse = await axios.get<ElectrsTransactionData>(getApiUrl(`/tx/${transactionId}`))
+  const ldkVout: TVout[] = convertElectrsVoutToLdkVout(electrsResponse.data.vout)
+  const transactionData: TTransactionData = {
+    header: electrsResponse.data.status.block_hash,
+    height: electrsResponse.data.status.block_height,
+    transaction: electrsResponse.data.txid,
+    vout: ldkVout
+  }
+  return transactionData
 }

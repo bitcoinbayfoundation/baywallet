@@ -47,9 +47,9 @@ export const connectToElectrum = async ({
  * Returns last known block height, and it's corresponding hex from local storage.
  * @returns {THeader}
  */
-export const getBlockHeader = async (): Promise<THeader> => {
-  const header = await getItem('header');
-  return JSON.parse(header);
+export const getBestBlock = async (): Promise<THeader> => {
+  const bestBlock = await getItem('header');
+  return bestBlock ? JSON.parse(bestBlock) : { height: 0, hex: '', hash: '' };
 };
 
 /**
@@ -111,7 +111,7 @@ export const getBlockHashFromHex = async ({
 }): Promise<string> => {
   // If empty, return the last known block hex from storage.
   if (!blockHex) {
-    const {hex} = await getBlockHeader();
+    const {hex} = await getBestBlock();
     blockHex = hex;
   }
   const block = Block.fromHex(blockHex);

@@ -306,6 +306,9 @@ PODS:
     - React
   - react-native-randombytes (3.6.1):
     - React-Core
+  - react-native-tcp-socket (6.0.3):
+    - CocoaAsyncSocket
+    - React-Core
   - React-perflogger (0.70.6)
   - React-RCTActionSheet (0.70.6):
     - React-Core/RCTActionSheetHeaders (= 0.70.6)
@@ -430,6 +433,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - "react-native-ldk (from `../node_modules/@synonymdev/react-native-ldk`)"
   - react-native-randombytes (from `../node_modules/react-native-randombytes`)
+  - react-native-tcp-socket (from `../node_modules/react-native-tcp-socket`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -511,6 +515,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@synonymdev/react-native-ldk"
   react-native-randombytes:
     :path: "../node_modules/react-native-randombytes"
+  react-native-tcp-socket:
+    :path: "../node_modules/react-native-tcp-socket"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -579,6 +585,7 @@ SPEC CHECKSUMS:
   React-logger: 1623c216abaa88974afce404dc8f479406bbc3a0
   react-native-ldk: 0d9f1a1c82b55140746c17fdcd85af0507bf7c09
   react-native-randombytes: 421f1c7d48c0af8dbcd471b0324393ebf8fe7846
+  react-native-tcp-socket: bf814462aa7bb427f004976d3a8765153baffe81
   React-perflogger: 8c79399b0500a30ee8152d0f9f11beae7fc36595
   React-RCTActionSheet: 7316773acabb374642b926c19aef1c115df5c466
   React-RCTAnimation: 5341e288375451297057391227f691d9b2326c3d

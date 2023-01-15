@@ -25,7 +25,7 @@ import ldk from '@synonymdev/react-native-ldk/dist/ldk';
 // 	setAccount,
 // } from '../utils/helpers';
 // import { EAccount } from '../utils/types';
-// import * as bitcoin from 'bitcoinjs-lib';
+import * as bitcoin from 'bitcoinjs-lib';
 import { selectedNetwork } from '@config';
 import { getBlockHashAtHeight, getBestBlock, getTransactionData } from '../blocks/electrs';
 import { getAccount } from '../accounts';
@@ -43,7 +43,7 @@ export const setupLdk = async () => {
 		// 	getBestBlock,
 		// 	getTransactionData,
 		// 	/*getTransactionPosition,*/
-		// 	/*getAddress,*/
+		// 	getAddress,
 		// 	/*getScriptPubKeyHistory,*/
 		// 	/*broadcastTransaction*/
 		// 	network: ldkNetwork(selectedNetwork),
@@ -61,5 +61,20 @@ export const ldkNetwork = (network: TAvailableNetworks): ENetworks => {
 			return ENetworks.testnet;
 		case 'bitcoin':
 			return ENetworks.mainnet;
+	}
+};
+
+export const getNetwork = (
+	network: TAvailableNetworks,
+): bitcoin.networks.Network => {
+	switch (network) {
+		case 'bitcoin':
+			return bitcoin.networks.bitcoin;
+		case 'bitcoinTestnet':
+			return bitcoin.networks.testnet;
+		case 'bitcoinRegtest':
+			return bitcoin.networks.regtest;
+		default:
+			return bitcoin.networks.regtest;
 	}
 };

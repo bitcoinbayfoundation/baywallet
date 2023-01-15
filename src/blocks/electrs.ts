@@ -3,6 +3,7 @@ import { getItem, setItem } from "../storage"
 import { getApiUrl } from "../util/config"
 import { THeader, TTransactionData, TVout } from "@synonymdev/react-native-ldk"
 import { convertElectrsVoutToLdkVout, ElectrsTransactionData } from "../types/electrs"
+import { getAddressFromScriptPubKey, getScriptHash } from "../accounts"
 
 /**
  * Retrieves the latest block hex from electrum
@@ -78,6 +79,11 @@ export const updateHeader = async (header:string): Promise<boolean> => {
   return result
 }
 
+export const getAddressScriptHashHistory = async (scriptHash:string) => {
+  const history = await axios.get(getApiUrl("/scripthash/:hash/txs"))
+  return history.data
+}
+
 export const getTransactionData = async (transactionId:string) => {
   const electrsResponse = await axios.get<ElectrsTransactionData>(getApiUrl(`/tx/${transactionId}`))
   const ldkVout: TVout[] = convertElectrsVoutToLdkVout(electrsResponse.data.vout)
@@ -88,4 +94,12 @@ export const getTransactionData = async (transactionId:string) => {
     vout: ldkVout
   }
   return transactionData
+}
+
+export const getScriptPubKeyHistory = async (scriptPubKey:string) => {
+  const address = getAddressFromScriptPubKey(scriptPubKey)
+  console.log("address", address)
+  const scriptHash = getScriptHash(address)
+  const history = await getAddressScriptHashHistory(scriptHash)
+
 }

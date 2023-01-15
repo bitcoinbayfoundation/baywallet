@@ -2331,7 +2331,7 @@ buffer@^4.9.1:
     ieee754 "^1.1.4"
     isarray "^1.0.0"
 
-buffer@^5.5.0:
+buffer@^5.4.3, buffer@^5.5.0:
   version "5.7.1"
   resolved "https://registry.npmjs.org/buffer/-/buffer-5.7.1.tgz"
   integrity sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==
@@ -3293,6 +3293,11 @@ event-target-shim@^5.0.0, event-target-shim@^5.0.1:
   version "5.0.1"
   resolved "https://registry.npmjs.org/event-target-shim/-/event-target-shim-5.0.1.tgz"
   integrity sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==
+
+eventemitter3@^4.0.7:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
+  integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
 
 events@^3.3.0:
   version "3.3.0"
@@ -6251,6 +6256,14 @@ react-native-randombytes@^3.6.1:
     buffer "^4.9.1"
     sjcl "^1.0.3"
 
+react-native-tcp-socket@^6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-tcp-socket/-/react-native-tcp-socket-6.0.3.tgz#f338041165a59984430c9347b66e7d8ece944926"
+  integrity sha512-YY659DLvI6x+FzVP2DYjSGXrlVfYh7HBPea6sUMtJUKNk/gnw0x1gcsyytVTwi2Y3QUqvxAqljGywIh4tt7E5g==
+  dependencies:
+    buffer "^5.4.3"
+    eventemitter3 "^4.0.7"
+
 react-native@0.70.6:
   version "0.70.6"
   resolved "https://registry.npmjs.org/react-native/-/react-native-0.70.6.tgz"
@@ -6578,6 +6591,10 @@ ripemd160@^2.0.0, ripemd160@^2.0.1, ripemd160@^2.0.2:
   dependencies:
     hash-base "^3.0.0"
     inherits "^2.0.1"
+
+"rn-electrum-client@https://github.com/synonymdev/rn-electrum-client":
+  version "0.0.8"
+  resolved "https://github.com/synonymdev/rn-electrum-client#dfbe9ebba4e4cf0d16e3ccea3dc49e05285d860f"
 
 rn-nodeify@^10.3.0:
   version "10.3.0"

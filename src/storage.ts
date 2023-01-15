@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
-export const setItem = async (key:string, value:string): Promise<boolean> => {
+export const setItem = async (key:string, value:any): Promise<boolean> => {
   try {
     await AsyncStorage.setItem(key, value)
     return true

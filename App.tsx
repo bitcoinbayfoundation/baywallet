@@ -1,42 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { Button, SafeAreaView, Text } from 'react-native';
-import { getLatestBlockHeader } from './src/blocks/electrs';
-import { createNewAccount, getAccount } from './src/accounts';
+import React, {useEffect, useState} from 'react';
+import {Button, SafeAreaView, Text} from 'react-native';
+import {connectToElectrum} from './src/electrs/electrs';
+import {createNewAccount, getAccount} from './src/accounts';
+import { ldkNetwork, setupLdk } from './src/ldk';
+import ldk from "@synonymdev/react-native-ldk/dist/ldk"
 
 const App = () => {
-  const [nodeStarted, setNodeStarted] = useState(true);
-  const [account, setAccount] = useState({name: "", seed: ""})
+  const [nodeStarted, setNodeStarted] = useState(false);
 
-  const findAccount = async () => {
-    const existingAccount = await getAccount()
-    console.log("USING EXISTING ACCOUNT", existingAccount)
-    if (existingAccount) setAccount({name: existingAccount.name, seed: existingAccount.seed})
-    const newAccount = await createNewAccount()
-    console.log("CREATED NEW ACCOUNT", newAccount)
-    setAccount({name: newAccount.name, seed: newAccount.seed})
-  }
   useEffect(() => {
-    findAccount()
-  }, [])
-
-  // Query for new blocks every minute and store them.
-  useEffect(() => {
-    if (!nodeStarted) return
-    let interval: NodeJS.Timer
-
-    getLatestBlockHeader()
-    interval = setInterval(() => {
-      getLatestBlockHeader()
-    }, 5000)
-
-    return () => clearInterval(interval)
-  }, [nodeStarted])
+    if (nodeStarted) return
+    const connect = async () => {
+      ldk.reset()      
+      const electrumResponse = await connectToElectrum({});
+      if (electrumResponse.isErr()) {
+        console.log('ERROR CONNECTING TO ELECTRUM', electrumResponse);
+        return;
+      }
+      console.log('CONNECTED TO ELECTRUM', electrumResponse);
+      const node = await setupLdk()
+      if (node?.isErr()) {
+        return console.log(`NODE STARTING ERROR: ${node.error.message}`)
+      }
+      setNodeStarted(true)
+    };
+    connect();
+  }, [nodeStarted]);
 
   return (
     <SafeAreaView>
-        <Text style={{textAlign: "center", paddingTop: "10%"}}>heyhowareya</Text>
-        <Text style={{textAlign: "center", padding: "5%"}}>{`Account name: ${account.name}`}</Text>
-        <Button onPress={() => setNodeStarted(false)} title="Stop node" />
+      <Text style={{textAlign: 'center', paddingTop: '10%'}}>heyhowareya</Text>
     </SafeAreaView>
   );
 };

@@ -2,19 +2,15 @@ import RNFS from 'react-native-fs';
 import * as electrum from "rn-electrum-client/helpers"
 import lm, {
 	DefaultTransactionDataShape,
-	ENetworks,
-	TAvailableNetworks,
-	THeader,
 	TTransactionData,
 	TTransactionPosition,
 } from '@synonymdev/react-native-ldk';
 import ldk from '@synonymdev/react-native-ldk/dist/ldk';
 import { getBestBlock, getBlockHex, getScriptPubKeyHistory, getBlockHashFromHeight } from '../electrs/electrs';
-import * as bitcoin from 'bitcoinjs-lib';
-import { getAccount, getAddress } from '../accounts';
+import { getAccount } from '../accounts';
+import { getAddress } from "../ldk/wallet" 
 import { err } from '../types/result';
-import { selectedNetwork } from '../util/config';
-import { getItem } from '../storage';
+import { selectedNetwork, ldkNetwork } from '../util/config';
 
 export const setupLdk = async () => {
 	try {
@@ -135,32 +131,5 @@ export const broadcastTransaction = async (rawTx: string): Promise<string> => {
 	} catch (e) {
 		console.log(e);
 		return '';
-	}
-};
-
-
-export const ldkNetwork = (network: TAvailableNetworks): ENetworks => {
-	switch (network) {
-		case 'bitcoinRegtest':
-			return ENetworks.regtest;
-		case 'bitcoinTestnet':
-			return ENetworks.testnet;
-		case 'bitcoin':
-			return ENetworks.mainnet;
-	}
-};
-
-export const getNetwork = (
-	network: TAvailableNetworks,
-): bitcoin.networks.Network => {
-	switch (network) {
-		case 'bitcoin':
-			return bitcoin.networks.bitcoin;
-		case 'bitcoinTestnet':
-			return bitcoin.networks.testnet;
-		case 'bitcoinRegtest':
-			return bitcoin.networks.regtest;
-		default:
-			return bitcoin.networks.regtest;
 	}
 };

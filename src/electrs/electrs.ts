@@ -3,7 +3,7 @@ import {Block} from 'bitcoinjs-lib';
 import {getItem, setItem} from '../storage';
 import { selectedNetwork, customPeers} from '../util/config';
 import {THeader} from '@synonymdev/react-native-ldk';
-import {getAddressFromScriptPubKey, getScriptHash} from '../accounts';
+import {getAddressFromScriptPubKey, getScriptHash} from '../ldk/wallet';
 import {Result, ok, err} from '../types/result';
 import {
   IGetHeaderResponse,

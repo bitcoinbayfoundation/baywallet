@@ -40,5 +40,10 @@ export const customPeers = {
 			tcp: 18483,
 			protocol: 'tcp',
 		},
+		{
+			host: '127.0.0.1',
+			tcp: 50000,
+			protocol: 'tcp',
+		},
 	],
 };

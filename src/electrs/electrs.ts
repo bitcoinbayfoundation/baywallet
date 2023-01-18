@@ -59,7 +59,7 @@ export const getBestBlock = async (): Promise<THeader> => {
  * @returns true if it stored correctly
  */
 export const updateHeader = async (header: THeader): Promise<boolean> => {
-  const result = await setItem('header', header);
+  const result = await setItem('header', JSON.stringify(header));
   return result;
 };
 
@@ -132,6 +132,7 @@ export const subscribeToHeader = async ({
   const subscribeResponse: ISubscribeToHeader = await electrum.subscribeHeader({
     network: selectedNetwork,
     onReceive: async data => {
+      console.log("RECEIVE", data)
       const hex = data[0].hex;
       const hash = getBlockHashFromHex({blockHex: hex});
       const header = {...data[0], hash};

@@ -3,6 +3,7 @@
     "baseUrl": "./",
     "paths": {
       "@config": ["./src/util/config.ts"]
-    }
+    },
+    "experimentalDecorators": true
   }
 }

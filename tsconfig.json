@@ -22,13 +22,13 @@
     "strict": true,
     "target": "esnext",
     "skipLibCheck": true,
-    "strictNullChecks": true,
+    "strictNullChecks": false,
     "strictFunctionTypes": true,
-    "strictPropertyInitialization": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
     "removeComments": true,
-    "useUnknownInCatchVariables": false
+    "useUnknownInCatchVariables": false,
+    "experimentalDecorators": true
   },
   "exclude": [
     "node_modules",

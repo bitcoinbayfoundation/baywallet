@@ -34,23 +34,19 @@ Developers must be running a Bitcoin node with `electrs` to be able to get block
 docker-compose up -d --build
 ```
 
-This command spins up a `bitcoind` instance in regtest as well as `electrs` to expose an API for block data, transaction information, and account information for LDK to use.
+This command spins up a `bitcoind` instance in regtest as well as `electrs` to expose an RPC for block data, transaction information, and account information for LDK to use.
 
 After running the docker configuration, run these commands to get fully setup to use Bay Wallet.
 
-Create a wallet on `bitcoind`:
 ```
-docker exec bitcoind bitcoin-cli --rpcport=18443 --rpcuser=baywallet --rpcpassword=baywallet createwallet baywallet
+# Create a wallet on the `bitcoind` node to use.
+yarn bc:create-wallet
+
+# If you have started the node before, run this to load the wallet.
+yarn bc:load-wallet
+
+# Generate blocks on the node.
+yarn bc:generate <num-blocks>
 ```
 
-> Recommended to add an alias to your `.bashrc` or `.zshrc` file to easily query `bitcoind` 
-> ```
-> alias bc="docker exec bitcoind bitcoin-cli --rpcport=18443 --rpcuser=baywallet --rpcpassword=baywallet"
-> ```
-
-To generate blocks:
-```
-docker exec bitcoind bitcoin-cli --rpcport=18443 --rpcuser=baywallet --rpcpassword=baywallet -generate <num-blocks>
-```
-
-Bay Wallet uses the `electrs` HTTP API to query the chain. This API endpoint runs on `localhost:30000` the API docs can be found [here.](https://github.com/Blockstream/esplora/blob/master/API.md)
+Bay Wallet uses the `electrs` library to query the chain. To explore the API, the docs can be found [here.](https://github.com/Blockstream/esplora/blob/master/API.md)

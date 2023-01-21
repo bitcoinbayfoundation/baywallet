@@ -2,9 +2,10 @@ import { selectedNetwork, getNetwork } from "../util/config";
 import * as bitcoin from "bitcoinjs-lib"
 import * as bip39 from "bip39"
 import * as bip32 from "bip32"
-import { getAccount, getNmemonicFromSeed } from "../accounts";
+import stores from "../store";
 
 export const getAddress = async () => {
+	const { getAccount, getNmemonicFromSeed } = stores.accountStore
   const network = getNetwork(selectedNetwork)
   const account = await getAccount()
   const mnemonic = getNmemonicFromSeed(account.seed)

@@ -1,7 +1,7 @@
 import {TAccount} from '@synonymdev/react-native-ldk';
 import {randomBytes} from 'crypto';
 import {action, makeObservable, observable, runInAction} from 'mobx';
-import {getItem, setItem} from 'src/storage';
+import {getItem, setItem} from '../storage';
 import * as bip39 from 'bip39';
 
 enum Account {

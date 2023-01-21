@@ -1,35 +1,31 @@
 import React, {useEffect} from 'react';
 import {SafeAreaView, Text, Button} from 'react-native';
-import { getAccount } from '../accounts';
 import { observer } from 'mobx-react';
 import store from "../store"
-import ldk from '@synonymdev/react-native-ldk/dist/ldk';
 import { connectToElectrum } from '../electrs/electrs';
 import { setupLdk } from '../ldk';
+import ldk from '@synonymdev/react-native-ldk/dist/ldk';
 
 const Home = observer(() => {
-  const { nodeId, setNodeId, account, setAccount } = store.lightningStore
+  const { nodeId, setNodeId } = store.lightningStore
+
   useEffect(() => {
-    const account = async () => {
-      const account = await getAccount()
-      return account
-    }
-    account()
-    // const connect = async () => {
-    //   ldk.reset();
-    //   const electrum = await connectToElectrum({});
-    //   if (electrum.isErr()) {
-    //     console.log('ERROR CONNECTING TO ELECTRUM', electrum);
-    //     return;
-    //   }
+    const connect = async () => {
+      ldk.reset();
+      const electrum = await connectToElectrum({});
+      if (electrum.isErr()) {
+        console.log('ERROR CONNECTING TO ELECTRUM', JSON.stringify(electrum.error));
+        return;
+      }
 
-    //   const node = await setupLdk();
+      console.log("ELECTRUM", electrum.value)
+      const node = await setupLdk();
 
-    //   if (node?.isErr()) {
-    //     return console.log(`NODE STARTING ERROR: ${node.error.message}`);
-    //   }
-    // };
-    // connect()
+      if (node?.isErr()) {
+        return console.log(`NODE STARTING ERROR: ${node.error.message}`);
+      }
+    };
+    connect()
   }, []);
 
   return (

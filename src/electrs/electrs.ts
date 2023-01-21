@@ -48,7 +48,7 @@ export const connectToElectrum = async ({
  * @returns {THeader}
  */
 export const getBestBlock = async (): Promise<THeader> => {
-  const bestBlock = await getItem('header');
+  const bestBlock = await getItem<string>('header');
   return bestBlock ? JSON.parse(bestBlock) : { height: 0, hex: '', hash: '' };
 };
 

@@ -14,12 +14,13 @@ import {
   subscribeToHeader,
   updateHeader,
 } from '../electrs/electrs';
-import {getAccount} from '../accounts';
 import {getAddress} from '../ldk/wallet';
 import {err, Result} from '../types/result';
 import {selectedNetwork, ldkNetwork} from '../util/config';
+import stores from '../store';
 
 export const setupLdk = async () => {
+  const {getAccount} = stores.accountStore
   try {
     const genesisHash = await getBlockHashFromHeight({height: 0});
     if (genesisHash.isErr()) {

@@ -6,7 +6,7 @@ import { NavigationContainer } from "@react-navigation/native"
 export const BayWalletProvider = ({children}) => {
   return (
     <NavigationContainer>
-      <Provider lightning={stores.lightningStore}>
+      <Provider lightning={stores.lightningStore} account={stores.accountStore}>
         {children}
       </Provider>
     </NavigationContainer>

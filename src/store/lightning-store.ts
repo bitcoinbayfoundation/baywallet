@@ -1,6 +1,6 @@
 import { action, makeObservable, observable, runInAction } from 'mobx';
 import ldk from "@synonymdev/react-native-ldk/dist/ldk"
-import lm, { TInvoice } from "@synonymdev/react-native-ldk"
+import lm, { TAddPeerReq, TInvoice } from "@synonymdev/react-native-ldk"
 import { TChannel } from '@synonymdev/react-native-ldk';
 
 export class LightningStore {
@@ -29,6 +29,22 @@ export class LightningStore {
     return nodeId.value
   }
 
+  @action
+  async addPeer(address: string, port: number, pubKey: string) {
+    const peerConfig: TAddPeerReq = {
+      address,
+      port,
+      pubKey,
+      timeout: 3600
+    }
+
+    const peerAdded = await ldk.addPeer(peerConfig)
+    if (peerAdded.isErr()) throw new Error("Could not add peer.")
+
+    await this.getPeers()
+
+    return peerAdded.value
+  }
   @action
   async getPeers(): Promise<string[]> {
     const peers = await ldk.listPeers()

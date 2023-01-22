@@ -8,7 +8,7 @@ export const BayWalletNavigation = observer(() => {
 
   return (
     <BayWallet.Navigator initialRouteName="home">
-      <BayWallet.Screen name="home" component={Home}/>
+      <BayWallet.Screen options={{headerShown: false}} name="home" component={Home}/>
     </BayWallet.Navigator>
   )  
 })

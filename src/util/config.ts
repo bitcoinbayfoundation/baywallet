@@ -35,7 +35,7 @@ export const customPeers = {
 	bitcoinTestnet: [],
 	bitcoinRegtest: [
 		{
-			host: '127.0.0.1',
+			host: 'host.docker.internal',
 			tcp: 50000,
 			protocol: 'tcp',
 		},

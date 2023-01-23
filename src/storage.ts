@@ -14,6 +14,6 @@ export const getItem = async <T>(key:string): Promise<T> => {
     const item = await AsyncStorage.getItem(key)
     return <T>item
   } catch (e) {
-    console.error("NO ITEM IN LOCAL STORAGE", e)
+    console.error(`NO ${key} IN LOCAL STORAGE`, e)
   }
 }

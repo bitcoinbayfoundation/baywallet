@@ -1,4 +1,4 @@
-import { selectedNetwork, getNetwork } from "../util/config";
+import { getNetwork } from "../util/config";
 import * as bitcoin from "bitcoinjs-lib"
 import * as bip39 from "bip39"
 import * as bip32 from "bip32"
@@ -6,7 +6,7 @@ import stores from "../store";
 
 export const getAddress = async () => {
 	const { getAccount, getNmemonicFromSeed } = stores.accountStore
-  const network = getNetwork(selectedNetwork)
+  const network = getNetwork("bitcoinRegtest")
   const account = await getAccount()
   const mnemonic = getNmemonicFromSeed(account.seed)
   const mnemonicSeed = await bip39.mnemonicToSeed(mnemonic)
@@ -26,7 +26,7 @@ export const getAddress = async () => {
 export const getAddressFromScriptPubKey = (scriptPubKey: string): string => {
 	return bitcoin.address.fromOutputScript(
 		Buffer.from(scriptPubKey, 'hex'),
-		getNetwork(selectedNetwork),
+		getNetwork("bitcoinRegtest"),
 	);
 };
 
@@ -37,7 +37,7 @@ export const getAddressFromScriptPubKey = (scriptPubKey: string): string => {
  */
 export const getScriptHash = (address: string): string => {
 	try {
-		const _network = getNetwork(selectedNetwork);
+		const _network = getNetwork("bitcoinRegtest");
 		const script = bitcoin.address.toOutputScript(address, _network);
 		let hash = bitcoin.crypto.sha256(script);
 		const reversedHash = new Buffer(hash.reverse());

@@ -1,14 +1,23 @@
 import React from "react"
-import {createNativeStackNavigator} from "@react-navigation/native-stack"
-import { observer } from "mobx-react"
 import Home from "../screens/Home"
+import { Settings } from "../screens/Settings"
+import { BottomNavigation, BottomNavigationTab } from "@ui-kitten/components"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 
-export const BayWalletNavigation = observer(() => {
-  const BayWallet = createNativeStackNavigator()
+const { Navigator, Screen } = createBottomTabNavigator()
 
-  return (
-    <BayWallet.Navigator initialRouteName="home">
-      <BayWallet.Screen options={{headerShown: false}} name="home" component={Home}/>
-    </BayWallet.Navigator>
-  )  
-})
+const BottomTabBar = ({ navigation, state }) => (
+  <BottomNavigation
+    selectedIndex={state.index}
+    onSelect={index => navigation.navigate(state.routeNames[index])}>
+    <BottomNavigationTab title='Home'/>
+    <BottomNavigationTab title='Settings'/>
+  </BottomNavigation>
+);
+
+export const BayWalletNavigator = () => (
+  <Navigator tabBar={props => <BottomTabBar {...props} />}>
+    <Screen name='Users' component={Home}/>
+    <Screen name='Orders' component={Settings}/>
+  </Navigator>
+);

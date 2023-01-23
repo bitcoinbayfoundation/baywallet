@@ -15,11 +15,13 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-decorators": "^7.20.7",
+    "@eva-design/eva": "^2.1.1",
     "@react-native-async-storage/async-storage": "^1.17.11",
     "@react-navigation/bottom-tabs": "^6.5.3",
     "@react-navigation/native": "^6.1.2",
     "@react-navigation/native-stack": "^6.9.8",
     "@synonymdev/react-native-ldk": "^0.0.77",
+    "@ui-kitten/components": "^5.1.2",
     "assert": "^1.5.0",
     "axios": "^1.2.2",
     "babel-preset-react-native": "^4.0.1",

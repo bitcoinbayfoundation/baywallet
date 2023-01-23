@@ -3,14 +3,16 @@ import { Provider } from "mobx-react"
 import stores from "./store"
 import { NavigationContainer } from "@react-navigation/native"
 import { BaseComponent } from "./components/base-component"
+import { ApplicationProvider } from "@ui-kitten/components"
+import * as eva from "@eva-design/eva"
 
 export const BayWalletProvider = ({children}) => {
   return (
     <NavigationContainer>
       <Provider lightning={stores.lightningStore} account={stores.accountStore}>
-        <BaseComponent>
+        <ApplicationProvider {...eva} theme={eva.dark}>
           {children}
-        </BaseComponent>
+        </ApplicationProvider>
       </Provider>
     </NavigationContainer>
   )

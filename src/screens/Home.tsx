@@ -1,33 +1,30 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView, Text, Button} from 'react-native';
 import { observer } from 'mobx-react';
 import store from "../store"
-import { connectToElectrum } from '../electrs/electrs';
 import { setupLdk } from '../ldk';
 import ldk from '@synonymdev/react-native-ldk/dist/ldk';
-import { BottomTabs } from '../components/bottom-tabs';
 
 const Home = observer(() => {
   const { nodeId, setNodeId } = store.lightningStore
+  const [nodeStarted, setNodeStarted] = useState(false)
+    const connect = async () => {
+      // ldk.reset();
+      // const electrum = await connectToElectrum({});
+      // if (electrum.isErr()) {
+      //   console.log('ERROR CONNECTING TO ELECTRUM', JSON.stringify(electrum.error));
+      //   return;
+      // }
 
+      // console.log("ELECTRUM", electrum.value)
+      // await setupLdk().catch(e => console.log(e));
+      setNodeStarted(true)
+    };
   useEffect(() => {
-    // const connect = async () => {
-    //   ldk.reset();
-    //   const electrum = await connectToElectrum({});
-    //   if (electrum.isErr()) {
-    //     console.log('ERROR CONNECTING TO ELECTRUM', JSON.stringify(electrum.error));
-    //     return;
-    //   }
-
-    //   console.log("ELECTRUM", electrum.value)
-    //   const node = await setupLdk();
-
-    //   if (node?.isErr()) {
-    //     return console.log(`NODE STARTING ERROR: ${node.error.message}`);
-    //   }
-    // };
-    // connect()
-  }, []);
+    if (nodeStarted) return
+    console.log("HEY HOW ARE YA")
+    connect()
+  }, [nodeStarted]);
 
   return (
     <>
@@ -35,7 +32,6 @@ const Home = observer(() => {
         {nodeId}
       </Text>
       <Button title="Set Node id" onPress={() => setNodeId("heyhowareya")} />
-      <BottomTabs />
     </>
   );
 });

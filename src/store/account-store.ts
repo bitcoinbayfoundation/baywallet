@@ -41,6 +41,7 @@ export class AccountStore {
     return storeAccount;
   }
 
+  @action
   async getAccount(): Promise<any> {
     const account = await getItem<string>(Account.currentAccountKey);
     if (account) return JSON.parse(account);
@@ -48,6 +49,7 @@ export class AccountStore {
     return newAccount;
   }
 
+  @action
   async createNewAccount(name?: string): Promise<any> {
     const firstAccount = await getItem(Account.name);
     if (firstAccount) return firstAccount;
@@ -66,6 +68,7 @@ export class AccountStore {
     }
   }
 
+  @action
   async setAccount({name, seed}: TAccount) {
     const account: TAccount = {
       name: name,

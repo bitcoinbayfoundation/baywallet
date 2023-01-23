@@ -1,7 +1,7 @@
 import * as electrum from 'rn-electrum-client/helpers';
 import {Block} from 'bitcoinjs-lib';
 import {getItem, setItem} from '../storage';
-import { selectedNetwork, customPeers} from '../util/config';
+import { customPeers} from '../util/config';
 import {THeader} from '@synonymdev/react-native-ldk';
 import {getAddressFromScriptPubKey, getScriptHash} from '../ldk/wallet';
 import {Result, ok, err} from '../types/result';
@@ -20,10 +20,15 @@ export const connectToElectrum = async ({
   const _tls = options.tls ?? global?.tls;
 
   console.info('NET', net);
-
+  
   const startResponse = await electrum.start({
-    network: selectedNetwork,
-    customPeers: customPeers[selectedNetwork],
+    network: "bitcoinRegtest",
+    customPeers: 		{
+			host: '35.233.47.252',
+			ssl: 18484,
+			tcp: 18483,
+			protocol: 'tcp',
+		},
     net,
     tls: _tls,
   });
@@ -31,8 +36,13 @@ export const connectToElectrum = async ({
   if (startResponse.error) {
     //Attempt one more time
     const {error, data} = await electrum.start({
-      network: selectedNetwork,
-      customPeers: customPeers[selectedNetwork],
+      network: "bitcoinRegtest",
+      customPeers: 		{
+			host: '35.233.47.252',
+			ssl: 18484,
+			tcp: 18483,
+			protocol: 'tcp',
+		},
       net,
       tls: _tls,
     });
@@ -75,7 +85,7 @@ export const getBlockHex = async ({
 }): Promise<Result<string>> => {
   const response: IGetHeaderResponse = await electrum.getHeader({
     height,
-    network: selectedNetwork,
+    network: "bitcoinRegtest",
   });
   if (response.error) {
     return err(response.data);
@@ -130,7 +140,7 @@ export const subscribeToHeader = async ({
   onReceive?: Function;
 }): Promise<Result<THeader>> => {
   const subscribeResponse: ISubscribeToHeader = await electrum.subscribeHeader({
-    network: selectedNetwork,
+    network: "bitcoinRegtest",
     onReceive: async data => {
       console.log("RECEIVE", data)
       const hex = data[0].hex;
@@ -161,7 +171,7 @@ export const getScriptPubKeyHistory = async (
     const scriptHash = getScriptHash(address);
     const response = await electrum.getAddressScriptHashesHistory({
       scriptHashes: [scriptHash],
-      network: selectedNetwork,
+      network: "bitcoinRegtest",
     });
 
     let history: {txid: string; height: number}[] = [];

@@ -22,6 +22,7 @@
     "@react-navigation/native-stack": "^6.9.8",
     "@synonymdev/react-native-ldk": "0.0.79",
     "@ui-kitten/components": "^5.1.2",
+    "@ui-kitten/eva-icons": "^5.1.2",
     "assert": "^1.5.0",
     "axios": "^1.2.2",
     "babel-preset-react-native": "^4.0.1",

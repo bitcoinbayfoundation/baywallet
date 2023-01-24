@@ -1,10 +1,11 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { BaseComponent } from "../components/base-component";
+import { Text } from "@ui-kitten/components";
 
 export const Settings = () => {
   return (
-    <View>
+    <BaseComponent>
       <Text>Settings</Text>
-    </View>
+    </BaseComponent>
   )
 }

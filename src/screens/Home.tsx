@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {Text} from 'react-native';
 import { observer } from 'mobx-react';
 import store from "../store"
-import { setupLdk } from '../ldk';
-import { Button } from '@ui-kitten/components';
+import { Button, TopNavigation, Text } from '@ui-kitten/components';
+import { BaseComponent } from '../components/base-component';
 
 const Home = observer(({navigation}) => {
   const { nodeId, setNodeId } = store.lightningStore
@@ -19,14 +18,15 @@ const Home = observer(({navigation}) => {
   }, [nodeStarted]);
 
   return (
-    <>
+    <BaseComponent>
+      <TopNavigation title='MyApp' alignment='center'/>
       <Text style={{textAlign: 'center', paddingTop: '10%'}}>
         Bay Wallet
       </Text>
       <Text style={{textAlign: 'center', paddingTop: '10%'}}>142,300 sats</Text>
       <Button onPress={() => navigation.navigate("receive")}>Receive</Button>
       <Button onPress={() => navigation.navigate("send")}>Send</Button>
-    </>
+    </ BaseComponent>
   );
 });
 

@@ -3,12 +3,7 @@ import {Text} from 'react-native';
 import { observer } from 'mobx-react';
 import store from "../store"
 import { setupLdk } from '../ldk';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { NavParamList } from '../navigation/NavParamList';
 import { Button } from '@ui-kitten/components';
-
-type HomeScreenProps = NativeStackScreenProps<NavParamList, 'home'>
 
 const Home = observer(({navigation}) => {
   const { nodeId, setNodeId } = store.lightningStore

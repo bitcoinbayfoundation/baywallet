@@ -1,37 +1,36 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, Text, Button} from 'react-native';
+import {Text} from 'react-native';
 import { observer } from 'mobx-react';
 import store from "../store"
 import { setupLdk } from '../ldk';
-import ldk from '@synonymdev/react-native-ldk/dist/ldk';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NavParamList } from '../navigation/NavParamList';
+import { Button } from '@ui-kitten/components';
 
-const Home = observer(() => {
+type HomeScreenProps = NativeStackScreenProps<NavParamList, 'home'>
+
+const Home = observer(({navigation}) => {
   const { nodeId, setNodeId } = store.lightningStore
   const [nodeStarted, setNodeStarted] = useState(false)
     const connect = async () => {
       // ldk.reset();
-      // const electrum = await connectToElectrum({});
-      // if (electrum.isErr()) {
-      //   console.log('ERROR CONNECTING TO ELECTRUM', JSON.stringify(electrum.error));
-      //   return;
-      // }
-
-      // console.log("ELECTRUM", electrum.value)
-      // await setupLdk().catch(e => console.log(e));
+      // await setupLdk()
       setNodeStarted(true)
     };
   useEffect(() => {
     if (nodeStarted) return
-    console.log("HEY HOW ARE YA")
     connect()
   }, [nodeStarted]);
 
   return (
     <>
       <Text style={{textAlign: 'center', paddingTop: '10%'}}>
-        {nodeId}
+        Bay Wallet
       </Text>
-      <Button title="Set Node id" onPress={() => setNodeId("heyhowareya")} />
+      <Text style={{textAlign: 'center', paddingTop: '10%'}}>142,300 sats</Text>
+      <Button onPress={() => navigation.navigate("receive")}>Receive</Button>
+      <Button onPress={() => navigation.navigate("send")}>Send</Button>
     </>
   );
 });

@@ -5,13 +5,15 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "start": "react-native start",
+    "cold:ios": "docker-compose up -d && yarn rn-setup && yarn bc:load-wallet && yarn bc:generate 1 && yarn ios",
+    "cold:android": "docker-compose up -d && yarn rn-setup && yarn bc:load-wallet && yarn bc:generate 1 && yarn android",
+    "start": "node rn-setup.js && react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "rn-setup": "node rn-setup.js",
-    "bc:create-wallet": "docker exec -it bitcoind bitcoin-cli --rpcport=18443 --rpcuser=baywallet --rpcpassword=baywallet createwallet baywallet",
-    "bc:load-wallet": "docker exec -it bitcoind bitcoin-cli --rpcport=18443 --rpcuser=baywallet --rpcpassword=baywallet loadwallet baywallet",
-    "bc:generate": "docker exec -it bitcoind bitcoin-cli --rpcport=18443 --rpcuser=baywallet --rpcpassword=baywallet -generate"
+    "bc:create-wallet": "docker exec -it bitcoind bitcoin-cli --rpcwallet=baywallet --rpcport=18443 --rpcuser=baywallet --rpcpassword=baywallet createwallet baywallet",
+    "bc:load-wallet": "docker exec -it bitcoind bitcoin-cli --rpcwallet=baywallet --rpcport=18443 --rpcuser=baywallet --rpcpassword=baywallet loadwallet baywallet",
+    "bc:generate": "docker exec -it bitcoind bitcoin-cli --rpcwallet=baywallet --rpcport=18443 --rpcuser=baywallet --rpcpassword=baywallet -generate"
   },
   "dependencies": {
     "@babel/plugin-proposal-decorators": "^7.20.7",

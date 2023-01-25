@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import store from "../store"
 import { Button, TopNavigation, Text } from '@ui-kitten/components';
 import { BaseComponent } from '../components/base-component';
+import { setupLdk } from '../ldk';
 
 const Home = observer(({navigation}) => {
   const { nodeId, setNodeId } = store.lightningStore

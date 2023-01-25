@@ -25,11 +25,10 @@ const { Navigator, Screen } = createBottomTabNavigator()
 
 const BottomTabBar = ({ navigation, state }) => {
   const {balance} = stores.lightningStore
-  const text= <Text {...eva} style={{color: "#000000"}}>${balance}</Text>
   return (<BottomNavigation
     selectedIndex={state.index}
     onSelect={index => navigation.navigate(state.routeNames[index])}>
-    <BottomNavigationTab title={evaProps => <Text {...evaProps} style={{fontSize: 25}}>${balance}</Text>}/>
+    <BottomNavigationTab title={evaProps => <Text {...evaProps} style={{fontSize: 20}}>${balance}</Text>}/>
     <BottomNavigationTab icon={<Icon name="settings-outline" />}/>
   </BottomNavigation>
 )};

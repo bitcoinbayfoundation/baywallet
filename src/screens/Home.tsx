@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {observer} from 'mobx-react';
 import store from '../store';
-import {Button, TopNavigation, Text, Layout} from '@ui-kitten/components';
+import {Button, TopNavigation, Text, Layout, TopNavigationAction, Icon, Divider} from '@ui-kitten/components';
 import {BaseComponent} from '../components/base-component';
 import {setupLdk} from '../ldk';
 
@@ -20,14 +20,18 @@ const Home = observer(({navigation}) => {
 
   return (
     <BaseComponent>
-    <Layout style={{flex:1, justifyContent: "center", alignItems: "center"}}>
-      <Text style={{textAlign: 'center', paddingTop: '10%', fontSize: 50}}>Bay Wallet</Text>
-      <Text style={{textAlign: 'center', paddingTop: '10%'}}>142,300 sats</Text>
-      <Layout style={{flex: 1, flexDirection: "row", justifyContent: "space-around"}}>
-        <Button style={{height: 10, width: 150}} onPress={() => navigation.navigate('receive')}>Receive</Button>
-        <Button style={{height: 10, width: 150}} onPress={() => navigation.navigate('send')}>Send</Button>
+      <TopNavigation
+        title='Bay Wallet'
+        alignment='center'
+      />
+      <Divider />
+      <Layout style={{flex:1, justifyContent: "center", alignItems: "center"}}>
+        <Text style={{textAlign: 'center', paddingTop: '10%', fontSize: 40}}>142,300 sats</Text>
+        <Layout style={{flex: 1, flexDirection: "row", justifyContent: "space-around"}}>
+          <Button style={{height: 10, width: 150}} onPress={() => navigation.navigate('receive')}>Receive</Button>
+          <Button style={{height: 10, width: 150}} onPress={() => navigation.navigate('send')}>Send</Button>
+        </Layout>
       </Layout>
-    </Layout>
     </BaseComponent>
   );
 });

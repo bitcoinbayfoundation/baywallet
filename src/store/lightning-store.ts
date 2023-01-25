@@ -8,6 +8,7 @@ export class LightningStore {
   @observable nodeId: string = null
   @observable peers: string[] = null
   @observable channels: TChannel[] = null
+  @observable balance: number = 24
 
   constructor() {
       makeObservable(this)

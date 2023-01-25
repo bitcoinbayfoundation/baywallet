@@ -3,9 +3,11 @@ import Home from "../screens/Home"
 import { Receive } from "../screens/Receive"
 import { Send } from "../screens/Send"
 import { Settings } from "../screens/Settings"
-import { BottomNavigation, BottomNavigationTab, Icon } from "@ui-kitten/components"
+import { BottomNavigation, BottomNavigationTab, Icon, Text } from "@ui-kitten/components"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import stores from "../store"
+import * as eva from "@eva-design/eva"
 
 const BayWalletStack = createNativeStackNavigator()
 
@@ -21,14 +23,16 @@ export const BayWalletAppNavigator = () => {
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
-const BottomTabBar = ({ navigation, state }) => (
-  <BottomNavigation
+const BottomTabBar = ({ navigation, state }) => {
+  const {balance} = stores.lightningStore
+  const text= <Text {...eva} style={{color: "#000000"}}>${balance}</Text>
+  return (<BottomNavigation
     selectedIndex={state.index}
     onSelect={index => navigation.navigate(state.routeNames[index])}>
-    <BottomNavigationTab icon={<Icon name="home-outline"/>}/>
+    <BottomNavigationTab title={evaProps => <Text {...evaProps} style={{fontSize: 25}}>${balance}</Text>}/>
     <BottomNavigationTab icon={<Icon name="settings-outline" />}/>
   </BottomNavigation>
-);
+)};
 
 export const BayWalletNavigator = () => (
   <Navigator tabBar={props => <BottomTabBar {...props} />}>

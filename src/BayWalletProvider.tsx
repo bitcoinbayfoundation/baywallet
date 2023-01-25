@@ -6,13 +6,15 @@ import { ApplicationProvider, IconRegistry } from "@ui-kitten/components"
 import * as eva from "@eva-design/eva"
 import { EvaIconsPack } from "@ui-kitten/eva-icons"
 import { BaseComponent } from "./components/base-component"
+import { default as mapping } from "../mapping.json"
 
 export const BayWalletProvider = ({children}) => {
   return (
     <NavigationContainer>
       <Provider lightning={stores.lightningStore} account={stores.accountStore}>
         <IconRegistry icons={EvaIconsPack} />
-        <ApplicationProvider {...eva} theme={eva.dark}>
+        {/*// @ts-ignore */}
+        <ApplicationProvider {...eva} theme={eva.dark} customMapping={mapping}>
           <BaseComponent>
             {children}
           </BaseComponent>

@@ -1,0 +1,37 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/Mitr-Bold.ttf",
+      "sha1": "507224116f60be6c731e7dce3b0d0e8ecdf43b83"
+    },
+    {
+      "path": "assets/Mitr-ExtraLight.ttf",
+      "sha1": "4502597dd1cab5904b48e93802d7a4f877adbde1"
+    },
+    {
+      "path": "assets/Mitr-Light.ttf",
+      "sha1": "36fa1864b632d48f379efa8443d81bd1de8aee46"
+    },
+    {
+      "path": "assets/Mitr-Medium.ttf",
+      "sha1": "ae9cbd2565c7cfef0e6b23a4c29f4d26e2ab2775"
+    },
+    {
+      "path": "assets/Mitr-Regular.ttf",
+      "sha1": "25281f084fb2e977963c7d2e8a5d68d1ba657f28"
+    },
+    {
+      "path": "assets/Mitr-SemiBold.ttf",
+      "sha1": "556a47584024f914ff55c8cb6eb0a92b517ae580"
+    },
+    {
+      "path": "assets/Numans/OFL.txt",
+      "sha1": "c6ea4d378e0b4f8248e65367e394b551072108b1"
+    },
+    {
+      "path": "assets/Numans-Regular.ttf",
+      "sha1": "8ff0628e160ca233b52b5780a34e65a947831f54"
+    }
+  ]
+}

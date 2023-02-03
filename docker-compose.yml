@@ -58,5 +58,31 @@ services:
     restart: unless-stopped
     networks:
       - baywallet 
+  lnd:
+    image: lightninglabs/lnd:v0.15.5-beta
+    container_name: lnd
+    hostname: lnd
+    command: >-
+      lnd --noseedbackup --trickledelay=5000 --alias=baywalletsfriend --externalip=lnd
+      --tlsextradomain=lnd --tlsextradomain=lnd --listen=0.0.0.0:9736
+      --rpclisten=0.0.0.0:10009 --restlisten=0.0.0.0:8080 --bitcoin.active
+      --bitcoin.regtest --bitcoin.node=bitcoind
+      --bitcoind.rpchost=bitcoind --bitcoind.rpcuser=baywallet
+      --bitcoind.rpcpass=baywallet
+      --bitcoind.zmqpubrawblock=tcp://bitcoind:28334
+      --bitcoind.zmqpubrawtx=tcp://bitcoind:28335
+    restart: always
+    volumes:
+      - ./docker/lnd:/root/lnd/.lnd
+    expose:
+      - '8080'
+      - '10009'
+      - '9736'
+    ports:
+      - '8080:8080'
+      - '10000:10009'
+      - '9736:9736'
+    networks:
+      - baywallet
 networks:
   baywallet:

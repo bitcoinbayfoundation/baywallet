@@ -13,7 +13,7 @@ export const getApiUrl = (path:string): string => {
  * 
  * @returns block hex
  */
-export const getLatestBlockHex = async (): Promise<string> => {
+export const getLatestBlockHash = async (): Promise<string> => {
   const hex = await axios.get(getApiUrl("/blocks/tip/hash"))
   return hex.data
 }
@@ -45,12 +45,12 @@ export const getBlockHashFromHeight = async(height:number): Promise<string> => {
  * @returns {THeader} header information for LDK
  */
 export const getLatestBlockHeader = async (): Promise<THeader | string> => {
-  const blockHex = await getLatestBlockHex()
+  const blockHash = await getLatestBlockHash()
   const tipHeight = await getTipHeight()
-  const header = await axios.get(getApiUrl(`/block/${blockHex}/header`))
+  const blockHex = await axios.get(getApiUrl(`/block/${blockHash}/header`))
   const headerItem: THeader = {
-    hex: blockHex,
-    hash: header.data,
+    hex: blockHex.data,
+    hash: blockHash,
     height: tipHeight
   }
   console.log("RETRIEVED HEADER INFO", headerItem)

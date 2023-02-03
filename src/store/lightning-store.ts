@@ -1,4 +1,4 @@
-import { action, makeObservable, observable, runInAction } from 'mobx';
+import { action, makeAutoObservable, observable, runInAction } from 'mobx';
 import ldk from "@synonymdev/react-native-ldk/dist/ldk"
 import lm, { TAddPeerReq, TInvoice } from "@synonymdev/react-native-ldk"
 import { TChannel } from '@synonymdev/react-native-ldk';
@@ -8,24 +8,27 @@ export class LightningStore {
   @observable nodeId: string = null
   @observable peers: string[] = null
   @observable channels: TChannel[] = null
-  @observable balance: number = 24
+  @observable balance: number = null
 
   constructor() {
-      makeObservable(this)
-  }
-
-  async getLightningInfo() {
-    this.getPeers()
-    this.getChannels()
+      makeAutoObservable(this)
   }
 
   @action
-  setNodeId = async (id:string): Promise<string> => {
+  async getLightningInfo() {
+    await this.getNodeId()
+    await this.getPeers()
+    await this.getChannels()
+  }
+
+  @action
+  getNodeId = async (): Promise<string> => {
     const nodeId = await ldk.nodeId()
     if (nodeId.isErr()) throw new Error("Could not get node id.")
     runInAction(() => {
-      this.nodeId = id
+      this.nodeId = nodeId.value
     })
+    console.log(nodeId)
 
     return nodeId.value
   }
@@ -40,12 +43,11 @@ export class LightningStore {
     }
 
     const peerAdded = await ldk.addPeer(peerConfig)
-    if (peerAdded.isErr()) throw new Error("Could not add peer.")
-
-    await this.getPeers()
+    if (peerAdded.isErr()) return console.log("no peer")
 
     return peerAdded.value
   }
+
   @action
   async getPeers(): Promise<string[]> {
     const peers = await ldk.listPeers()
@@ -65,6 +67,7 @@ export class LightningStore {
     runInAction(() => {
       this.channels = channels.value
     })
+    console.log("lookin for channels", channels.value)
     return channels.value
   }
 
@@ -74,6 +77,20 @@ export class LightningStore {
     const payReq = await ldk.createPaymentRequest({amountSats, description, expiryDeltaSeconds: 3600 })
     if (payReq.isErr()) throw new Error("Could not create invoice.")
     return payReq.value
+  }
+
+  @action
+  async getNodeBalance() {
+    console.log("node balance")
+    let balance:number
+    console.log("efwefwef", this.channels)
+    this.channels?.map(chan => {
+      console.log("chan", chan)
+      if (chan.is_usable) balance += chan.balance_sat
+    })
+    runInAction(() => this.balance = balance)
+    console.log("balance", balance)
+    return balance
   }
 
   private satsToMilliSats(sats:number) {

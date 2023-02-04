@@ -49,4 +49,13 @@ yarn bc:load-wallet
 yarn bc:generate <num-blocks>
 ```
 
+After starting the Bitcoin node, creating a wallet, and generating a full block, the `electrs` REST API will be available. You can then start the application:
+```
+// iOS
+yarn ios
+
+// Android
+// yarn android
+```
+
 Bay Wallet uses the `electrs` library to query the chain. To explore the API, the docs can be found [here.](https://github.com/Blockstream/esplora/blob/master/API.md)

@@ -7,6 +7,7 @@ import * as eva from "@eva-design/eva"
 import { EvaIconsPack } from "@ui-kitten/eva-icons"
 import { BaseComponent } from "./components/base-component"
 import { default as mapping } from "../mapping.json"
+import { colors } from "../theme"
 
 export const BayWalletProvider = ({children}) => {
   return (
@@ -14,7 +15,7 @@ export const BayWalletProvider = ({children}) => {
       <Provider lightning={stores.lightningStore} account={stores.accountStore}>
         <IconRegistry icons={EvaIconsPack} />
         {/*// @ts-ignore */}
-        <ApplicationProvider {...eva} theme={eva.dark} customMapping={mapping}>
+        <ApplicationProvider {...eva} theme={{...eva.dark, ...colors}} customMapping={mapping}>
           <BaseComponent>
             {children}
           </BaseComponent>

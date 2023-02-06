@@ -1,4 +1,4 @@
-import { Icon, Text } from "@ui-kitten/components"
+import { Icon, Text, useTheme } from "@ui-kitten/components"
 import React, { useEffect, useRef, useState } from "react"
 import { Animated, Dimensions, GestureResponderEvent, PanResponder, PanResponderGestureState, View } from "react-native"
 
@@ -13,8 +13,9 @@ interface Props {
 }
 
 export const BottomDrawer = ({children}: Props) => {
-  const {height} = Dimensions.get("window")
   const [label, setLabel] = useState(false)
+  const theme = useTheme()
+  const {height} = Dimensions.get("window")
   const y = useRef(new Animated.Value(DrawerState.Closed)).current
   const state = useRef(new Animated.Value(DrawerState.Closed)).current
   const margin = height * .05
@@ -80,7 +81,7 @@ export const BottomDrawer = ({children}: Props) => {
     <Animated.View 
       style={{
         width: "100%",
-        backgroundColor: "#222b45",
+        backgroundColor: theme["background-basic-color-1"],
         height: height,
         borderRadius: 25,
         position: "absolute",

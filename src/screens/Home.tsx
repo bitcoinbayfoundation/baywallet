@@ -5,13 +5,14 @@ import {Button, TopNavigation, Text, Layout, Divider} from '@ui-kitten/component
 import {BaseComponent} from '../components/base-component';
 import {setupLdk} from '../ldk';
 import ldk from "@synonymdev/react-native-ldk/dist/ldk"
+import { BottomDrawer } from '../components/bottom-drawer';
 
 const Home = observer(({navigation}) => {
   const {nodeId, channels, balance, peers, getLightningInfo, addPeer, getNodeId, getNodeBalance, getChannels, getPeers} = store.lightningStore;
   const [nodeStarted, setNodeStarted] = useState(false);
   const connect = async () => {
-    ldk.reset();
-    await setupLdk()
+    // ldk.reset();
+    // await setupLdk()
     setNodeStarted(true);
   };
   useEffect(() => {
@@ -26,20 +27,28 @@ const Home = observer(({navigation}) => {
         alignment='center'
       />
       <Divider />
-      <Layout style={{flex:1, justifyContent: "center", alignItems: "center"}}>
-        <Text style={{textAlign: 'center', paddingTop: '10%', fontSize: 40}}>142,300 sats</Text>
-        <Layout style={{flex: 1, flexDirection: "row", justifyContent: "space-around", height: "100%"}}>
-          <Button style={{height: 10, width: 150}} onPress={() => navigation.navigate('receive')}>Receive</Button>
-          <Button style={{height: 10, width: 150}} onPress={() => navigation.navigate('send')}>Send</Button>
+      <Layout style={{alignItems: "center", marginTop: "25%"}}>
+        <Amount />
+        <Layout style={{ flexDirection: "row", marginTop: "10%" }}>
+          <Button style={{height: 10, width: 150, marginRight: 5}} onPress={() => navigation.navigate('receive')}>Receive</Button>
+          <Button style={{height: 10, width: 150, marginLeft: 5}} onPress={() => navigation.navigate('send')}>Send</Button>
         </Layout>
-        <Text>Node Id: {nodeId}</Text>
-        {/* <Text>Balance: {balance}</Text> */}
-        {/* <Text>Channels: {JSON.stringify(channels)}</Text> */}
-        {/* <Text>Peers:: {JSON.stringify(peers)}</Text> */}
-        <Button style={{height: 10, width: 150}} onPress={async () => await getLightningInfo()}>Get Node Id</Button>
       </Layout>
+      <BottomDrawer>
+        <Text>Transaction List goes here</Text>
+      </BottomDrawer>
     </BaseComponent>
   );
 });
 
 export default Home;
+
+ // TODO: Add symbol referenced by user preference.
+const Amount = () => {
+  return (
+    <Layout style={{display: "flex", alignItems: "center", flexDirection: "row"}}>
+      {/* <Satoshi color="#ff0000" style={{marginTop: , marginRight: 10}}/> */}
+      <Text style={{textAlign: 'center', paddingTop: '10%', fontSize: 50}}>124,000 sats</Text>
+    </Layout>
+  )
+}

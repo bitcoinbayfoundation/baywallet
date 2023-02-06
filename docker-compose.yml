@@ -54,7 +54,7 @@ services:
       - 50000:50000
       - 30000:30000
     volumes:
-      - ./bitcoin/:/config
+      - ./docker/bitcoin/:/config
     restart: unless-stopped
     networks:
       - baywallet 

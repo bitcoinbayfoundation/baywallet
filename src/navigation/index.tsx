@@ -8,10 +8,11 @@ import { BottomNavigation, BottomNavigationTab, Icon, Text } from "@ui-kitten/co
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import stores from "../store"
+import { NavigationContainer } from "@react-navigation/native"
 
-const BayWalletStack = createNativeStackNavigator()
 
 export const BayWalletAppNavigator = () => {
+  const BayWalletStack = createNativeStackNavigator()
   return (
     <BayWalletStack.Navigator initialRouteName="home">
       <BayWalletStack.Screen options={{headerShown: false}} name="home" component={Home} />
@@ -22,22 +23,27 @@ export const BayWalletAppNavigator = () => {
   )
 }
 
-const { Navigator, Screen } = createBottomTabNavigator()
 
 const BottomTabBar = ({ navigation, state }) => {
   const {balance} = stores.lightningStore
-  return (<BottomNavigation
+  return (
+    <BottomNavigation
     selectedIndex={state.index}
     onSelect={index => navigation.navigate(state.routeNames[index])}>
-    <BottomNavigationTab title={evaProps => <Text {...evaProps} style={{fontSize: 20}}>${balance}</Text>}/>
-    <BottomNavigationTab icon={<Icon name="settings-outline" />}/>
-  </BottomNavigation>
+      <BottomNavigationTab title={evaProps => <Text {...evaProps} style={{fontSize: 20}}>${balance}</Text>}/>
+      <BottomNavigationTab icon={<Icon name="settings-outline" />}/>
+    </BottomNavigation>
 )};
 
-export const BayWalletNavigator = () => (
-  <Navigator tabBar={props => <BottomTabBar {...props} />}>
-    <Screen name='baywallet' options={{headerShown:false}} component={BayWalletAppNavigator}/>
-    <Screen name='settings' options={{headerShown:false}} component={Settings}/>
-  </Navigator>
-);
+export const BayWalletNavigator = () => {
+  const { Navigator, Screen } = createBottomTabNavigator()
+  return (
+    <NavigationContainer>
+      <Navigator tabBar={props => <BottomTabBar {...props} />}>
+        <Screen name='baywallet' options={{headerShown:false}} component={BayWalletAppNavigator}/>
+        <Screen name='settings' options={{headerShown:false}} component={Settings}/>
+      </Navigator>
+    </NavigationContainer>
+  )
+};
 

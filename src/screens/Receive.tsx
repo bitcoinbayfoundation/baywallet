@@ -2,8 +2,14 @@ import {observer} from 'mobx-react';
 import React, { useState } from 'react';
 import {Divider, Icon, Input, Text, TopNavigation, TopNavigationAction, Button, Layout} from '@ui-kitten/components';
 import {BaseComponent} from '../components/base-component';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { NavParamList } from 'src/navigation/NavParamList';
+import { useNavigation } from '@react-navigation/native';
 
-export const Receive = observer(({navigation}) => {
+type ReceiveScreenProps = NativeStackNavigationProp<NavParamList, 'receive'>
+
+export const Receive = observer(() => {
+  const navigation = useNavigation<ReceiveScreenProps>()
   const [amount, setAmount] = useState<any>("")
   const [description, setDescription] = useState<any>("")
   return (

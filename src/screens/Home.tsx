@@ -6,8 +6,14 @@ import {BaseComponent} from '../components/base-component';
 import {setupLdk} from '../ldk';
 import ldk from "@synonymdev/react-native-ldk/dist/ldk"
 import { BottomDrawer } from '../components/bottom-drawer';
+import { useNavigation } from '@react-navigation/native';
+import { NavParamList } from '../navigation/NavParamList';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-const Home = observer(({navigation}) => {
+type HomeScreenProp = NativeStackNavigationProp<NavParamList, 'home'>
+
+const Home = observer(() => {
+  const navigation = useNavigation<HomeScreenProp>()
   const {nodeId, channels, balance, peers, getLightningInfo, addPeer, getNodeId, getNodeBalance, getChannels, getPeers} = store.lightningStore;
   const [nodeStarted, setNodeStarted] = useState(false);
   const connect = async () => {

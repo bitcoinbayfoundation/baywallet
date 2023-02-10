@@ -11,16 +11,14 @@ import { colors } from "../theme"
 
 export const BayWalletProvider = ({children}) => {
   return (
-    <NavigationContainer>
-      <Provider lightning={stores.lightningStore} account={stores.accountStore}>
-        <IconRegistry icons={EvaIconsPack} />
-        {/*// @ts-ignore */}
-        <ApplicationProvider {...eva} theme={{...eva.dark, ...colors}} customMapping={mapping}>
-          <BaseComponent>
-            {children}
-          </BaseComponent>
-        </ApplicationProvider>
-      </Provider>
-    </NavigationContainer>
+    <Provider lightning={stores.lightningStore} account={stores.accountStore}>
+      <IconRegistry icons={EvaIconsPack} />
+      {/*// @ts-ignore */}
+      <ApplicationProvider {...eva} theme={{...eva.dark, ...colors}} customMapping={mapping}>
+        <BaseComponent>
+          {children}
+        </BaseComponent>
+      </ApplicationProvider>
+    </Provider>
   )
 }

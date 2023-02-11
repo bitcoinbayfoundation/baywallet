@@ -1,9 +1,10 @@
 import React from "react"
 import Home from "../screens/Home"
 import { Receive } from "../screens/Receive"
-import { Send } from "../screens/Send"
+import { Scan } from "../screens/Scan"
 import { Settings } from "../screens/Settings"
 import { Invoice } from "../screens/Invoice"
+import { Pay } from "../screens/Pay"
 import { BottomNavigation, BottomNavigationTab, Icon, Text } from "@ui-kitten/components"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
@@ -17,8 +18,9 @@ export const BayWalletAppNavigator = () => {
     <BayWalletStack.Navigator initialRouteName="home">
       <BayWalletStack.Screen options={{headerShown: false}} name="home" component={Home} />
       <BayWalletStack.Screen options={{headerShown: false}} name="receive" component={Receive} />
-      <BayWalletStack.Screen options={{headerShown: false}} name="send" component={Send} />
+      <BayWalletStack.Screen options={{headerShown: false}} name="scan" component={Scan} />
       <BayWalletStack.Screen options={{headerShown: false}} name="invoice" component={Invoice} />
+      <BayWalletStack.Screen options={{headerShown: false}} name="pay" component={Pay} />
     </BayWalletStack.Navigator>
   )
 }

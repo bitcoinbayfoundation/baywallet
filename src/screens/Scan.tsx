@@ -6,10 +6,10 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { NavParamList } from 'src/navigation/NavParamList';
 import { useNavigation } from '@react-navigation/native';
 
-type SendScreenProp = NativeStackNavigationProp<NavParamList, 'send'>
+type ScanScreenProp = NativeStackNavigationProp<NavParamList, 'scan'>
 
-export const Send = observer(() => {
-  const navigation = useNavigation<SendScreenProp>()
+export const Scan = observer(() => {
+  const navigation = useNavigation<ScanScreenProp>()
   return (
     <BaseComponent>
       <TopNavigation

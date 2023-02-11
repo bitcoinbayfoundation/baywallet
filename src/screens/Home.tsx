@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {observer} from 'mobx-react';
 import store from '../store';
-import {Button, TopNavigation, Text, Layout, Divider} from '@ui-kitten/components';
+import {Button, TopNavigation, Text, Layout, Divider, useTheme} from '@ui-kitten/components';
 import {BaseComponent} from '../components/base-component';
 import {setupLdk} from '../ldk';
 import ldk from "@synonymdev/react-native-ldk/dist/ldk"
@@ -37,7 +37,7 @@ const Home = observer(() => {
         <Amount />
         <Layout style={{ flexDirection: "row", marginTop: "10%" }}>
           <Button style={{height: 10, width: 150, marginRight: 5}} onPress={() => navigation.navigate('receive')}>Receive</Button>
-          <Button style={{height: 10, width: 150, marginLeft: 5}} onPress={() => navigation.navigate('send')}>Send</Button>
+          <Button style={{height: 10, width: 150, marginLeft: 5}} onPress={() => navigation.navigate('scan')}>Send</Button>
         </Layout>
       </Layout>
       <BottomDrawer>

@@ -4,7 +4,7 @@ import * as bip39 from "bip39"
 import { randomBytes } from "crypto";
 
 enum Account {
-  name = 'bay-wallet-0',
+  name = 'bay-wallet-3',
   currentAccountKey = 'current-account',
 }
 export async function setActiveAccount(account: TAccount) {
@@ -13,15 +13,17 @@ export async function setActiveAccount(account: TAccount) {
 }
 
 export async function getAccount(): Promise<any> {
-  const account = await getItem<string>(Account.currentAccountKey);
+  const account = await getItem<string>("baywallet-account");
+  console.log(account)
   if (account) return JSON.parse(account);
-  const newAccount = await createNewAccount();
+  const newAccount = await createNewAccount("baywallet-account");
   return newAccount;
 }
 
 export async function createNewAccount(name?: string): Promise<any> {
-  const firstAccount = await getItem(Account.name);
-  if (firstAccount) return firstAccount;
+  const firstAccount = await getItem<string>(name);
+  console.log("first account", firstAccount)
+  if (firstAccount) return JSON.parse(firstAccount);
   if (!name) throw new Error('Need to supply a name for new wallet.');
   try {
     const account: TAccount = {
@@ -43,7 +45,7 @@ export async function setAccount({name, seed}: TAccount) {
     seed: seed,
   };
   // await Keychain.setGenericPassword(name, JSON.stringify(account), {service: name})
-  await setItem(Account.currentAccountKey, account);
+  await setItem(name, JSON.stringify(account));
 }
 
 function generateSeed() {

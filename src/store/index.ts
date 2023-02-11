@@ -12,6 +12,3 @@ export class DataStore {
         this.settingsStore = new SettingsStore(this)
     }
 }
-
-const stores = new DataStore()
-export default stores

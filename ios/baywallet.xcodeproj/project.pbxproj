@@ -19,6 +19,7 @@
 		7699B88040F8A987B510C191 /* libPods-baywallet-baywalletTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-baywallet-baywalletTests.a */; };
 		7B00A73F156E49B4A2C3B50A /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 25E456AD7BF344A691474484 /* OFL.txt */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		B50572DA2997399A00F9A715 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B50572D92997399A00F9A715 /* Assets.xcassets */; };
 		D748C92EA4D24E07BD2F2560 /* Numans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81E9A59F0C994410ACFB0C4F /* Numans-Regular.ttf */; };
 		E464ACCC8C1446B6A743B5AA /* Mitr-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 803F9AFA7FE44FF199B18DCF /* Mitr-SemiBold.ttf */; };
 		EE7EC2957B1E417992092D53 /* Mitr-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D246FE77513848CC8CCD1C06 /* Mitr-Medium.ttf */; };
@@ -45,20 +46,21 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = baywallet/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = baywallet/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-baywallet-baywalletTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-baywallet-baywalletTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		25E456AD7BF344A691474484 /* OFL.txt */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = OFL.txt; path = ../assets/Numans/OFL.txt; sourceTree = "<group>"; };
+		25E456AD7BF344A691474484 /* OFL.txt */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = OFL.txt; path = ../assets/Numans/OFL.txt; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-baywallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-baywallet.debug.xcconfig"; path = "Target Support Files/Pods-baywallet/Pods-baywallet.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-baywallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-baywallet.release.xcconfig"; path = "Target Support Files/Pods-baywallet/Pods-baywallet.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-baywallet-baywalletTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-baywallet-baywalletTests.debug.xcconfig"; path = "Target Support Files/Pods-baywallet-baywalletTests/Pods-baywallet-baywalletTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-baywallet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-baywallet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6BF32E485D3C43EDBAFD0398 /* Mitr-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-ExtraLight.ttf"; path = "../assets/Mitr-ExtraLight.ttf"; sourceTree = "<group>"; };
-		803F9AFA7FE44FF199B18DCF /* Mitr-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-SemiBold.ttf"; path = "../assets/Mitr-SemiBold.ttf"; sourceTree = "<group>"; };
+		6BF32E485D3C43EDBAFD0398 /* Mitr-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-ExtraLight.ttf"; path = "../assets/Mitr-ExtraLight.ttf"; sourceTree = "<group>"; };
+		803F9AFA7FE44FF199B18DCF /* Mitr-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-SemiBold.ttf"; path = "../assets/Mitr-SemiBold.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = baywallet/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		81E9A59F0C994410ACFB0C4F /* Numans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Numans-Regular.ttf"; path = "../assets/Numans-Regular.ttf"; sourceTree = "<group>"; };
+		81E9A59F0C994410ACFB0C4F /* Numans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Numans-Regular.ttf"; path = "../assets/Numans-Regular.ttf"; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-baywallet-baywalletTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-baywallet-baywalletTests.release.xcconfig"; path = "Target Support Files/Pods-baywallet-baywalletTests/Pods-baywallet-baywalletTests.release.xcconfig"; sourceTree = "<group>"; };
-		92E3B38E57424884BFB533E6 /* Mitr-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-Bold.ttf"; path = "../assets/Mitr-Bold.ttf"; sourceTree = "<group>"; };
-		B4C7032396CD41F7B07397F9 /* Mitr-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-Light.ttf"; path = "../assets/Mitr-Light.ttf"; sourceTree = "<group>"; };
-		D246FE77513848CC8CCD1C06 /* Mitr-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-Medium.ttf"; path = "../assets/Mitr-Medium.ttf"; sourceTree = "<group>"; };
-		E0E93C2F02524C6DA235F13E /* Mitr-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-Regular.ttf"; path = "../assets/Mitr-Regular.ttf"; sourceTree = "<group>"; };
+		92E3B38E57424884BFB533E6 /* Mitr-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-Bold.ttf"; path = "../assets/Mitr-Bold.ttf"; sourceTree = "<group>"; };
+		B4C7032396CD41F7B07397F9 /* Mitr-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-Light.ttf"; path = "../assets/Mitr-Light.ttf"; sourceTree = "<group>"; };
+		B50572D92997399A00F9A715 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D246FE77513848CC8CCD1C06 /* Mitr-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-Medium.ttf"; path = "../assets/Mitr-Medium.ttf"; sourceTree = "<group>"; };
+		E0E93C2F02524C6DA235F13E /* Mitr-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-Regular.ttf"; path = "../assets/Mitr-Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -108,6 +110,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				B50572D92997399A00F9A715 /* Assets.xcassets */,
 			);
 			name = baywallet;
 			sourceTree = "<group>";
@@ -125,7 +128,6 @@
 				25E456AD7BF344A691474484 /* OFL.txt */,
 			);
 			name = Resources;
-			path = "";
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -277,6 +279,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				B50572DA2997399A00F9A715 /* Assets.xcassets in Resources */,
 				6AF8EA34616641D4A54766F4 /* Mitr-Bold.ttf in Resources */,
 				0DFCAD741A354A809696EEB2 /* Mitr-ExtraLight.ttf in Resources */,
 				508A465C12EF4307A29143A6 /* Mitr-Light.ttf in Resources */,

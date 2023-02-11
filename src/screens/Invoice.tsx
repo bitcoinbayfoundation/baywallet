@@ -1,19 +1,41 @@
 import React from 'react';
 import {observer} from 'mobx-react';
-import {Divider, Icon, Layout, Text, TopNavigation, TopNavigationAction} from '@ui-kitten/components';
-import { BaseComponent } from '../components/base-component';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { NavParamList } from '../navigation/NavParamList';
-import { RouteProp, useNavigation } from '@react-navigation/native';
+import {
+  Divider,
+  Icon,
+  Layout,
+  Text,
+  TopNavigation,
+  TopNavigationAction,
+  Button,
+} from '@ui-kitten/components';
+import Clipboard from "@react-native-clipboard/clipboard"
+import {BaseComponent} from '../components/base-component';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {NavParamList} from '../navigation/NavParamList';
+import {RouteProp, useNavigation} from '@react-navigation/native';
+import QRCode from 'react-native-qrcode-svg';
+import {Share} from 'react-native';
 
-type InvoiceScreenProp = NativeStackNavigationProp<NavParamList, 'invoice'>
+type InvoiceScreenProp = NativeStackNavigationProp<NavParamList, 'invoice'>;
 
 type InvoiceProps = {
   route?: RouteProp<NavParamList, 'invoice'>;
 };
 
-export const Invoice = observer((props:InvoiceProps) => {
-  const navigation = useNavigation<InvoiceScreenProp>()
+export const Invoice = observer((props: InvoiceProps) => {
+  const navigation = useNavigation<InvoiceScreenProp>();
+
+  const onShare = async () => {
+    try {
+      await Share.share({
+        message: props.route.params.payReq,
+      });
+    } catch (error) {
+      alert(`Error: ${error}`);
+    }
+  };
+
   return (
     <BaseComponent>
       <TopNavigation
@@ -27,8 +49,25 @@ export const Invoice = observer((props:InvoiceProps) => {
         }
       />
       <Divider />
-      <Layout>
-        <Text>{props.route.params.payReq}</Text>
+      <Layout
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          paddingTop: 20,
+          height: "60%",
+          alignItems: 'center',
+        }}
+      >
+        <Text style={{fontSize: 30, paddingBottom: 30}}>
+          {Number(props.route.params.amount).toLocaleString()} sats
+        </Text>
+        <QRCode value={props.route.params.payReq} size={300} />
+        <Layout style={{display: 'flex', flexDirection: 'row', paddingTop: 30}}>
+          <Button style={{width: 100, marginHorizontal: 5}} onPress={() => onShare()}>Share</Button>
+          <Button style={{width: 100, marginHorizontal: 5}} onPress={() => { Clipboard.setString(props.route.params.payReq); alert('Copied to clipboard.')}}>
+            Copy
+          </Button>
+        </Layout>
       </Layout>
     </BaseComponent>
   );

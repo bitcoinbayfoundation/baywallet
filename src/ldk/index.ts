@@ -1,20 +1,16 @@
 import RNFS from 'react-native-fs';
-import * as electrum from 'rn-electrum-client/helpers';
 import lm, {
   DefaultTransactionDataShape,
   ENetworks,
   TTransactionData,
   TTransactionPosition,
 } from '@synonymdev/react-native-ldk';
-import ldk from '@synonymdev/react-native-ldk/dist/ldk';
 import {getAddress} from '../ldk/wallet';
 import {err, Result} from '../types/result';
-import { ldkNetwork} from '../util/config';
-import stores from '../store';
 import { getBestBlock, getBlockHashFromHeight, getScriptPubKeyHistory, getTransactionData, getTransactionPosition, broadcastTransaction, getLatestBlockHeader, updateHeader } from '../electrs/http';
+import { getAccount } from '../util/account';
 
-export const setupLdk = async () => {
-  const {getAccount} = stores.accountStore
+export const setupLdk = async () => {  
   try {
     const genesisHash = await getBlockHashFromHeight(0);
     const headerInfo = await getLatestBlockHeader()

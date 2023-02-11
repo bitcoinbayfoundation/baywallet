@@ -8,8 +8,9 @@ import { Pay } from "../screens/Pay"
 import { BottomNavigation, BottomNavigationTab, Icon, Text } from "@ui-kitten/components"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import stores from "../store"
+import { useDataStore } from "../store/DataProvider"
 import { NavigationContainer } from "@react-navigation/native"
+import { AdvancedSettings } from "../screens/AdvancedSettings"
 
 
 export const BayWalletAppNavigator = () => {
@@ -25,9 +26,19 @@ export const BayWalletAppNavigator = () => {
   )
 }
 
+export const SettingsNavigator = () => {
+  const SettingsStack = createNativeStackNavigator()
+  return (
+    <SettingsStack.Navigator initialRouteName="settings">
+      <SettingsStack.Screen options={{headerShown: false}} name="settings" component={Settings} />
+      <SettingsStack.Screen options={{headerShown: false}} name="advanced-settings" component={AdvancedSettings} />
+    </SettingsStack.Navigator>
+  )
+}
+
 
 const BottomTabBar = ({ navigation, state }) => {
-  const {balance} = stores.lightningStore
+  const {lightningStore: {balance}} = useDataStore()
   return (
     <BottomNavigation
     selectedIndex={state.index}
@@ -43,7 +54,7 @@ export const BayWalletNavigator = () => {
     <NavigationContainer>
       <Navigator tabBar={props => <BottomTabBar {...props} />}>
         <Screen name='baywallet' options={{headerShown:false}} component={BayWalletAppNavigator}/>
-        <Screen name='settings' options={{headerShown:false}} component={Settings}/>
+        <Screen name='baywallet-settings' options={{headerShown:false}} component={SettingsNavigator}/>
       </Navigator>
     </NavigationContainer>
   )

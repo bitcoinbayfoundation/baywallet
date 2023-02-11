@@ -1,7 +1,7 @@
+import { TInvoice } from "@synonymdev/react-native-ldk"
+
 export type InvoiceScreenProps = {
-  payReq: string
-  amount: string
-  description?: string
+  invoice: TInvoice
 }
 
 export type PayScreenProps = {

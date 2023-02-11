@@ -1,5 +1,24 @@
 {
   "strict": {
     "text-font-family": "Numans-Regular"
+  },
+  "components": {
+    "Button": {
+      "meta": {},
+      "appearances": {
+        "filled": {
+          "mapping": {},
+          "variantGroups": {
+            "status": {
+              "primary": {
+                "textColor": "white",
+                "backgroundColor": "color-basic-200",
+                "borderColor": "color-basic-200"
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

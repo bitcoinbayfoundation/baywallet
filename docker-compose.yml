@@ -64,7 +64,7 @@ services:
     hostname: lnd
     command: >-
       lnd --noseedbackup --trickledelay=5000 --alias=baywalletsfriend --externalip=lnd
-      --tlsextradomain=lnd --tlsextradomain=lnd --listen=0.0.0.0:9736
+      --tlsextradomain=lnd --tlsextradomain=lnd --listen=0.0.0.0:9735
       --rpclisten=0.0.0.0:10009 --restlisten=0.0.0.0:8080 --bitcoin.active
       --bitcoin.regtest --bitcoin.node=bitcoind
       --bitcoind.rpchost=bitcoind --bitcoind.rpcuser=baywallet
@@ -73,15 +73,15 @@ services:
       --bitcoind.zmqpubrawtx=tcp://bitcoind:28335
     restart: always
     volumes:
-      - ./docker/lnd:/root/lnd/.lnd
+      - ./docker/lnd:/root/.lnd
     expose:
       - '8080'
       - '10009'
-      - '9736'
+      - '9735'
     ports:
       - '8080:8080'
       - '10000:10009'
-      - '9736:9736'
+      - '9735:9735'
     networks:
       - baywallet
 networks:

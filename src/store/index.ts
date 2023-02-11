@@ -1,14 +1,17 @@
 import { AccountStore } from "./account-store"
 import { LightningStore } from "./lightning-store"
-class Stores {
+import { SettingsStore } from "./settings-store"
+export class DataStore {
     public lightningStore: LightningStore
     public accountStore: AccountStore
+    public settingsStore: SettingsStore
     
     constructor() {
-        this.lightningStore = new LightningStore()
-        this.accountStore = new AccountStore()
+        this.lightningStore = new LightningStore(this)
+        this.accountStore = new AccountStore(this)
+        this.settingsStore = new SettingsStore(this)
     }
 }
 
-const stores = new Stores()
+const stores = new DataStore()
 export default stores

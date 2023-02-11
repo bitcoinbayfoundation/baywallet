@@ -2,16 +2,18 @@ import { action, makeAutoObservable, observable, runInAction } from 'mobx';
 import ldk from "@synonymdev/react-native-ldk/dist/ldk"
 import lm, { TAddPeerReq, TInvoice } from "@synonymdev/react-native-ldk"
 import { TChannel } from '@synonymdev/react-native-ldk';
+import { DataStore } from '.';
 
 export class LightningStore {
-
+  rootStore: DataStore
   @observable nodeId: string = null
   @observable peers: string[] = null
   @observable channels: TChannel[] = null
   @observable balance: number = 24
 
-  constructor() {
-      makeAutoObservable(this)
+  constructor(rootStore: DataStore) {
+    this.rootStore = rootStore
+    makeAutoObservable(this)
   }
 
   @action

@@ -3,6 +3,7 @@ import {randomBytes} from 'crypto';
 import {action, makeObservable, observable, runInAction} from 'mobx';
 import {getItem, setItem} from '../storage';
 import * as bip39 from 'bip39';
+import { DataStore } from '.';
 
 enum Account {
   name = 'bay-wallet-0',
@@ -25,10 +26,12 @@ enum Account {
  */
 
 export class AccountStore {
+  rootStore: DataStore
   @observable account: TAccount = {name: '', seed: ''};
   @observable activeAccount: string = '';
 
-  constructor() {
+  constructor(rootStore: DataStore) {
+    this.rootStore = rootStore
     makeObservable(this);
   }
 

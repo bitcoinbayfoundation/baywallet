@@ -9,7 +9,7 @@ export class LightningStore {
   @observable nodeId: string = null
   @observable peers: string[] = null
   @observable channels: TChannel[] = null
-  @observable balance: number = 24
+  @observable balance: number
 
   constructor(rootStore: DataStore) {
     this.rootStore = rootStore
@@ -21,6 +21,7 @@ export class LightningStore {
     await this.getNodeId()
     await this.getPeers()
     await this.getChannels()
+    await this.getNodeBalance()
   }
 
   @action
@@ -30,7 +31,6 @@ export class LightningStore {
     runInAction(() => {
       this.nodeId = nodeId.value
     })
-    console.log(nodeId)
 
     return nodeId.value
   }
@@ -69,7 +69,6 @@ export class LightningStore {
     runInAction(() => {
       this.channels = channels.value
     })
-    console.log("lookin for channels", channels.value)
     return channels.value
   }
 
@@ -82,16 +81,14 @@ export class LightningStore {
   }
 
   @action
-  async getNodeBalance() {
-    console.log("node balance")
-    let balance:number
-    console.log("efwefwef", this.channels)
-    this.channels?.map(chan => {
-      console.log("chan", chan)
-      if (chan.is_usable) balance += chan.balance_sat
-    })
+  async getNodeBalance()  {
+    let balance:number = 0
+    if (this.channels.length !== 0) {
+      this.channels?.map(chan => {
+        if (chan.is_usable) balance += chan.balance_sat
+      })
+    }
     runInAction(() => this.balance = balance)
-    console.log("balance", balance)
     return balance
   }
 

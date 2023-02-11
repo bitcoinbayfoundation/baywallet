@@ -29,7 +29,7 @@ export const Invoice = observer((props: InvoiceProps) => {
   const onShare = async () => {
     try {
       await Share.share({
-        message: props.route.params.payReq,
+        message: "lightning:" + props.route.params.invoice.to_str,
       });
     } catch (error) {
       alert(`Error: ${error}`);
@@ -59,12 +59,12 @@ export const Invoice = observer((props: InvoiceProps) => {
         }}
       >
         <Text style={{fontSize: 30, paddingBottom: 30}}>
-          {Number(props.route.params.amount).toLocaleString()} sats
+          {Number(props.route.params.invoice.amount_satoshis).toLocaleString()} sats
         </Text>
-        <QRCode value={props.route.params.payReq} size={300} />
+        <QRCode value={props.route.params.invoice.to_str} size={300} />
         <Layout style={{display: 'flex', flexDirection: 'row', paddingTop: 30}}>
           <Button style={{width: 100, marginHorizontal: 5}} onPress={() => onShare()}>Share</Button>
-          <Button style={{width: 100, marginHorizontal: 5}} onPress={() => { Clipboard.setString(props.route.params.payReq); alert('Copied to clipboard.')}}>
+          <Button style={{width: 100, marginHorizontal: 5}} onPress={() => { Clipboard.setString(props.route.params.invoice.to_str); alert('Copied to clipboard.')}}>
             Copy
           </Button>
         </Layout>

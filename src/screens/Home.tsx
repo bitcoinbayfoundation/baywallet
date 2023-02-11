@@ -1,29 +1,36 @@
 import React, {useEffect, useState} from 'react';
 import {observer} from 'mobx-react';
-import store from '../store';
-import {Button, TopNavigation, Text, Layout, Divider, useTheme} from '@ui-kitten/components';
-import {BaseComponent} from '../components/base-component';
-import {setupLdk} from '../ldk';
 import ldk from "@synonymdev/react-native-ldk/dist/ldk"
+import {Button, TopNavigation, Text, Layout, Divider} from '@ui-kitten/components';
+import {BaseComponent} from '../components/base-component';
 import { BottomDrawer } from '../components/bottom-drawer';
 import { useNavigation } from '@react-navigation/native';
 import { NavParamList } from '../navigation/NavParamList';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Pressable } from 'react-native';
+import { useDataStore } from '../store/DataProvider';
+import { setupLdk } from '../ldk';
 
 type HomeScreenProp = NativeStackNavigationProp<NavParamList, 'home'>
 
 const Home = observer(() => {
   const navigation = useNavigation<HomeScreenProp>()
-  const {nodeId, channels, balance, peers, getLightningInfo, addPeer, getNodeId, getNodeBalance, getChannels, getPeers} = store.lightningStore;
+  const {lightningStore: {nodeId, balance}, lightningStore} = useDataStore()
   const [nodeStarted, setNodeStarted] = useState(false);
   const connect = async () => {
-    // ldk.reset();
-    // await setupLdk()
+    console.log("center")
+    ldk.reset();
+    await setupLdk()
     setNodeStarted(true);
   };
+  const getInfo = async () => {
+    return await lightningStore.getLightningInfo()
+  }
   useEffect(() => {
-    if (nodeStarted) return
+    if (nodeStarted) {
+      getInfo()
+      return
+    }
     connect();
   }, [nodeStarted]);
 
@@ -42,7 +49,7 @@ const Home = observer(() => {
         </Layout>
       </Layout>
       <BottomDrawer>
-        <Text>Transaction List goes here</Text>
+        <Text>TODO: Transaction component</Text>
       </BottomDrawer>
     </BaseComponent>
   );
@@ -56,8 +63,8 @@ enum AmountView {
   Sats = "sats"
 }
 const Amount = () => {
+  const {lightningStore: {balance}} = useDataStore()
   const [view, setView] = useState<AmountView>(AmountView.Sats)
-  const {balance} = store.lightningStore
   const cycleAmountView = () => {
     switch(view) {
       case AmountView.Hidden:
@@ -74,7 +81,7 @@ const Amount = () => {
     <Pressable onPress={() => cycleAmountView()}>
       <Layout style={{display: "flex", alignItems: "center", flexDirection: "row"}}>
         {/* <Satoshi color="#ff0000" style={{marginTop: , marginRight: 10}}/> */}
-        <Text style={{textAlign: 'center', paddingTop: '10%', fontSize: 50}}>{view === AmountView.Sats ? balance.toLocaleString() + " sats" : "********"}</Text>
+        <Text style={{textAlign: 'center', paddingTop: '10%', fontSize: 50}}>{view === AmountView.Sats ? balance + " sats" : "********"}</Text>
       </Layout>
     </Pressable>
   )

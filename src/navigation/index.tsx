@@ -2,7 +2,7 @@ import React from "react"
 import Home from "../screens/Home"
 import { Receive } from "../screens/Receive"
 import { Scan } from "../screens/Scan"
-import { Settings } from "../screens/Settings"
+import { Settings } from "../screens/settings/Settings"
 import { Invoice } from "../screens/Invoice"
 import { Pay } from "../screens/Pay"
 import { BottomNavigation, BottomNavigationTab, Icon, Text } from "@ui-kitten/components"
@@ -10,7 +10,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { useDataStore } from "../store/DataProvider"
 import { NavigationContainer } from "@react-navigation/native"
-import { AdvancedSettings } from "../screens/AdvancedSettings"
+import { AdvancedSettings } from "../screens/settings/AdvancedSettings"
+import { HomeFeed } from "../screens/nostr/HomeFeed"
+import { Profile } from "../screens/nostr/Profile"
 
 
 export const BayWalletAppNavigator = () => {
@@ -36,14 +38,26 @@ export const SettingsNavigator = () => {
   )
 }
 
+export const NostrNavigator = () => {
+  const NostrStack = createNativeStackNavigator()
+  return (
+    <NostrStack.Navigator>
+      <NostrStack.Screen options={{headerShown: false}} name="nostr-home-feed" component={HomeFeed} />
+      <NostrStack.Screen options={{headerShown: false}} name="nostr-profile" component={Profile} />
+    </NostrStack.Navigator>
+  )
+}
+
 
 const BottomTabBar = ({ navigation, state }) => {
-  const {lightningStore: {balance}} = useDataStore()
+  // const {lightningStore: {balance}} = useDataStore()
   return (
     <BottomNavigation
     selectedIndex={state.index}
     onSelect={index => navigation.navigate(state.routeNames[index])}>
-      <BottomNavigationTab title={evaProps => <Text {...evaProps} style={{fontSize: 20}}>${balance}</Text>}/>
+      {/* <BottomNavigationTab title={evaProps => <Text {...evaProps} style={{fontSize: 20}}>${balance}</Text>}/> */}
+      <BottomNavigationTab icon={<Icon name="flash-outline" />}/>
+      <BottomNavigationTab icon={<Icon name="radio-outline" />} />
       <BottomNavigationTab icon={<Icon name="settings-outline" />}/>
     </BottomNavigation>
 )};
@@ -53,8 +67,9 @@ export const BayWalletNavigator = () => {
   return (
     <NavigationContainer>
       <Navigator tabBar={props => <BottomTabBar {...props} />}>
-        <Screen name='baywallet' options={{headerShown:false}} component={BayWalletAppNavigator}/>
-        <Screen name='baywallet-settings' options={{headerShown:false}} component={SettingsNavigator}/>
+        <Screen name='baywallet' options={{headerShown:false}} component={BayWalletAppNavigator} />
+        <Screen name='nostr' options={{headerShown:false}} component={NostrNavigator} />
+        <Screen name='baywallet-settings' options={{headerShown:false}} component={SettingsNavigator} />
       </Navigator>
     </NavigationContainer>
   )

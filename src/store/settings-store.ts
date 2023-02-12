@@ -1,13 +1,14 @@
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import { action, makeAutoObservable, observable, runInAction } from "mobx"
 import { getItem, setItem } from "../storage"
-import { BayWalletSettings, defaultSettings } from "../types/settings"
+import { BayWalletSettings, SettingsKey, defaultSettings } from "../types/settings"
 import {DataStore} from "./index"
 
 export class SettingsStore {
   rootStore: DataStore
-
-  @observable hideBalance:boolean
+  
   @observable settings: BayWalletSettings
+
   constructor(rootStore:DataStore) {
     this.settingsInit()
     this.rootStore = rootStore
@@ -17,27 +18,38 @@ export class SettingsStore {
   @action 
   async settingsInit() {
     let settings: BayWalletSettings = await this.getSettings()
-    if (!settings) settings = await this.setSetting(JSON.stringify(defaultSettings))
+    if (!settings) return await this.initDefaultSetting()
     runInAction(() => {
       this.settings = settings
-      this.hideBalance = settings.hideBalance
+    })
+  }
+
+  private async initDefaultSetting() {
+    await setItem("settings", JSON.stringify(defaultSettings))
+    runInAction(() => {
+      this.settings = defaultSettings
     })
   }
 
   @action
-  async setSetting(value): Promise<any> {
+  async wipeSettings() {
+    return await AsyncStorage.removeItem("settings")
+  }
+
+  @action
+  async setSetting(setting?: SettingsKey, value?: any): Promise<any> {
     const oldSetting: BayWalletSettings = await this.getSettings()
-    // const newSetting: BayWalletSettings = { ...oldSetting, settings }
-    const saveSetting = JSON.stringify(value)
-    console.log("save", saveSetting)
-    const save = await setItem("settings", saveSetting)
-    return save
+    const newSetting: BayWalletSettings = { ...oldSetting, [setting]: value }
+    await setItem("settings", JSON.stringify(newSetting))
+    runInAction(() => {
+      this.settings = newSetting
+    })
   }
 
   @action
   async getSettings(): Promise<BayWalletSettings> {
     const settings = await getItem<string | false>("settings")
-    if (!settings) return 
+    if (!settings) return
     return JSON.parse(settings)
   }
 }

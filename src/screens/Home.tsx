@@ -17,8 +17,8 @@ const Home = observer(() => {
   const navigation = useNavigation<HomeScreenProp>()
   const {lightningStore: {nodeId, balance}, lightningStore} = useDataStore()
   const [nodeStarted, setNodeStarted] = useState(false);
+
   const connect = async () => {
-    console.log("center")
     ldk.reset();
     await setupLdk()
     setNodeStarted(true);

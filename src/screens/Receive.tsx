@@ -9,7 +9,6 @@ import { useDataStore } from '../store/DataProvider';
 
 type ReceiveScreenProps = NativeStackNavigationProp<NavParamList, 'receive'>
 
-const pay_req = "lnbcrt20n1p37dmfqpp5meh0w4hsmyr64nwy2vzcpmlsycdlqrwwzha5r94t58aaxzv07zyqdqqcqzpgxqyz5vqsp5cgew5x6k4r3d5utgc7xjh44ctwnjcpm0dsvfhfdsv74mkk3fvg2q9qyyssqhcryq8lh2wv6mke23xarryrrnme8mwvq6sxjk60tgwprskyr5jlh3wu5fyv0wywehr6ut2c25q0tth5lhh2ry2szglglx9wmp4m7wusq34c8tg"
 export const Receive = observer(() => {
   const navigation = useNavigation<ReceiveScreenProps>()
   const {lightningStore} = useDataStore()
@@ -36,7 +35,7 @@ export const Receive = observer(() => {
         <Input
           placeholder='Description'
           value={description}
-          onChange={change => setDescription(change.nativeEvent.text)}
+          onChange={change =>  setDescription(change.nativeEvent.text)}
           />
         <Button onPress={async () => {
           const invoice = await lightningStore.createInvoice(Number(amount), description)

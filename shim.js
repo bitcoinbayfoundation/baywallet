@@ -13,6 +13,8 @@ if (typeof process === 'undefined') {
 
 global.net = require('./src/electrs/net');
 global.tls = require('./src/electrs/tls');
+global.TextDecoder = require("text-decoding").TextDecoder
+global.TextEncoder = require("text-encoding").TextEncoder
 
 process.browser = false
 if (typeof Buffer === 'undefined') global.Buffer = require('buffer').Buffer

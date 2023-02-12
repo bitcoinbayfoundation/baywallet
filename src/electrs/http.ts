@@ -99,7 +99,6 @@ export const getScriptPubKeyHistory = async (scriptPubkey: string) => {
   const address = getAddressFromScriptPubKey(scriptPubkey)
   const scriptHash = getScriptHash(address)
   const scriptHashHistory = await axios.get<ElectrsTransactionData[]>(getApiUrl(`/scripthash/${scriptHash}/txs`))
-  console.log("SCRIPT HASH HISTORY", scriptHashHistory)
   let history: {txid: string, height: number}[] = []
 
   scriptHashHistory.data.map(result => {

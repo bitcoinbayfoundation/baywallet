@@ -2,13 +2,12 @@ import { getNetwork } from "../util/config";
 import * as bitcoin from "bitcoinjs-lib"
 import * as bip39 from "bip39"
 import * as bip32 from "bip32"
-import stores from "../store";
+import { getAccount } from "../util/account";
 
 export const getAddress = async () => {
-	const { getAccount, getNmemonicFromSeed } = stores.accountStore
   const network = getNetwork("bitcoinRegtest")
   const account = await getAccount()
-  const mnemonic = getNmemonicFromSeed(account.seed)
+  const mnemonic = bip39.entropyToMnemonic(account.seed)
   const mnemonicSeed = await bip39.mnemonicToSeed(mnemonic)
   const root = bip32.fromSeed(mnemonicSeed, network)
   const keyPair = root.derivePath("m/84'/1'/0'/0/0");

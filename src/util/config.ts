@@ -43,7 +43,7 @@ export const customPeers = {
 };
 
 export const lndDevNode: TAddPeerReq = {
-	address: "localhost",
+	address: "127.0.0.1",
 	port: 9735,
 	pubKey: "02708bc245f5ba8130149ce59281c2f1f7fd7578118cc019384ce21a8ad08eabe2",
 	timeout: 3600

@@ -3,10 +3,10 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Text, Layout, TopNavigation, Divider, Icon, TopNavigationAction, ListItem } from "@ui-kitten/components";
 import { observer } from "mobx-react";
 import React from "react";
-import { useDataStore } from "../store/DataProvider";
-import { BaseComponent } from "../components/base-component";
-import { SettingsParamList } from "../navigation/SettingsParamList";
-import { lndDevNode } from "../util/config";
+import { useDataStore } from "../../store/DataProvider";
+import { BaseComponent } from "../../components/base-component";
+import { SettingsParamList } from "../../navigation/SettingsParamList";
+import { lndDevNode } from "../../util/config";
 
 type AdvancedSettingProps = NativeStackNavigationProp<SettingsParamList, "advanced-settings">
 
@@ -30,7 +30,7 @@ export const AdvancedSettings = observer(() => {
           title="List channels"
           onPress={async () => {
             const channels = await lightningStore.getChannels()
-            return alert(channels)
+            return alert(JSON.stringify(channels))
           }}
         />
         <ListItem
@@ -44,6 +44,7 @@ export const AdvancedSettings = observer(() => {
         <ListItem
           title="Get peers"
           onPress={async () => {
+            console.log("peers")
             const peers = await lightningStore.getPeers()
             if (peers.length === 0) return alert("No peers")
             return alert(peers)

@@ -10,6 +10,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Pressable } from 'react-native';
 import { useDataStore } from '../store/DataProvider';
 import { setupLdk } from '../ldk';
+import { Loading } from '../components/loading';
 
 type HomeScreenProp = NativeStackNavigationProp<NavParamList, 'home'>
 
@@ -17,6 +18,7 @@ const Home = observer(() => {
   const navigation = useNavigation<HomeScreenProp>()
   const {lightningStore: {nodeId, balance}, lightningStore} = useDataStore()
   const [nodeStarted, setNodeStarted] = useState(false);
+  const [appReady, setAppReady] = useState<boolean>()
 
   const connect = async () => {
     ldk.reset();
@@ -24,7 +26,8 @@ const Home = observer(() => {
     setNodeStarted(true);
   };
   const getInfo = async () => {
-    return await lightningStore.getLightningInfo()
+    await lightningStore.getLightningInfo()
+    setAppReady(true)
   }
   useEffect(() => {
     if (nodeStarted) {
@@ -33,6 +36,8 @@ const Home = observer(() => {
     }
     connect();
   }, [nodeStarted]);
+
+  if(!appReady) return <Loading />
 
   return (
     <BaseComponent>

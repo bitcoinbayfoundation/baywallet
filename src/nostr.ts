@@ -1,6 +1,7 @@
-import { generatePrivateKey, getPublicKey } from "nostr-tools"
+import { runInAction } from "mobx"
+import { generatePrivateKey, getPublicKey, Relay, relayInit } from "nostr-tools"
 import { getItem, setItem } from "./storage"
-import { NostrKeys } from "./types/nostr"
+import { NostrKeys, Event } from "./types/nostr"
 
 const createNostrKeys = async (): Promise<NostrKeys> => {
   const privatekey = generatePrivateKey()
@@ -27,6 +28,29 @@ export const getNostrProfile = async (): Promise<NostrKeys> => {
   return privateKey
 }
 
-export const connectToRelays = () => {
+export const connectToRelays = async (relays: string[]): Promise<Relay> => {
+  const relay = relayInit(relays[0])
+  await relay.connect()
+  relay.on('connect', () => {
+    console.log(`Connected to ${relay.url}`)
+  })
+  return relay
+}
 
+export const getNotes = async (relay: Relay): Promise<Event[]> => {
+  return new Promise((resolve) => {
+    let events: Event[]
+
+    const sub = relay.sub([{
+      kinds: [1],
+      authors: ["3f194d7cf5c59eca0145ed7804f0a67c0cc17b6ff6b4bd585821160dcf9d785b"]
+    }])
+    
+    sub.on('event', event => {
+      resolve(event)
+      events.push(event)
+      sub.unsub()
+    })
+    resolve(events)
+  })
 }

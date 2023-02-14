@@ -7,6 +7,7 @@ const WHITE = "#F5FAFF"
 
 export const colors = {
   "white": WHITE,
+  "off-white": "#555",
   "color-basic-100": WHITE, // Font color
   "color-basic-200": AZURE_BLUE,
   "color-basic-300": AZURE_BLUE,
@@ -24,7 +25,6 @@ export const colors = {
 
 /**
  * Comonents i need to theme
- *  <Divider />
  *  Bottom tabs
  *  Radio buttons
  */

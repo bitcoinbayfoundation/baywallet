@@ -19,6 +19,15 @@
           }
         }
       }
+    },
+    "Divider": {
+      "appearances": {
+        "default": {
+          "mapping": {
+            "backgroundColor": "off-white"
+          }
+        }
+      }
     }
   }
 }

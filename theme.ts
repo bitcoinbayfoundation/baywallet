@@ -21,3 +21,10 @@ export const colors = {
   "color-primary-default-border": AZURE_BLUE,
   "background-basic-color-1": AZURE_BLUE_DARK_BG // Dark theme background
 }
+
+/**
+ * Comonents i need to theme
+ *  <Divider />
+ *  Bottom tabs
+ *  Radio buttons
+ */

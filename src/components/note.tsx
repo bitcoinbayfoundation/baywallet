@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Avatar, Divider, Layout, Text } from "@ui-kitten/components"
-import { Event, Profile } from "../types/nostr"
+import { Profile, Event } from "../types/nostr"
 import { useDataStore } from "../store/DataProvider"
 
 type NoteProps = { note: Event}
@@ -11,7 +11,6 @@ export const Note = ({note}:NoteProps) => {
 
   const getProfile = async () => {
     const profile = await nostrStore.getProfile(note.pubkey)
-    console.log(profile)
     setProfile(profile)
   }
   useEffect(() => {
@@ -27,7 +26,7 @@ export const Note = ({note}:NoteProps) => {
         <Text style={{marginTop: 5}}>{content}</Text>
       </Layout>
     </Layout>
-    <Divider style={{backgroundColor: "#555"}}/>
+    <Divider />
     </>
   )
 }

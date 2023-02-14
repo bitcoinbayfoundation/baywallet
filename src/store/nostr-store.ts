@@ -17,6 +17,7 @@ export class NostrStore {
 
   constructor(rootStore: DataStore) {
     this.rootStore = rootStore
+    this.events = null
     this.connectToRelay()
     makeAutoObservable(this)
   }
@@ -40,7 +41,6 @@ export class NostrStore {
   @action
   async getEvents() {
     const events = await getNotes(this.relay)
-    console.log("store events", events[0])
     runInAction(() => {
       this.events = events
     })

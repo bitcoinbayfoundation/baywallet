@@ -1,6 +1,6 @@
 import { action, makeAutoObservable, observable, runInAction } from "mobx";
-import { connectToRelays, getNostrProfile, getNotes } from "../nostr";
-import { NostrKeys } from "../types/nostr";
+import { connectToRelays, getNostrKeys, getNotes, getProfile } from "../nostr";
+import { NostrKeys, Profile } from "../types/nostr";
 import { DataStore } from ".";
 import { Relay } from "nostr-tools";
 import { Event } from "../types/nostr";
@@ -17,12 +17,13 @@ export class NostrStore {
 
   constructor(rootStore: DataStore) {
     this.rootStore = rootStore
+    this.connectToRelay()
     makeAutoObservable(this)
   }
 
   @action
-  async getNostrProfile() {
-    const account = await getNostrProfile()
+  async getNostrKeys() {
+    const account = await getNostrKeys()
     runInAction(() => {
       this.nostrAccount = account
     })
@@ -39,9 +40,16 @@ export class NostrStore {
   @action
   async getEvents() {
     const events = await getNotes(this.relay)
-    console.log("store events")
+    console.log("store events", events[0])
     runInAction(() => {
       this.events = events
     })
+    return events
+  }
+
+  @action
+  async getProfile(pubkey:string): Promise<Profile> {
+    const profile = await getProfile(this.relay, pubkey)
+    return profile
   }
 }

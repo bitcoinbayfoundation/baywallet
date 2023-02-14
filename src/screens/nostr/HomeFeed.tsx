@@ -6,19 +6,24 @@ import { NostrParamList } from "../../navigation/NostrParamList";
 import { useDataStore } from "../../store/DataProvider";
 import { BaseComponent } from "../../components/base-component";
 import { Pressable } from "react-native";
+import { Note } from "../../components/note";
 import { Event } from "src/types/nostr";
 
 type HomeFeedProps = NativeStackNavigationProp<NostrParamList, "nostr-home-feed">
 
 export const HomeFeed = () => {
   const navigation = useNavigation<HomeFeedProps>()
-  const { nostrStore, nostrStore: {events} } = useDataStore()
+  const { nostrStore, nostrStore: {relay} } = useDataStore()
+  const [events, setEvents] = useState<Event[]>()
+  const getEvents = async () => {
+    const notes = await nostrStore.getEvents()
+    setEvents(notes)
+  }
   useEffect(() => {
-    (async () => {
-      const events = await nostrStore.getEvents()
-      console.log(events)
-    })
-  })
+    if (!relay) return
+    getEvents()
+  }, [relay])
+
   return (
     <BaseComponent>
       <TopNavigation
@@ -31,13 +36,8 @@ export const HomeFeed = () => {
         }
       />
       <Divider />
-      <Layout>
-        <Text>Home Feed</Text>
-        <Button onPress={async () => await nostrStore.connectToRelay()}>Connect</Button>
-        <Button onPress={async () => await nostrStore.getEvents()}>Get Events</Button>
-        {events && (
-          events.map(event => <Text>{event.id}</Text>)
-        )}
+      <Layout style={{marginHorizontal: 10}}>
+        {events?.map(event => <Note key={event.id} note={event} />)}
       </Layout>
     </BaseComponent>
   )

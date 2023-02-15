@@ -3,6 +3,7 @@ import ldk from "@synonymdev/react-native-ldk/dist/ldk"
 import lm, { TAddPeerReq, TInvoice } from "@synonymdev/react-native-ldk"
 import { TChannel } from '@synonymdev/react-native-ldk';
 import { DataStore } from '.';
+import { invoice } from '../stubs/ldk';
 
 export class LightningStore {
   rootStore: DataStore
@@ -10,9 +11,11 @@ export class LightningStore {
   @observable peers: string[] = null
   @observable channels: TChannel[] = null
   @observable balance: number
+  @observable transactions: TInvoice[]
 
   constructor(rootStore: DataStore) {
     this.rootStore = rootStore
+    this.transactions = invoice
     makeAutoObservable(this)
   }
 

@@ -11,12 +11,13 @@ import { Pressable } from 'react-native';
 import { useDataStore } from '../store/DataProvider';
 import { setupLdk, syncLdk } from '../ldk';
 import { Loading } from '../components/loading';
+import { Transaction } from '../components/lightning/transactions';
 
 type HomeScreenProp = NativeStackNavigationProp<NavParamList, 'home'>
 
 const Home = observer(() => {
   const navigation = useNavigation<HomeScreenProp>()
-  const {lightningStore: {nodeId, balance, peers}, lightningStore} = useDataStore()
+  const {lightningStore: {nodeId, balance, peers, transactions}, lightningStore} = useDataStore()
   const [nodeStarted, setNodeStarted] = useState(false);
   const [appReady, setAppReady] = useState<boolean>()
 
@@ -63,7 +64,7 @@ const Home = observer(() => {
         </Layout>
       </Layout>
       <BottomDrawer>
-        <Text>TODO: Transaction component</Text>
+        {transactions?.map(tx => <Transaction transaction={tx} />)}
       </BottomDrawer>
     </BaseComponent>
   );

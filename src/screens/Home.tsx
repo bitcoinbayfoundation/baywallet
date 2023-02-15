@@ -72,31 +72,20 @@ const Home = observer(() => {
 export default Home;
 
  // TODO: Add symbol referenced by user preference.
-enum AmountView {
-  Hidden = "hidden",
-  Sats = "sats"
-}
-const Amount = () => {
-  const {lightningStore: {balance}} = useDataStore()
-  const [view, setView] = useState<AmountView>(AmountView.Sats)
-  const cycleAmountView = () => {
-    switch(view) {
-      case AmountView.Hidden:
-        setView(AmountView.Sats)
-        return
-      case AmountView.Sats:
-        setView(AmountView.Hidden)
-        return
-      default:
-        return
-    }
-  }
+const Amount = observer(() => {
+  const {lightningStore: {balance}, settingsStore: {settings}} = useDataStore()
+  const [hideBalance, setHideBalance] = useState<boolean>(settings.hideBalance)
+
+  useEffect(() => {
+    setHideBalance(settings.hideBalance)
+  }, [settings])
+  
   return (
-    <Pressable onPress={() => cycleAmountView()}>
+    <Pressable onPress={() => setHideBalance(!hideBalance)}>
       <Layout style={{display: "flex", alignItems: "center", flexDirection: "row"}}>
         {/* <Satoshi color="#ff0000" style={{marginTop: , marginRight: 10}}/> */}
-        <Text style={{textAlign: 'center', paddingTop: '10%', fontSize: 50}}>{view === AmountView.Sats ? balance + " sats" : "********"}</Text>
+        <Text style={{textAlign: 'center', paddingTop: '10%', fontSize: 50}}>{hideBalance ? "*********" : balance + " sats"}</Text>
       </Layout>
     </Pressable>
   )
-}
+})

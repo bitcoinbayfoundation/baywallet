@@ -48,3 +48,18 @@ export const lndDevNode: TAddPeerReq = {
 	pubKey: "02708bc245f5ba8130149ce59281c2f1f7fd7578118cc019384ce21a8ad08eabe2",
 	timeout: 3600
 }
+
+export const loggerConfig = {
+	levels: {
+		debug: 0,
+		LDK: 0,
+		NOSTR: 0
+	},
+	transportOptions: {
+		colors: {
+			debug: "yellow",
+			LDK: "blue",
+			NOSTR: "purple"
+		}
+	}
+}

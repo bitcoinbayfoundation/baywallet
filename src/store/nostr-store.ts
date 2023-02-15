@@ -1,4 +1,4 @@
-import { action, makeAutoObservable, observable, runInAction } from "mobx";
+import { action, makeAutoObservable, observable, runInAction, when } from "mobx";
 import { connectToRelays, getNostrKeys, getNotes, getProfile } from "../nostr";
 import { NostrKeys, Profile } from "../types/nostr";
 import { DataStore } from ".";
@@ -7,9 +7,10 @@ import { Event } from "../types/nostr";
 
 export class NostrStore {
   rootStore: DataStore
-  @observable nostrAccount: NostrKeys
+  @observable nostrKeys: NostrKeys
+  @observable me: Profile
   @observable relay: Relay
-  @observable events: Event[]
+  @observable events: Event[] = []
 
   relays: string[] = [
     "wss://nostr.bitcoinbay.engineering"
@@ -19,6 +20,7 @@ export class NostrStore {
     this.rootStore = rootStore
     this.events = null
     this.connectToRelay()
+    this.getNostrKeys()
     makeAutoObservable(this)
   }
 
@@ -26,8 +28,17 @@ export class NostrStore {
   async getNostrKeys() {
     const account = await getNostrKeys()
     runInAction(() => {
-      this.nostrAccount = account
+      this.nostrKeys = account
     })
+  }
+
+  @action
+  async getMe() {
+    const profile = await this.getProfile("3f194d7cf5c59eca0145ed7804f0a67c0cc17b6ff6b4bd585821160dcf9d785b")
+    runInAction(() => {
+      this.me = profile
+    })
+    return profile
   }
 
   @action 
@@ -44,7 +55,6 @@ export class NostrStore {
     runInAction(() => {
       this.events = events
     })
-    return events
   }
 
   @action

@@ -8,22 +8,19 @@ import { BaseComponent } from "../../components/base-component";
 import { Pressable } from "react-native";
 import { Note } from "../../components/note";
 import { Event } from "src/types/nostr";
+import { observer } from "mobx-react";
 
 type HomeFeedProps = NativeStackNavigationProp<NostrParamList, "nostr-home-feed">
 
-export const HomeFeed = () => {
+export const HomeFeed = observer(() => {
   const navigation = useNavigation<HomeFeedProps>()
-  const { nostrStore, nostrStore: {relay} } = useDataStore()
-  const [events, setEvents] = useState<Event[]>()
-  const getEvents = async () => {
-    const notes = await nostrStore.getEvents()
-    setEvents(notes)
-  }
+  const { nostrStore, nostrStore: {relay, events} } = useDataStore()
+  
   useEffect(() => {
     if (!relay) return
-    getEvents()
-  }, [relay])
-  
+    nostrStore.getEvents()
+  }, [])
+
   return (
     <BaseComponent>
       <TopNavigation
@@ -41,4 +38,4 @@ export const HomeFeed = () => {
       </Layout>
     </BaseComponent>
   )
-}
+})

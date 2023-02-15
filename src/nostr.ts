@@ -25,10 +25,10 @@ export const getNostrPubKey = async (): Promise<string> => {
 }
 
 export const getNostrKeys = async (): Promise<NostrKeys> => {
-  let privateKey
-  privateKey = await getItem<string | false>("nostr")
-  if (!privateKey) privateKey = await createNostrKeys()
-  return privateKey
+  let keys
+  keys = await getItem<string | false>("nostr")
+  if (!keys) keys = await createNostrKeys()
+  return JSON.parse(keys)
 }
 
 export const connectToRelays = async (relays: string[]): Promise<Relay> => {
@@ -50,7 +50,6 @@ export const getNotes = async (relay: Relay): Promise<Array<any>> =>
     }])
     
     sub.on('event', event => {
-      // console.log("event", event)
       eventsById[event.id] = event
       fetchCount === 0
       fetchCount++
@@ -72,5 +71,7 @@ export const getProfile = async (relay: Relay, pubkey: string): Promise<Profile>
       const profile = <string>event.content
       // console.log(`Found profile ${JSON.stringify(event)}`)
       resolve(JSON.parse(profile))
+
+      sub.unsub()
     })
   })

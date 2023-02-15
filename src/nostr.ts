@@ -1,7 +1,6 @@
-import { runInAction } from "mobx"
 import { generatePrivateKey, getPublicKey, Relay, relayInit } from "nostr-tools"
 import { getItem, setItem } from "./storage"
-import { NostrKeys, Event, Profile } from "./types/nostr"
+import { NostrKeys, Profile } from "./types/nostr"
 
 const TIMEOUT = 3000
 const LIMIT = 4

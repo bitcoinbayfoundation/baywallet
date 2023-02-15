@@ -7,7 +7,6 @@ import { useDataStore } from "../../store/DataProvider";
 import { BaseComponent } from "../../components/base-component";
 import { Pressable } from "react-native";
 import { Note } from "../../components/note";
-import { Event } from "src/types/nostr";
 import { observer } from "mobx-react";
 
 type HomeFeedProps = NativeStackNavigationProp<NostrParamList, "nostr-home-feed">

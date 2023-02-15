@@ -9,16 +9,25 @@ import { NavParamList } from '../navigation/NavParamList';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Pressable } from 'react-native';
 import { useDataStore } from '../store/DataProvider';
-import { setupLdk } from '../ldk';
+import { setupLdk, syncLdk } from '../ldk';
 import { Loading } from '../components/loading';
 
 type HomeScreenProp = NativeStackNavigationProp<NavParamList, 'home'>
 
 const Home = observer(() => {
   const navigation = useNavigation<HomeScreenProp>()
-  const {lightningStore: {nodeId, balance}, lightningStore} = useDataStore()
+  const {lightningStore: {nodeId, balance, peers}, lightningStore} = useDataStore()
   const [nodeStarted, setNodeStarted] = useState(false);
   const [appReady, setAppReady] = useState<boolean>()
+
+  const sync = async () => {
+    await syncLdk()
+  }
+
+  useEffect(() => {
+    if (!nodeStarted) return
+    sync()
+  }, [peers, nodeStarted])
 
   const connect = async () => {
     ldk.reset();

@@ -57,7 +57,12 @@ export const setupLdk = async () => {
  * @returns {Promise<Result<string>>}
  */
 export const syncLdk = async (): Promise<Result<string>> => {
+  console.log("syncing ldk")
   const syncResponse = await lm.syncLdk();
+  if (syncResponse.isErr()) {
+    console.log("Error syncing", syncResponse.error)
+  } else {console.log("synced", syncResponse.value)}
+  
   return syncResponse;
 };
 

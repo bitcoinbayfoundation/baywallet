@@ -8,11 +8,11 @@ import { Pay } from "../screens/Pay"
 import { BottomNavigation, BottomNavigationTab, Icon, Text } from "@ui-kitten/components"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { useDataStore } from "../store/DataProvider"
 import { NavigationContainer } from "@react-navigation/native"
 import { AdvancedSettings } from "../screens/settings/AdvancedSettings"
 import { HomeFeed } from "../screens/nostr/HomeFeed"
 import { Profile } from "../screens/nostr/Profile"
+import { Channels } from "../screens/settings/Channels"
 
 
 export const BayWalletAppNavigator = () => {
@@ -34,6 +34,7 @@ export const SettingsNavigator = () => {
     <SettingsStack.Navigator initialRouteName="settings">
       <SettingsStack.Screen options={{headerShown: false}} name="settings" component={Settings} />
       <SettingsStack.Screen options={{headerShown: false}} name="advanced-settings" component={AdvancedSettings} />
+      <SettingsStack.Screen options={{headerShown: false}} name="channels" component={Channels} />
     </SettingsStack.Navigator>
   )
 }

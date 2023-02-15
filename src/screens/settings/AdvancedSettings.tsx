@@ -27,11 +27,9 @@ export const AdvancedSettings = observer(() => {
           onPress={() => alert(nodeId)}
         />
         <ListItem
-          title="List channels"
-          onPress={async () => {
-            const channels = await lightningStore.getChannels()
-            return alert(JSON.stringify(channels))
-          }}
+          title="Channels"
+          accessoryRight={<Icon name="arrow-ios-forward-outline" fill="#FFF" />}
+          onPress={() => navigation.navigate("channels")}
         />
         <ListItem
           title="Add peer"

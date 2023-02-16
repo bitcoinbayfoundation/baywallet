@@ -5,7 +5,7 @@ import { Divider, Avatar, Layout, TopNavigation } from "@ui-kitten/components";
 import { NostrParamList } from "../../navigation/NostrParamList";
 import { useDataStore } from "../../store/DataProvider";
 import { BaseComponent } from "../../components/base-component";
-import { Pressable } from "react-native";
+import { Pressable, ScrollView } from "react-native";
 import { Note } from "../../components/note";
 import { observer } from "mobx-react";
 
@@ -32,9 +32,11 @@ export const HomeFeed = observer(() => {
         }
       />
       <Divider />
-      <Layout style={{marginHorizontal: 10}}>
-        {events?.map(event => <Note key={event.id} note={event} />)}
-      </Layout>
+      <ScrollView>
+        <Layout style={{marginHorizontal: 10}}>
+          {events?.map(event => <Note key={event.id} note={event} />)}
+        </Layout>
+      </ScrollView>
     </BaseComponent>
   )
 })

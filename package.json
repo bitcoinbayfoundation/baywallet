@@ -49,6 +49,7 @@
     "react-native-screens": "^3.19.0",
     "react-native-svg": "^13.7.0",
     "react-native-tcp-socket": "^6.0.3",
+    "react-native-toast-message": "^2.1.5",
     "react-native-vision-camera": "^2.15.4",
     "readable-stream": "^1.0.33",
     "rn-electrum-client": "https://github.com/synonymdev/rn-electrum-client",

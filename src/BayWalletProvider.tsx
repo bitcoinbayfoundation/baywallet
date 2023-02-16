@@ -7,6 +7,7 @@ import { default as mapping } from "../mapping.json"
 import { colors } from "../theme"
 import { DataStoreProvider } from "./store/DataProvider"
 import { StatusBar } from "react-native"
+import Toast from "react-native-toast-message"
 
 export const BayWalletProvider = ({children}) => {
   return (
@@ -18,6 +19,7 @@ export const BayWalletProvider = ({children}) => {
           <DataStoreProvider>
             <StatusBar barStyle="light-content" />
             {children}
+            <Toast />
           </DataStoreProvider>
         </BaseComponent>
       </ApplicationProvider>

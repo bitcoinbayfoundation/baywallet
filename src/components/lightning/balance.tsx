@@ -3,7 +3,7 @@ import { Layout, Text } from "@ui-kitten/components"
 import { observer } from "mobx-react"
 import { useEffect, useState } from "react"
 import { Pressable } from "react-native"
-import { useDataStore } from "src/store/DataProvider"
+import { useDataStore } from "../../store/DataProvider"
 
  // TODO: Add symbol referenced by user preference.
 export const Balance = observer(() => {

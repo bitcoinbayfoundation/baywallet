@@ -11,13 +11,19 @@ import { Loading } from '../components/loading';
 import { Transaction } from '../components/lightning/transactions';
 import { useLightningNode } from '../hooks/use-lightning-node';
 import { Balance } from '../components/lightning/balance';
+import { EmitterSubscription } from 'react-native';
 
 type HomeScreenProp = NativeStackNavigationProp<NavParamList, 'home'>
+
+let logSubscription: EmitterSubscription | undefined;
+let paymentSubscription: EmitterSubscription | undefined;
+let onChannelSubscription: EmitterSubscription | undefined;
+let backupSubscriptionId: string | undefined;
 
 const Home = observer(() => {
   const navigation = useNavigation<HomeScreenProp>()
   const {lightningStore: {transactions}} = useDataStore()
-  const {appReady} = useLightningNode()
+  const {appReady} = useLightningNode(logSubscription, paymentSubscription, onChannelSubscription, backupSubscriptionId)
 
   if(!appReady) return <Loading />
 

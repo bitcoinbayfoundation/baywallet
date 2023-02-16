@@ -6,12 +6,12 @@ import { EmitterSubscription } from "react-native";
 import lm, { EEventTypes, TChannelManagerPayment, TChannelUpdate } from "@synonymdev/react-native-ldk";
 import Toast from "react-native-toast-message";
 
-let logSubscription: EmitterSubscription | undefined;
-let paymentSubscription: EmitterSubscription | undefined;
-let onChannelSubscription: EmitterSubscription | undefined;
-let backupSubscriptionId: string | undefined;
-
-export const useLightningNode = () => {
+export const useLightningNode = (
+	logSubscription: EmitterSubscription | undefined, 
+	paymentSubscription: EmitterSubscription | undefined, 
+	onChannelSubscription: EmitterSubscription | undefined, 
+	backupSubscriptionId: string | undefined
+) => {
   const [nodeStarted, setNodeStarted] = useState<boolean>(false)
   const [appReady, setAppReady] = useState<boolean>(false)
   const { lightningStore } = useDataStore()

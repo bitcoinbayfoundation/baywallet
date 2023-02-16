@@ -9,43 +9,16 @@ import { NavParamList } from '../navigation/NavParamList';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Pressable } from 'react-native';
 import { useDataStore } from '../store/DataProvider';
-import { setupLdk, syncLdk } from '../ldk';
 import { Loading } from '../components/loading';
 import { Transaction } from '../components/lightning/transactions';
+import { useLightningNode } from '../hooks/use-lightning-node';
 
 type HomeScreenProp = NativeStackNavigationProp<NavParamList, 'home'>
 
 const Home = observer(() => {
   const navigation = useNavigation<HomeScreenProp>()
-  const {lightningStore: {nodeId, balance, peers, transactions}, lightningStore} = useDataStore()
-  const [nodeStarted, setNodeStarted] = useState(false);
-  const [appReady, setAppReady] = useState<boolean>()
-
-  const sync = async () => {
-    await syncLdk()
-  }
-
-  useEffect(() => {
-    if (!nodeStarted) return
-    sync()
-  }, [peers, nodeStarted])
-
-  const connect = async () => {
-    ldk.reset();
-    await setupLdk()
-    setNodeStarted(true);
-  };
-  const getInfo = async () => {
-    await lightningStore.getLightningInfo()
-    setAppReady(true)
-  }
-  useEffect(() => {
-    if (nodeStarted) {
-      getInfo()
-      return
-    }
-    connect();
-  }, [nodeStarted]);
+  const {lightningStore: {transactions}} = useDataStore()
+  const {appReady} = useLightningNode()
 
   if(!appReady) return <Loading />
 
@@ -64,7 +37,7 @@ const Home = observer(() => {
         </Layout>
       </Layout>
       <BottomDrawer>
-        {transactions?.map(tx => <Transaction transaction={tx} />)}
+        {transactions?.map(tx => <Transaction key={tx.payment_hash} transaction={tx} />)}
       </BottomDrawer>
     </BaseComponent>
   );

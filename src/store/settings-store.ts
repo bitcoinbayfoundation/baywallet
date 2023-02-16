@@ -10,8 +10,8 @@ export class SettingsStore {
   @observable settings: BayWalletSettings
 
   constructor(rootStore:DataStore) {
-    this.settingsInit()
     this.rootStore = rootStore
+    this.settingsInit()
     makeAutoObservable(this)
   }
 

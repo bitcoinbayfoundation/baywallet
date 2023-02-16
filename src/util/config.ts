@@ -1,5 +1,6 @@
 import { ENetworks, TAddPeerReq, TAvailableNetworks } from "@synonymdev/react-native-ldk";
 import * as bitcoin from "bitcoinjs-lib"
+import Toast, {BaseToast, ErrorToast} from "react-native-toast-message";
 
 export const selectedNetwork: TAvailableNetworks = 'bitcoinRegtest'
 
@@ -47,19 +48,4 @@ export const lndDevNode: TAddPeerReq = {
 	port: 9735,
 	pubKey: "02708bc245f5ba8130149ce59281c2f1f7fd7578118cc019384ce21a8ad08eabe2",
 	timeout: 3600
-}
-
-export const loggerConfig = {
-	levels: {
-		debug: 0,
-		LDK: 0,
-		NOSTR: 0
-	},
-	transportOptions: {
-		colors: {
-			debug: "yellow",
-			LDK: "blue",
-			NOSTR: "purple"
-		}
-	}
 }

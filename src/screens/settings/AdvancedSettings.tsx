@@ -7,6 +7,7 @@ import { useDataStore } from "../../store/DataProvider";
 import { BaseComponent } from "../../components/base-component";
 import { SettingsParamList } from "../../navigation/SettingsParamList";
 import { lndDevNode } from "../../util/config";
+import Toast from "react-native-toast-message";
 
 type AdvancedSettingProps = NativeStackNavigationProp<SettingsParamList, "advanced-settings">
 
@@ -45,7 +46,7 @@ export const AdvancedSettings = observer(() => {
             console.log("peers")
             const peers = await lightningStore.getPeers()
             if (peers.length === 0) return alert("No peers")
-            return alert(peers)
+            return Toast.show({ type: "success", text1: "Peers", text2: JSON.stringify(peers)})
           }}
         />
         <ListItem

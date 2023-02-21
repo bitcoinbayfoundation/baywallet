@@ -13,7 +13,7 @@ export const colors = {
   "color-basic-300": AZURE_BLUE,
   "color-basic-400": AZURE_BLUE,
   "color-basic-500": AZURE_BLUE,
-  "color-basic-600": PANTONE_BLUE,
+  "color-basic-600": WHITE, // Bottom tabs
   "color-basic-700": CESTASIAN_BLUE,
   "color-basic-800": AZURE_BLUE_DARK_BG, // Dark theme background
   "color-basic-900": AZURE_BLUE_DARK_BG,
@@ -25,6 +25,5 @@ export const colors = {
 
 /**
  * Comonents i need to theme
- *  Bottom tabs
  *  Radio buttons
  */

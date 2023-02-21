@@ -5,6 +5,7 @@ import ldk from "@synonymdev/react-native-ldk/dist/ldk"
 import { EmitterSubscription } from "react-native";
 import lm, { EEventTypes, TChannelManagerPayment, TChannelUpdate } from "@synonymdev/react-native-ldk";
 import Toast from "react-native-toast-message";
+import { getLatestBlockHeader } from "../electrs/http";
 
 export const useLightningNode = (
 	logSubscription: EmitterSubscription | undefined, 
@@ -40,7 +41,15 @@ export const useLightningNode = (
     setNodeStarted(true)
   }
 
-    useEffect(() => {
+	useEffect(() => {
+		let interval: NodeJS.Timer
+		interval = setInterval(() => {
+			getLatestBlockHeader()
+			syncLdk()
+		}, 10000)
+	})
+
+  useEffect(() => {
     if (!logSubscription) {
 			// @ts-ignore
 			logSubscription = ldk.onEvent(EEventTypes.ldk_log, (log: string) => {/* I can send logs somewhere here */})
@@ -51,7 +60,11 @@ export const useLightningNode = (
 			paymentSubscription = ldk.onEvent(
 				EEventTypes.channel_manager_payment_claimed,
 				(res: TChannelManagerPayment) =>
-					alert(`Received ${res.amount_sat} sats`),
+					Toast.show({
+            type: "success",
+            text1: "New payment!",
+						text2: `${res.amount_sat} sats`,
+          })
 			);
 		}
 

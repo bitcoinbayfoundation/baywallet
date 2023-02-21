@@ -1,10 +1,12 @@
 import RNFS from 'react-native-fs';
 import lm, {
   DefaultTransactionDataShape,
+  ELdkLogLevels,
   ENetworks,
   TTransactionData,
   TTransactionPosition,
 } from '@synonymdev/react-native-ldk';
+import ldk from "@synonymdev/react-native-ldk/dist/ldk"
 import {getAddress} from '../ldk/wallet';
 import {err, Result} from '../types/result';
 import { getBestBlock, getBlockHashFromHeight, getScriptPubKeyHistory, getTransactionData, getTransactionPosition, broadcastTransaction, getLatestBlockHeader, updateHeader } from '../electrs/http';
@@ -15,7 +17,7 @@ export const setupLdk = async () => {
     const genesisHash = await getBlockHashFromHeight(0);
     const headerInfo = await getLatestBlockHeader()
     const account = await getAccount();
-    console.log('ACCOUNT', account);
+    ldk.setLogLevel(ELdkLogLevels.trace, true)
     await lm.setBaseStoragePath(`${RNFS.DocumentDirectoryPath}/baywallet/`);
     // Subscribe to new blocks and sync LDK accordingly.
     // const headerInfo = await subscribeToHeader({

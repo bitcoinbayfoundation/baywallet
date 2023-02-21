@@ -83,7 +83,7 @@ export const convertElectrsVoutToLdkVout = (electrs:ElectrsVout[]): TVout[] => {
     const ldkVout: TVout = {
       hex: vout.scriptpubkey,
       // TODO: what is n?
-      n: 1,
+      n: 0,
       value: vout.value
     } 
     voutArray.push(ldkVout)

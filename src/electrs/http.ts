@@ -53,7 +53,7 @@ export const getLatestBlockHeader = async (): Promise<THeader | string> => {
     hash: blockHash,
     height: tipHeight
   }
-  console.log("RETRIEVED HEADER INFO", headerItem)
+  // console.log("RETRIEVED HEADER INFO", headerItem)
   const headerStorage = await updateHeader(JSON.stringify(headerItem))
   if (!headerStorage) return "Doh! Did not save latest block header."
   return headerItem
@@ -80,14 +80,21 @@ export const updateHeader = async (header:string): Promise<boolean> => {
 
 export const getTransactionData = async (transactionId:string) => {
   const electrsResponse = await axios.get<ElectrsTransactionData>(getApiUrl(`/tx/${transactionId}`))
+  console.log(electrsResponse.data.status.block_hash)
   const ldkVout: TVout[] = convertElectrsVoutToLdkVout(electrsResponse.data.vout)
-  const transactionData: TTransactionData = {
-    header: electrsResponse.data.status.block_hash,
-    height: electrsResponse.data.status.block_height,
-    transaction: electrsResponse.data.txid,
-    vout: ldkVout
+  let blockHeader
+  try {
+    blockHeader = await axios.get(getApiUrl(`/block/${electrsResponse?.data?.status.block_hash}/header`))
+    const transactionData: TTransactionData = {
+      header: blockHeader.data,
+      height: electrsResponse.data.status.block_height,
+      transaction: electrsResponse.data.txid,
+      vout: ldkVout
+    }
+    return transactionData
+  } catch (e) {
+    console.log("There is a failure getting the transaction data.", e)
   }
-  return transactionData
 }
 
 export const getTransactionPosition = async ({tx_hash, height}) => {

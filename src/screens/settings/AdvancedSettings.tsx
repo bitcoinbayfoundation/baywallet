@@ -8,12 +8,14 @@ import { BaseComponent } from "../../components/base-component";
 import { SettingsParamList } from "../../navigation/SettingsParamList";
 import { lndDevNode } from "../../util/config";
 import Toast from "react-native-toast-message";
+import { Modals, useModal } from "../../hooks/use-modal";
 
 type AdvancedSettingProps = NativeStackNavigationProp<SettingsParamList, "advanced-settings">
 
 export const AdvancedSettings = observer(() => {
   const navigation = useNavigation<AdvancedSettingProps>()
   const {lightningStore, lightningStore: {nodeId}} = useDataStore()
+  const {showModal} = useModal()
   return (
     <BaseComponent>
       <TopNavigation
@@ -25,7 +27,7 @@ export const AdvancedSettings = observer(() => {
       <Layout>
         <ListItem
           title="Get node id"
-          onPress={() => alert(nodeId)}
+          onPress={() => showModal(Modals.NodeId, {nodeId: nodeId})}
         />
         <ListItem
           title="Channels"

@@ -46,7 +46,7 @@ export const useLightningNode = (
 		interval = setInterval(() => {
 			getLatestBlockHeader()
 			syncLdk()
-		}, 10000)
+		}, 100000)
 	})
 
   useEffect(() => {

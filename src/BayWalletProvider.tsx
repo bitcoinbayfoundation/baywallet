@@ -13,7 +13,7 @@ import { toastConfig } from "./components/toast"
 export const BayWalletProvider = ({children}) => {
   return (
     <>
-    <IconRegistry icons={EvaIconsPack} />
+      <IconRegistry icons={EvaIconsPack} />
       {/*// @ts-ignore */}
       <ApplicationProvider {...eva} theme={{...eva.dark, ...colors}} customMapping={mapping}>
         <BaseComponent>

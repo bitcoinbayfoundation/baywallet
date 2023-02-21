@@ -16,6 +16,7 @@ import {NavParamList} from '../navigation/NavParamList';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 import QRCode from 'react-native-qrcode-svg';
 import {Share} from 'react-native';
+import Toast from 'react-native-toast-message';
 
 type InvoiceScreenProp = NativeStackNavigationProp<NavParamList, 'invoice'>;
 
@@ -64,7 +65,7 @@ export const Invoice = observer((props: InvoiceProps) => {
         <QRCode value={props.route.params.invoice.to_str} size={300} />
         <Layout style={{display: 'flex', flexDirection: 'row', paddingTop: 30}}>
           <Button style={{width: 100, marginHorizontal: 5}} onPress={() => onShare()}>Share</Button>
-          <Button style={{width: 100, marginHorizontal: 5}} onPress={() => { Clipboard.setString(props.route.params.invoice.to_str); alert('Copied to clipboard.')}}>
+          <Button style={{width: 100, marginHorizontal: 5}} onPress={() => { Clipboard.setString(props.route.params.invoice.to_str); Toast.show({type: "success", text1: 'Copied to clipboard.'})}}>
             Copy
           </Button>
         </Layout>

@@ -13,10 +13,10 @@ export async function setActiveAccount(account: TAccount) {
 }
 
 export async function getAccount(): Promise<any> {
-  const account = await getItem<string>("baywallet-account");
+  const account = await getItem<string>("baywallet-account-test");
   console.log(account)
   if (account) return JSON.parse(account);
-  const newAccount = await createNewAccount("baywallet-account");
+  const newAccount = await createNewAccount("baywallet-account-test");
   return newAccount;
 }
 

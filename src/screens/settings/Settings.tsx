@@ -32,7 +32,7 @@ export const Settings = observer(() => {
         accessoryRight={<Icon name="arrow-ios-forward-outline" fill="#FFF" />}
         onPress={() => navigation.navigate("advanced-settings")}
       />
-      <Button onPress={async () => settingsStore.wipeSettings()}>wipe</Button>
+      <Button onPress={async () => settingsStore.settingsInit()}>wipe</Button>
     </BaseComponent>
   )
 })

@@ -66,3 +66,4 @@ buck-out/
 # Docker
 /docker/bitcoin/regtest
 /docker/lnd/*
+/docker/electrumx/*

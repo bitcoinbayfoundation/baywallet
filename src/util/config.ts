@@ -36,8 +36,8 @@ export const customPeers = {
 	bitcoinTestnet: [],
 	bitcoinRegtest: [
 		{
-			host: 'host.docker.internal',
-			tcp: 50000,
+			host: '127.0.0.1',
+			tcp: 50001,
 			protocol: 'tcp',
 		},
 	],
@@ -46,6 +46,6 @@ export const customPeers = {
 export const lndDevNode: TAddPeerReq = {
 	address: "127.0.0.1",
 	port: 9735,
-	pubKey: "02708bc245f5ba8130149ce59281c2f1f7fd7578118cc019384ce21a8ad08eabe2",
+	pubKey: "02cd9665a22b50b7dacdbac9a3254946fc6961982e59842560c51e30774fecd623",
 	timeout: 3600
 }

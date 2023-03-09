@@ -3,55 +3,71 @@ import lm, {
   DefaultTransactionDataShape,
   ELdkLogLevels,
   ENetworks,
+  THeader,
   TTransactionData,
   TTransactionPosition,
 } from '@synonymdev/react-native-ldk';
 import ldk from "@synonymdev/react-native-ldk/dist/ldk"
 import {getAddress} from '../ldk/wallet';
-import {err, Result} from '../types/result';
-import { getBestBlock, getBlockHashFromHeight, getScriptPubKeyHistory, getTransactionData, getTransactionPosition, broadcastTransaction, getLatestBlockHeader, updateHeader } from '../electrs/http';
+import {err, ok, Result} from '../types/result';
+import { getBlockHashFromHeight, getBlockHex, getScriptPubKeyHistory } from '../electrs/electrs';
+import * as electrum from "rn-electrum-client"
 import { getAccount } from '../util/account';
+import { getItem, setItem } from '../storage';
 
-export const setupLdk = async () => {  
-  try {
-    const genesisHash = await getBlockHashFromHeight(0);
-    const headerInfo = await getLatestBlockHeader()
-    const account = await getAccount();
-    ldk.setLogLevel(ELdkLogLevels.trace, true)
-    await lm.setBaseStoragePath(`${RNFS.DocumentDirectoryPath}/baywallet/`);
-    // Subscribe to new blocks and sync LDK accordingly.
-    // const headerInfo = await subscribeToHeader({
-    //   onReceive: async (): Promise<void> => {
-    //     const syncRes = await syncLdk();
-    //     if (syncRes.isErr()) {
-    //       return;
-    //     }
-    //   },
-    // });
-    // if (headerInfo.isErr()) {
-    //   return;
-    // }
-    await updateHeader(JSON.stringify(headerInfo));
+/**
+ * Used to spin-up LDK services.
+ * In order, this method:
+ * 1. Fetches and sets the genesis hash.
+ * 2. Retrieves and sets the seed from storage.
+ * 3. Starts ldk with the necessary params.
+ * 4. Adds/Connects saved peers from storage. (Note: Not needed as LDK handles this automatically once a peer has been added successfully. Only used to make example app easier to test.)
+ * 5. Syncs LDK.
+ */
+export const setupLdk = async (): Promise<Result<string>> => {
+  console.log("setups !!!!")
+	try {
+		await ldk.reset();
+		const genesisHash = await getBlockHashFromHeight({height:0});
+		if (genesisHash.isErr()) {
+			return err(genesisHash.error.message);
+		}
+		const account = await getAccount();
+		const storageRes = await lm.setBaseStoragePath(
+			`${RNFS.DocumentDirectoryPath}/ldk/`,
+		);
+		if (storageRes.isErr()) {
+			return err(storageRes.error);
+		}
+    console.log(getBestBlock === undefined, genesisHash.value, account, getAddress === undefined, getScriptPubKeyHistory === undefined, getTransactionData===undefined, getTransactionPosition===undefined, broadcastTransaction===undefined)
+		const lmStart = await lm.start({
+			getBestBlock,
+			genesisHash: genesisHash.value,
+			account,
+			getAddress,
+			getScriptPubKeyHistory,
+			getTransactionData,
+			getTransactionPosition,
+			broadcastTransaction,
+			network: ENetworks.regtest,
+		});
 
-    const lmStart = await lm.start({
-      account,
-      genesisHash: genesisHash,
-      getBestBlock,
-      getAddress,
-      getScriptPubKeyHistory,
-      getTransactionData,
-      getTransactionPosition,
-      broadcastTransaction,
-      network: ENetworks.regtest,
-    });
+		if (lmStart.isErr()) {
+      console.log("lm start error", lmStart.error.stack)
+			return err(lmStart.error.message);
+		}
+    console.log("make it here?")
+		// const syncRes = await lm.syncLdk();
+		// if (syncRes.isErr()) {
+    //   console.log("sync error", syncRes.error)
+		// 	return err(syncRes.error.message);
+		// }
 
-    if (lmStart.isErr()) {
-      return err(`ERROR STARTING: ${lmStart.error.message}`);
-    }
-    
-  } catch (e) {
-    console.error('FAILED TO SET UP LDK', e);
-  }
+		return ok('Running LDK'); //e2e test needs to see this string
+	} catch (e) {
+    console.log("this is ee ", e)
+		return err(e.toString());
+	}
 };
 
 /**
@@ -69,53 +85,75 @@ export const syncLdk = async (): Promise<Result<string>> => {
 };
 
 /**
+ * Saves new/latest header data to local storage.
+ * @param {THeader} header
+ * @returns {Promise<void>}
+ */
+export const updateHeader = async ({
+	header,
+}: {
+	header: THeader;
+}): Promise<boolean> => {
+	return await setItem('header', JSON.stringify(header));
+};
+
+/**
+ * Returns last known header information from storage.
+ * @returns {Promise<THeader>}
+ */
+export const getBestBlock = async (): Promise<THeader> => {
+	const bestBlock = await getItem('header');
+	return bestBlock ? JSON.parse(bestBlock) : { height: 0, hex: '', hash: '' };
+};
+
+/**
  * Returns the transaction header, height and hex (transaction) for a given txid.
  * @param {string} txId
  * @returns {Promise<TTransactionData>}
  */
-// export const getTransactionData = async (
-//   txId: string = '',
-// ): Promise<TTransactionData> => {
-//   let transactionData = DefaultTransactionDataShape;
-//   const data = {
-//     key: 'tx_hash',
-//     data: [
-//       {
-//         tx_hash: txId,
-//       },
-//     ],
-//   };
-//   const response = await electrum.getTransactions({
-//     txHashes: data,
-//     network: "bitcoinRegtest",
-//   });
+export const getTransactionData = async (
+  txId: string = '',
+): Promise<TTransactionData> => {
+  let transactionData = DefaultTransactionDataShape;
+  const data = {
+    key: 'tx_hash',
+    data: [
+      {
+        tx_hash: txId,
+      },
+    ],
+  };
+  const response = await electrum.getTransactions({
+    txHashes: data,
+    network: "bitcoinRegtest",
+  });
 
-//   if (response.error || !response.data || response.data[0].error) {
-//     return transactionData;
-//   }
-//   const {confirmations, hex: hex_encoded_tx, vout} = response.data[0].result;
-//   const header = await getBestBlock();
-//   const currentHeight = header.height;
-//   let confirmedHeight = 0;
-//   if (confirmations) {
-//     confirmedHeight = currentHeight - confirmations + 1;
-//   }
-//   const hexEncodedHeader = await getBlockHex({
-//     height: confirmedHeight,
-//   });
-//   if (hexEncodedHeader.isErr()) {
-//     return transactionData;
-//   }
-//   const voutData = vout.map(({n, value, scriptPubKey: {hex}}) => {
-//     return {n, hex, value};
-//   });
-//   return {
-//     header: hexEncodedHeader.value,
-//     height: confirmedHeight,
-//     transaction: hex_encoded_tx,
-//     vout: voutData,
-//   };
-// };
+  if (response.error || !response.data || response.data[0].error) {
+    return transactionData;
+  }
+  const {confirmations, hex: hex_encoded_tx, vout} = response.data[0].result;
+  const header = await getBestBlock();
+  const currentHeight = header.height;
+  let confirmedHeight = 0;
+  if (confirmations) {
+    confirmedHeight = currentHeight - confirmations + 1;
+  }
+  const hexEncodedHeader = await getBlockHex({
+    height: confirmedHeight,
+  });
+  if (hexEncodedHeader.isErr()) {
+    return transactionData;
+  }
+  const voutData = vout.map(({n, value, scriptPubKey: {hex}}) => {
+    return {n, hex, value};
+  });
+  return {
+    header: hexEncodedHeader.value,
+    height: confirmedHeight,
+    transaction: hex_encoded_tx,
+    vout: voutData,
+  };
+};
 
 /**
  * Returns the position/index of the provided tx_hash within a block.
@@ -123,36 +161,36 @@ export const syncLdk = async (): Promise<Result<string>> => {
  * @param {number} height
  * @returns {Promise<number>}
  */
-// export const getTransactionPosition = async ({
-//   tx_hash,
-//   height,
-// }): Promise<TTransactionPosition> => {
-//   const response = await electrum.getTransactionMerkle({
-//     tx_hash,
-//     height,
-//     network: "bitcoinRegtest",
-//   });
-//   if (response.error || isNaN(response.data?.pos || response.data?.pos < 0)) {
-//     return -1;
-//   }
-//   return response.data.pos;
-// };
+export const getTransactionPosition = async ({
+  tx_hash,
+  height,
+}): Promise<TTransactionPosition> => {
+  const response = await electrum.getTransactionMerkle({
+    tx_hash,
+    height,
+    network: "bitcoinRegtest",
+  });
+  if (response.error || isNaN(response.data?.pos || response.data?.pos < 0)) {
+    return -1;
+  }
+  return response.data.pos;
+};
 
 /**
  * Attempts to broadcast the provided rawTx.
  * @param {string} rawTx
  * @returns {Promise<string>}
  */
-// export const broadcastTransaction = async (rawTx: string): Promise<string> => {
-//   try {
-//     const response = await electrum.broadcastTransaction({
-//       rawTx,
-//       network: "bitcoinRegtest",
-//     });
-//     console.log('broadcastTransaction', response);
-//     return response.data;
-//   } catch (e) {
-//     console.log(e);
-//     return '';
-//   }
-// };
+export const broadcastTransaction = async (rawTx: string): Promise<string> => {
+  try {
+    const response = await electrum.broadcastTransaction({
+      rawTx,
+      network: "bitcoinRegtest",
+    });
+    console.log('broadcastTransaction', response);
+    return response.data;
+  } catch (e) {
+    console.log(e);
+    return '';
+  }
+};

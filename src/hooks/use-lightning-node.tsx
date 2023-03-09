@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
-import { setupLdk, syncLdk } from "../ldk"
+import { setupLdk, syncLdk, updateHeader } from "../ldk"
 import { useDataStore } from "../store/DataProvider"
 import ldk from "@synonymdev/react-native-ldk/dist/ldk"
 import { EmitterSubscription } from "react-native";
 import lm, { EEventTypes, TChannelManagerPayment, TChannelUpdate } from "@synonymdev/react-native-ldk";
 import Toast from "react-native-toast-message";
 import { getLatestBlockHeader } from "../electrs/http";
+import { connectToElectrum, subscribeToHeader } from "../electrs/electrs";
 
 export const useLightningNode = (
 	logSubscription: EmitterSubscription | undefined, 
@@ -36,18 +37,36 @@ export const useLightningNode = (
   }
 
   const connectToLightning = async () => {
-    ldk.reset()
-    await setupLdk()
+		const electrumResponse = await connectToElectrum({});
+		if (electrumResponse.isErr()) {
+			console.log("Electrum response", electrumResponse.error)
+			return;
+		}
+		// Subscribe to new blocks and sync LDK accordingly.
+		const headerInfo = await subscribeToHeader({
+			onReceive: async (): Promise<void> => {
+				const syncRes = await syncLdk();
+				if (syncRes.isErr()) {
+					console.log("Sync error", syncRes.error)
+					return;
+				}
+			},
+		});
+		if (headerInfo.isErr()) {
+			console.log("Header info error", headerInfo.error)
+			return;
+		}
+		await updateHeader({ header: headerInfo.value });
+		// Setup LDK
+		const setupResponse = await setupLdk();
+		console.log("respinse", setupResponse)
+		if (setupResponse.isErr()) {
+			console.log("Start error", setupResponse.error.message)
+			return;
+		}
+		console.log("YOU DA GOAT")
     setNodeStarted(true)
   }
-
-	useEffect(() => {
-		let interval: NodeJS.Timer
-		interval = setInterval(() => {
-			getLatestBlockHeader()
-			syncLdk()
-		}, 100000)
-	})
 
   useEffect(() => {
     if (!logSubscription) {

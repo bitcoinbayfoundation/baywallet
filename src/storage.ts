@@ -9,7 +9,7 @@ export const setItem = async (key:string, value:any): Promise<boolean> => {
   }
 }
 
-export const getItem = async <T>(key:string): Promise<T | false> => {
+export const getItem = async <T>(key:string): Promise<any> => {
   try {
     const item = await AsyncStorage.getItem(key)
     return <T>item

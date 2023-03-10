@@ -40,38 +40,38 @@ services:
       - '50001:50001'
       - '50002:50002'
 
-  # electrum:
-  #   image: ghcr.io/vulpemventures/electrs:latest
-  #   container_name: electrum
-  #   entrypoint:
-  #     - /build/electrs
-  #   command:
-  #     - -vvvv
-  #     - --network
-  #     - regtest
-  #     - --daemon-dir
-  #     - /config
-  #     - --daemon-rpc-addr
-  #     - bitcoind:18443
-  #     - --cookie
-  #     - baywallet:baywallet
-  #     - --http-addr
-  #     - 0.0.0.0:30000
-  #     - --electrum-rpc-addr
-  #     - 0.0.0.0:50000
-  #     - --cors
-  #     - "*"
-  #     - --jsonrpc-import
-  #   depends_on:
-  #     - bitcoind
-  #   ports:
-  #     - 50000:50000
-  #     - 30000:30000
-  #   volumes:
-  #     - ./docker/bitcoin/:/config
-  #   restart: unless-stopped
-  #   networks:
-  #     - baywallet 
+  electrum:
+    image: ghcr.io/vulpemventures/electrs:latest
+    container_name: electrum-http
+    entrypoint:
+      - /build/electrs
+    command:
+      - -vvvv
+      - --network
+      - regtest
+      - --daemon-dir
+      - /config
+      - --daemon-rpc-addr
+      - bitcoind:18443
+      - --cookie
+      - baywallet:baywallet
+      - --http-addr
+      - 0.0.0.0:30000
+      - --electrum-rpc-addr
+      - 0.0.0.0:50000
+      - --cors
+      - "*"
+      - --jsonrpc-import
+    depends_on:
+      - bitcoind
+    ports:
+      - 50000:50000
+      - 30000:30000
+    volumes:
+      - ./docker/bitcoin/:/config
+    restart: unless-stopped
+    networks:
+      - baywallet 
   lnd:
     image: lightninglabs/lnd:v0.15.5-beta
     container_name: lnd

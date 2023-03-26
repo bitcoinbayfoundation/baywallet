@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Divider, Avatar, Layout, TopNavigation } from "@ui-kitten/components";
+import { Divider, Avatar, Layout, TopNavigation, Button } from "@ui-kitten/components";
 import { NostrParamList } from "../../navigation/NostrParamList";
 import { useDataStore } from "../../store/DataProvider";
 import { BaseComponent } from "../../components/base-component";
@@ -13,10 +13,10 @@ type HomeFeedProps = NativeStackNavigationProp<NostrParamList, "nostr-home-feed"
 
 export const HomeFeed = observer(() => {
   const navigation = useNavigation<HomeFeedProps>()
-  const { nostrStore, nostrStore: {relay, events} } = useDataStore()
+  const { nostrStore, nostrStore: {events} } = useDataStore()
   
   useEffect(() => {
-    if (!relay) return
+    // if (!relay) return
     nostrStore.getEvents()
   }, [])
 

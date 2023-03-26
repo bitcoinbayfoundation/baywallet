@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react"
 import { Avatar, Divider, Layout, Text } from "@ui-kitten/components"
-import { Profile, Event } from "../types/nostr"
+import { Profile } from "../types/nostr"
 import { useDataStore } from "../store/DataProvider"
+import { Event } from "nostr-tools"
 
 type NoteProps = { note: Event}
 export const Note = ({note}:NoteProps) => {

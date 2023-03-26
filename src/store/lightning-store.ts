@@ -15,7 +15,6 @@ export class LightningStore {
 
   constructor(rootStore: DataStore) {
     this.rootStore = rootStore
-    this.transactions = invoice
     makeAutoObservable(this)
   }
 
@@ -88,6 +87,7 @@ export class LightningStore {
     let balance:number = 0
     if (this.channels.length !== 0) {
       this.channels?.map(chan => {
+        console.log(chan.balance_sat)
         if (chan.is_usable) balance += chan.balance_sat
       })
     }
@@ -95,7 +95,8 @@ export class LightningStore {
     return balance
   }
 
-  private satsToMilliSats(sats:number) {
-    return sats * 1_000;
+  @action
+  async getLightningTransactions() {
+    runInAction(() => this.transactions = invoice)
   }
 }

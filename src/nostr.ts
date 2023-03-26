@@ -1,9 +1,9 @@
-import { generatePrivateKey, getPublicKey, Relay, relayInit } from "nostr-tools"
+import { generatePrivateKey, getPublicKey, Kind, Relay, relayInit } from "nostr-tools"
 import { getItem, setItem } from "./storage"
 import { NostrKeys, Profile } from "./types/nostr"
 
 const TIMEOUT = 3000
-const LIMIT = 4
+const LIMIT = 45
 
 const createNostrKeys = async (): Promise<NostrKeys> => {
   const privatekey = generatePrivateKey()
@@ -30,34 +30,38 @@ export const getNostrKeys = async (): Promise<NostrKeys> => {
   return JSON.parse(keys)
 }
 
-export const connectToRelays = async (relays: string[]): Promise<Relay> => {
-  const relay = relayInit(relays[0])
-  await relay.connect()
-  relay.on('connect', () => {
-    console.log(`Connected to ${relay.url}`)
-  })
-  return relay
+export const connectToRelay = async (rel: string[]): Promise<any> => {
+  const connectedRelays: Record<string, Relay> = {}
+  await Promise.all(rel.map(async (relay) => {
+    const conn = relayInit(relay)
+    await conn.connect()
+    conn.on('connect', () => {
+      console.log(`Connected to ${relay}`)
+      connectedRelays[relay] = conn
+    })
+    conn.on('error', () => {
+      console.log(`Error connecting to ${relay}`)
+    })
+  }))
+
+  return Array.from(Object.values(connectedRelays))  
 }
 
-export const getNotes = async (relay: Relay): Promise<Array<any>> => 
-  new Promise((resolve) => {
-    let fetchCount = 0
-    const eventsById: Record<string, any> = {}
-    const sub = relay.sub([{
-      kinds: [1],
-      authors: ["3f194d7cf5c59eca0145ed7804f0a67c0cc17b6ff6b4bd585821160dcf9d785b"]
+export const getEvents = async (relays: Relay[]): Promise<Array<any>> => {
+  let fetchCount = 0
+  const eventsById: Record<string, any> = {}
+  await Promise.all(relays.map(async relay => {
+    const sub = await relay.list([{
+      kinds: [Kind.Text],
     }])
-    
-    sub.on('event', event => {
+
+    return sub.map(event => {
       eventsById[event.id] = event
-      fetchCount === 0
-      fetchCount++
-      if (fetchCount === LIMIT) {
-        resolve(Array.from(Object.values(eventsById)))
-        sub.unsub()
-      }
     })
-  })
+  }))
+  
+  return Array.from(Object.values(eventsById))
+}
 
 export const getProfile = async (relay: Relay, pubkey: string): Promise<Profile> => 
   new Promise((resolve) => {

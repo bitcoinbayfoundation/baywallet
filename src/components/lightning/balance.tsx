@@ -18,7 +18,7 @@ export const Balance = observer(() => {
     <Pressable onPress={() => setHideBalance(!hideBalance)}>
       <Layout style={{display: "flex", alignItems: "center", flexDirection: "row"}}>
         {/* <Satoshi color="#ff0000" style={{marginTop: , marginRight: 10}}/> */}
-        <Text style={{textAlign: 'center', paddingTop: '10%', fontSize: 50}}>{hideBalance ? "*********" : balance + " sats"}</Text>
+        <Text style={{textAlign: 'center', paddingTop: '10%', fontSize: 50}}>{hideBalance ? "*********" : balance.toLocaleString() + " sats"}</Text>
       </Layout>
     </Pressable>
   )

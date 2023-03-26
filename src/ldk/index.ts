@@ -11,7 +11,7 @@ import ldk from "@synonymdev/react-native-ldk/dist/ldk"
 import {getAddress} from '../ldk/wallet';
 import {err, ok, Result} from '../types/result';
 import { getBlockHashFromHeight, getBlockHex, getScriptPubKeyHistory } from '../electrs/electrs';
-import * as electrum from "rn-electrum-client"
+import * as electrum from "rn-electrum-client/helpers"
 import { getAccount } from '../util/account';
 import { getItem, setItem } from '../storage';
 
@@ -25,7 +25,6 @@ import { getItem, setItem } from '../storage';
  * 5. Syncs LDK.
  */
 export const setupLdk = async (): Promise<Result<string>> => {
-  console.log("setups !!!!")
 	try {
 		await ldk.reset();
 		const genesisHash = await getBlockHashFromHeight({height:0});
@@ -39,24 +38,27 @@ export const setupLdk = async (): Promise<Result<string>> => {
 		if (storageRes.isErr()) {
 			return err(storageRes.error);
 		}
-    console.log(getBestBlock === undefined, genesisHash.value, account, getAddress === undefined, getScriptPubKeyHistory === undefined, getTransactionData===undefined, getTransactionPosition===undefined, broadcastTransaction===undefined)
 		const lmStart = await lm.start({
-			getBestBlock,
-			genesisHash: genesisHash.value,
 			account,
-			getAddress,
-			getScriptPubKeyHistory,
+			genesisHash: genesisHash.value,
+			getBestBlock,
 			getTransactionData,
 			getTransactionPosition,
+			getAddress,
+			getScriptPubKeyHistory,
+      getFees: () =>
+				Promise.resolve({
+					highPriority: 12500,
+					normal: 12500,
+					background: 12500,
+				}),
 			broadcastTransaction,
 			network: ENetworks.regtest,
 		});
 
 		if (lmStart.isErr()) {
-      console.log("lm start error", lmStart.error.stack)
 			return err(lmStart.error.message);
 		}
-    console.log("make it here?")
 		// const syncRes = await lm.syncLdk();
 		// if (syncRes.isErr()) {
     //   console.log("sync error", syncRes.error)
@@ -65,7 +67,6 @@ export const setupLdk = async (): Promise<Result<string>> => {
 
 		return ok('Running LDK'); //e2e test needs to see this string
 	} catch (e) {
-    console.log("this is ee ", e)
 		return err(e.toString());
 	}
 };
@@ -75,10 +76,8 @@ export const setupLdk = async (): Promise<Result<string>> => {
  * @returns {Promise<Result<string>>}
  */
 export const syncLdk = async (): Promise<Result<string>> => {
-  console.log("syncing ldk")
   const syncResponse = await lm.syncLdk();
   if (syncResponse.isErr()) {
-    console.log("Error syncing", syncResponse.error)
   } else {console.log("synced", syncResponse.value)}
   
   return syncResponse;
@@ -127,7 +126,6 @@ export const getTransactionData = async (
     txHashes: data,
     network: "bitcoinRegtest",
   });
-
   if (response.error || !response.data || response.data[0].error) {
     return transactionData;
   }
@@ -147,6 +145,7 @@ export const getTransactionData = async (
   const voutData = vout.map(({n, value, scriptPubKey: {hex}}) => {
     return {n, hex, value};
   });
+  console.log("GOT TRANSACTION DATA", voutData)
   return {
     header: hexEncodedHeader.value,
     height: confirmedHeight,

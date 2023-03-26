@@ -5,7 +5,6 @@ import { BaseModal } from "./base"
 import Toast from "react-native-toast-message"
 
 export const NodeId = ({data}) => {
-  console.log(data)
   return (
     <BaseModal>
       <Text>Your pubkey:</Text>

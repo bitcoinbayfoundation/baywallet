@@ -9,7 +9,6 @@ export const Channel = ({channel}:ChannelProps) => {
   const totalCapacity = inbound_capacity_sat + outbound_capacity_sat
   const outbound = (outbound_capacity_sat / totalCapacity) * 100
   const inbound = (inbound_capacity_sat / totalCapacity) * 100
-  console.log("inboiucd", inbound, "outboufn", outbound)
 
   const inboundStyles = inbound === 100 ? {
     width: `${inbound}%`, backgroundColor: "#CCC", height: 10, 

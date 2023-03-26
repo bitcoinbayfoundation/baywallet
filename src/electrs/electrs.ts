@@ -1,76 +1,64 @@
 import * as electrum from 'rn-electrum-client/helpers';
+import {err, ok, Result} from '../util/result';
+import {getItem} from '../storage';
+import { updateHeader } from '../ldk';
 import {Block} from 'bitcoinjs-lib';
-import {getItem, setItem} from '../storage';
-import { customPeers} from '../util/config';
+import * as tls from './tls';
+import {customPeers, selectedNetwork} from '../util/config';
 import {THeader} from '@synonymdev/react-native-ldk';
-import {getAddressFromScriptPubKey, getScriptHash} from '../ldk/wallet';
-import {Result, ok, err} from '../types/result';
 import {
   IGetHeaderResponse,
   ISubscribeToHeader,
   TGetAddressHistory,
 } from '../types/electrs';
-
-export const connectToElectrum = async ({
-  options = {net: undefined, tls: undefined},
+import {getAddressFromScriptPubKey, getScriptHash} from '../ldk/wallet';
+/**
+ * Returns the block hash given a block hex.
+ * Leaving blockHex empty will return the last known block hash from storage.
+ * @param {string} [blockHex]
+ * @returns {string}
+ */
+export const getBlockHashFromHex = async ({
+  blockHex,
 }: {
-  options?: {net?: any; tls?: any};
-}): Promise<Result<string>> => {
-  const net = options.net ?? global?.net;
-  const _tls = options.tls ?? global?.tls;
-
-  console.info('NET', net);
-  
-  const startResponse = await electrum.start({
-    network: "bitcoinRegtest",
-    customPeers: 		{
-			host: '35.233.47.252',
-			ssl: 18484,
-			tcp: 18483,
-			protocol: 'tcp',
-		},
-    net,
-    tls: _tls,
-  });
-
-  if (startResponse.error) {
-    //Attempt one more time
-    const {error, data} = await electrum.start({
-      network: "bitcoinRegtest",
-      customPeers: 		{
-			host: '35.233.47.252',
-			ssl: 18484,
-			tcp: 18483,
-			protocol: 'tcp',
-		},
-      net,
-      tls: _tls,
-    });
-    if (error) {
-      return err(data);
-    }
+  blockHex?: string;
+}): Promise<string> => {
+  // If empty, return the last known block hex from storage.
+  if (!blockHex) {
+    const {hex} = await getBlockHeader();
+    blockHex = hex;
   }
-  return ok('Successfully connected.');
+  const block = Block.fromHex(blockHex);
+  const hash = block.getId();
+  return hash;
 };
 
 /**
  * Returns last known block height, and it's corresponding hex from local storage.
  * @returns {THeader}
  */
-export const getBestBlock = async (): Promise<THeader> => {
-  const bestBlock = await getItem<string>('header');
-  return bestBlock ? JSON.parse(bestBlock) : { height: 0, hex: '', hash: '' };
+export const getBlockHeader = async (): Promise<THeader> => {
+  const header = await getItem<string | false>('header');
+  if (!header) throw new Error("No block header")
+  return JSON.parse(header);
 };
 
 /**
- * Update best block header in storage
- *
- * @param header Header hex to save to local storage
- * @returns true if it stored correctly
+ * Returns the block hash for the provided height and network.
+ * @param {number} [height]
+ * @returns {Promise<Result<string>>}
  */
-export const updateHeader = async (header: THeader): Promise<boolean> => {
-  const result = await setItem('header', JSON.stringify(header));
-  return result;
+export const getBlockHashFromHeight = async ({
+  height = 0,
+}: {
+  height?: number;
+}): Promise<Result<string>> => {
+  const response = await getBlockHex({height});
+  if (response.isErr()) {
+    return err(response.error.message);
+  }
+  const blockHash = await getBlockHashFromHex({blockHex: response.value});
+  return ok(blockHash);
 };
 
 /**
@@ -85,7 +73,7 @@ export const getBlockHex = async ({
 }): Promise<Result<string>> => {
   const response: IGetHeaderResponse = await electrum.getHeader({
     height,
-    network: "bitcoinRegtest",
+    network: selectedNetwork,
   });
   if (response.error) {
     return err(response.data);
@@ -93,40 +81,36 @@ export const getBlockHex = async ({
   return ok(response.data);
 };
 
-/**
- * Returns the block hash for the provided height and network.
- * @param {number} [height]
- * @returns {Promise<Result<string>>}
- */
-export const getBlockHashFromHeight = async ({ height = 0 }: { height?: number;}): Promise<Result<string>> => {
-  const response = await getBlockHex({height});
-  if (response.isErr()) {
-    return err(response.error.message);
-  }
-  const blockHash = await getBlockHashFromHex({blockHex: response.value});
-  return ok(blockHash);
-};
-
-
-/**
- * Returns the block hash given a block hex.
- * Leaving blockHex empty will return the last known block hash from storage.
- * @param {string} [blockHex]
- * @returns {string}
- */
-export const getBlockHashFromHex = async ({
-  blockHex,
+export const connectToElectrum = async ({
+  options = {net: undefined, tls: undefined},
 }: {
-  blockHex?: string;
-}): Promise<string> => {
-  // If empty, return the last known block hex from storage.
-  if (!blockHex) {
-    const {hex} = await getBestBlock();
-    blockHex = hex;
+  options?: {net?: any; tls?: any};
+}): Promise<Result<string>> => {
+  const net = options.net ?? global?.net;
+  const _tls = options.tls ?? tls;
+
+  console.info('NET', net);
+
+  const startResponse = await electrum.start({
+    network: selectedNetwork,
+    customPeers: customPeers[selectedNetwork],
+    net,
+    tls: _tls,
+  });
+
+  if (startResponse.error) {
+    //Attempt one more time
+    const {error, data} = await electrum.start({
+      network: selectedNetwork,
+      customPeers: customPeers[selectedNetwork],
+      net,
+      tls: _tls,
+    });
+    if (error) {
+      return err(data);
+    }
   }
-  const block = Block.fromHex(blockHex);
-  const hash = block.getId();
-  return hash;
+  return ok('Successfully connected.');
 };
 
 /**
@@ -140,13 +124,14 @@ export const subscribeToHeader = async ({
   onReceive?: Function;
 }): Promise<Result<THeader>> => {
   const subscribeResponse: ISubscribeToHeader = await electrum.subscribeHeader({
-    network: "bitcoinRegtest",
+    network: selectedNetwork,
     onReceive: async data => {
-      console.log("RECEIVE", data)
       const hex = data[0].hex;
       const hash = getBlockHashFromHex({blockHex: hex});
       const header = {...data[0], hash};
-      await updateHeader(header);
+      await updateHeader({
+        header,
+      });
       if (onReceive) {
         onReceive();
       }
@@ -159,7 +144,9 @@ export const subscribeToHeader = async ({
   const hex = subscribeResponse.data.hex;
   const hash = await getBlockHashFromHex({blockHex: hex});
   const header = {...subscribeResponse.data, hash};
-  await updateHeader(header);
+  await updateHeader({
+    header,
+  });
   return ok(header);
 };
 
@@ -171,8 +158,20 @@ export const getScriptPubKeyHistory = async (
     const scriptHash = getScriptHash(address);
     const response = await electrum.getAddressScriptHashesHistory({
       scriptHashes: [scriptHash],
-      network: "bitcoinRegtest",
+      network: selectedNetwork,
     });
+
+    /*
+		const mempoolResponse = await electrum.getAddressScriptHashesMempool({
+			scriptHashes: [scriptHash],
+			network: selectedNetwork,
+		});
+
+		if (response.error || mempoolResponse.error) {
+			return [];
+		}
+		const combinedResponse = [...response.data, ...mempoolResponse.data];
+		*/
 
     let history: {txid: string; height: number}[] = [];
     await Promise.all(

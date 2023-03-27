@@ -13,11 +13,11 @@ type HomeFeedProps = NativeStackNavigationProp<NostrParamList, "nostr-home-feed"
 
 export const HomeFeed = observer(() => {
   const navigation = useNavigation<HomeFeedProps>()
-  const { nostrStore, nostrStore: {events} } = useDataStore()
+  const { nostrStore, nostrStore: {events, relays} } = useDataStore()
   
   useEffect(() => {
-    // if (!relay) return
-    nostrStore.getEvents()
+    if (!relays) return
+    nostrStore.getAllEvents()
   }, [])
 
   return (

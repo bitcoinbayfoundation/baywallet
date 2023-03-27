@@ -8,13 +8,14 @@ type NoteProps = { note: Event}
 export const Note = ({note}:NoteProps) => {
   const {nostrStore} = useDataStore()
   const { content } = note
-  const [profile, setProfile] = useState<Profile>({name: ""})
+  const [profile, setProfile] = useState<Profile>()
 
-  const getProfile = async () => {
-    const profile = await nostrStore.getProfile(note.pubkey)
-    setProfile(profile)
-  }
   useEffect(() => {
+    const getProfile = async () => {
+      const profile = await nostrStore.getProfile(note.pubkey)
+      const content: Profile = JSON.parse(profile.content)
+      setProfile(content)
+    }
     getProfile()
   }, [])
 

@@ -1,5 +1,5 @@
 import { action, makeAutoObservable, observable, runInAction, when } from "mobx";
-import { connectToRelay, getNostrKeys, getEvents, getProfile } from "../nostr";
+import { connectToRelay, getNostrKeys, getNostrEvents } from "../nostr";
 import { NostrKeys, Profile } from "../types/nostr";
 import { DataStore } from ".";
 import { Kind, Relay, SimplePool, Event } from "nostr-tools";
@@ -34,15 +34,6 @@ export class NostrStore {
     })
   }
 
-  @action
-  async getMe() {
-    // const profile = await this.getProfile("3f194d7cf5c59eca0145ed7804f0a67c0cc17b6ff6b4bd585821160dcf9d785b")
-    // runInAction(() => {
-    //   this.me = profile
-    // })
-    // return profile
-  }
-
   @action 
   async connectToRelays() {
     const relays = await connectToRelay(this.relayUrls)
@@ -52,16 +43,22 @@ export class NostrStore {
   }
 
   @action
-  async getEvents() {
-    const events = await getEvents(this.relays)
+  async getAllEvents() {
+    const events = await getNostrEvents(this.relays, [{kinds: [Kind.Text]}])
     runInAction(() => {
       this.events = events
     })
   }
 
+  @action 
+  async getMe() {
+    const me = await getNostrEvents(this.relays, [{kinds: [Kind.Metadata], authors: [this.nostrKeys.pubkey]}])
+    return me[0]
+  }
+
   @action
-  async getProfile(pubkey:string) {
-    const profile = await getProfile(this.relays[1], pubkey)
-    return profile
+  async getProfile(pubkey:string): Promise<Event> {
+    const profile = await getNostrEvents(this.relays, [{kinds: [Kind.Metadata], authors: [pubkey]}])
+    return profile[0]
   }
 }

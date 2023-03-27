@@ -1,4 +1,4 @@
-import { generatePrivateKey, getPublicKey, Kind, Relay, relayInit } from "nostr-tools"
+import { Filter, generatePrivateKey, getPublicKey, Kind, Relay, relayInit } from "nostr-tools"
 import { getItem, setItem } from "./storage"
 import { NostrKeys, Profile } from "./types/nostr"
 
@@ -47,14 +47,10 @@ export const connectToRelay = async (rel: string[]): Promise<any> => {
   return Array.from(Object.values(connectedRelays))  
 }
 
-export const getEvents = async (relays: Relay[]): Promise<Array<any>> => {
-  let fetchCount = 0
+export const getNostrEvents = async (relays: Relay[], filter: Filter[]): Promise<Array<any>> => {
   const eventsById: Record<string, any> = {}
   await Promise.all(relays.map(async relay => {
-    const sub = await relay.list([{
-      kinds: [Kind.Text],
-    }])
-
+    const sub = await relay.list(filter)
     return sub.map(event => {
       eventsById[event.id] = event
     })
@@ -62,19 +58,3 @@ export const getEvents = async (relays: Relay[]): Promise<Array<any>> => {
   
   return Array.from(Object.values(eventsById))
 }
-
-export const getProfile = async (relay: Relay, pubkey: string): Promise<Profile> => 
-  new Promise((resolve) => {
-    const sub = relay.sub([{
-      kinds: [0],
-      authors: [pubkey]
-    }])
-
-    sub.on('event', event => {
-      const profile = <string>event.content
-      // console.log(`Found profile ${JSON.stringify(event)}`)
-      resolve(JSON.parse(profile))
-
-      sub.unsub()
-    })
-  })

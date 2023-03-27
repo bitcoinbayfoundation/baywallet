@@ -17,7 +17,7 @@ export const HomeFeed = observer(() => {
   
   useEffect(() => {
     if (!relays) return
-    nostrStore.getAllEvents()
+    nostrStore.getFollowingFeed()
   }, [])
 
   return (

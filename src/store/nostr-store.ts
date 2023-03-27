@@ -15,7 +15,10 @@ export class NostrStore {
 
   relayUrls: string[] = [
     "wss://nostr.bitcoinbay.engineering",
-    "wss://nos.lol"
+    "wss://nos.lol",
+    "wss://relay.damus.io",
+    "wss://eden.nostr.land",
+    "wss://offchain.pub"
   ]
 
   constructor(rootStore: DataStore) {
@@ -46,7 +49,7 @@ export class NostrStore {
   async getAllEvents() {
     const events = await getNostrEvents(this.relays, [{kinds: [Kind.Text]}])
     runInAction(() => {
-      this.events = events
+      // this.events = events
     })
   }
 
@@ -60,5 +63,26 @@ export class NostrStore {
   async getProfile(pubkey:string): Promise<Event> {
     const profile = await getNostrEvents(this.relays, [{kinds: [Kind.Metadata], authors: [pubkey]}])
     return profile[0]
+  }
+
+  @action 
+  async getFollowingPubkeys() {
+    const following = await getNostrEvents(this.relays, [{kinds: [Kind.Contacts], authors: ["3f194d7cf5c59eca0145ed7804f0a67c0cc17b6ff6b4bd585821160dcf9d785b"]}])
+    const arrayOfFollowing = []
+    if (following.length === 0) return
+    following[0].tags.forEach(tag => {
+      arrayOfFollowing.push(tag[1])
+    })
+    return arrayOfFollowing
+  }
+
+  @action
+  async getFollowingFeed() {
+    const following = await this.getFollowingPubkeys()
+    const feed = await getNostrEvents(this.relays, [{kinds: [Kind.Text], authors: following}])
+    runInAction(() => {
+      this.events = feed
+    })
+    return feed
   }
 }

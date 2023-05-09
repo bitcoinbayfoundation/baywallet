@@ -15,7 +15,7 @@ export const useLightningNode = (
 ) => {
   const [nodeStarted, setNodeStarted] = useState<boolean>(false)
   const [appReady, setAppReady] = useState<boolean>(false)
-  const { lightningStore } = useDataStore()
+  const { lightningStore, lspStore } = useDataStore()
 
 
 
@@ -26,6 +26,12 @@ export const useLightningNode = (
     }
     connectToLightning()
   }, [nodeStarted])
+
+	useEffect(() => {
+		if (!nodeStarted) return
+		lspStore.connectToLsp()
+		lspStore.checkForLspChannel()
+	}, [nodeStarted])
 
   const initLightningInfo = async () => {
     await lightningStore.getLightningInfo()
@@ -57,7 +63,7 @@ export const useLightningNode = (
 			console.log("Start error", setupResponse.error.message)
 			return;
 		}
-		console.log("YOU DA GOAT")
+		
     setNodeStarted(true)
   }
 

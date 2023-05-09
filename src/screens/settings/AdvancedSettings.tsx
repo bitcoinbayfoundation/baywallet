@@ -6,7 +6,7 @@ import React from "react";
 import { useDataStore } from "../../store/DataProvider";
 import { BaseComponent } from "../../components/base-component";
 import { SettingsParamList } from "../../navigation/SettingsParamList";
-import { lndDevNode } from "../../util/config";
+import { lspNodeDev } from "../../util/config";
 import Toast from "react-native-toast-message";
 import { Modals, useModal } from "../../hooks/use-modal";
 
@@ -37,8 +37,8 @@ export const AdvancedSettings = observer(() => {
         <ListItem
           title="Add peer"
           onPress={async () => {
-            console.log(lndDevNode)
-            const peer = await lightningStore.addPeer(lndDevNode.address, lndDevNode.port, lndDevNode.pubKey)
+            console.log(lspNodeDev)
+            const peer = await lightningStore.addPeer(lspNodeDev.address, lspNodeDev.port, lspNodeDev.pubKey)
             return alert(peer)
           }}
         />

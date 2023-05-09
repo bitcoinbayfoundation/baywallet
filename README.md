@@ -2,6 +2,8 @@
 
 ldk wallet for the plebs of tampa, by tampa plebs.
 
+![Bitcoin Bay](./docs/bitcoinbay.jpeg)
+
 ## Description
 
 Bay Wallet is a project spawned from the Tampa BitDevs meetup. The goal of the project is to inspire new Bitcoin developers to work on a Bitcoin project in a collaborative environment with experienced Bitcoin developers.

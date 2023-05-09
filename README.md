@@ -1,6 +1,6 @@
 # Bay Wallet
 
-ldk wallet for the plebs of tampa, by tampa plebs.
+ldk wallet & nostr client for the plebs of tampa, by tampa plebs.
 
 ![Bitcoin Bay](./docs/bitcoinbay.jpeg)
 
@@ -9,6 +9,8 @@ ldk wallet for the plebs of tampa, by tampa plebs.
 Bay Wallet is a project spawned from the Tampa BitDevs meetup. The goal of the project is to inspire new Bitcoin developers to work on a Bitcoin project in a collaborative environment with experienced Bitcoin developers.
 
 Bay Wallet is built with LDK, a Lightning implementation library. LDK allows developers to create full node implementations wihtout having to use a monolithic node implementation such as LND, Core Lightning, or Eclair. This bodes well for mobile because we can run a full node on the device.
+
+Included with Bay Wallet is a nostr client. Having a nostr client included with a Lightning wallet creates a seamless UX for zaps, community engagement, as well as app support.
 
 ***Resources***
 * [LDK (rust-lightning)](https://github.com/lightningdevkit/rust-lightning)

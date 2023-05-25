@@ -339,7 +339,7 @@ PODS:
     - RCTTypeSafety
     - React-Core
     - ReactCommon/turbomodule/core
-  - react-native-tcp-socket (5.2.0):
+  - react-native-tcp-socket (6.0.3):
     - CocoaAsyncSocket
     - React-Core
   - React-perflogger (0.71.7)
@@ -662,7 +662,7 @@ SPEC CHECKSUMS:
   react-native-ldk: b9b34c15067689e5aa7aef92ce278454b000ac39
   react-native-randombytes: 421f1c7d48c0af8dbcd471b0324393ebf8fe7846
   react-native-safe-area-context: 39c2d8be3328df5d437ac1700f4f3a4f75716acc
-  react-native-tcp-socket: c752d16fd5300dc96fc4a749c4db7c2a3886cd52
+  react-native-tcp-socket: bf814462aa7bb427f004976d3a8765153baffe81
   React-perflogger: 2d505bbe298e3b7bacdd9e542b15535be07220f6
   React-RCTActionSheet: 0e96e4560bd733c9b37efbf68f5b1a47615892fb
   React-RCTAnimation: fd138e26f120371c87e406745a27535e2c8a04ef

@@ -6,9 +6,9 @@ const getLndRequest = async (endpoint: string) => {
     const thing = await axios.request({
       baseURL: "http://127.0.0.1:8080",
       url: "/v1/getinfo",
-      // headers: {
-      //   "Grpc-Metadata-macaroon": mac
-      // }
+      headers: {
+        "Grpc-Metadata-macaroon": mac
+      }
     })
     console.log("THING", thing)
     return thing

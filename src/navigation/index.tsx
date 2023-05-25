@@ -14,7 +14,6 @@ import { HomeFeed } from "../screens/nostr/HomeFeed"
 import { Profile } from "../screens/nostr/Profile"
 import { Channels } from "../screens/settings/Channels"
 
-
 export const BayWalletAppNavigator = () => {
   const BayWalletStack = createNativeStackNavigator()
   return (
@@ -41,6 +40,7 @@ export const SettingsNavigator = () => {
 
 export const NostrNavigator = () => {
   const NostrStack = createNativeStackNavigator()
+  
   return (
     <NostrStack.Navigator>
       <NostrStack.Screen options={{headerShown: false}} name="nostr-home-feed" component={HomeFeed} />

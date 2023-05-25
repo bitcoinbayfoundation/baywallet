@@ -4,7 +4,7 @@ import { Profile } from "../types/nostr"
 import { useDataStore } from "../store/DataProvider"
 import { Event } from "nostr-tools"
 
-type NoteProps = { note: Event}
+type NoteProps = { note: any}
 export const Note = ({note}:NoteProps) => {
   const {nostrStore} = useDataStore()
   const { content } = note

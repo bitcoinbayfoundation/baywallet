@@ -8,13 +8,13 @@ export class DataStore {
     public accountStore: AccountStore
     public settingsStore: SettingsStore
     public nostrStore: NostrStore
-    public lspStore: LspStore
+    // public lspStore: LspStore
     
     constructor() {
         this.lightningStore = new LightningStore(this)
         this.accountStore = new AccountStore(this)
         this.settingsStore = new SettingsStore(this)
         this.nostrStore = new NostrStore(this)
-        this.lspStore = new LspStore(this)
+        // this.lspStore = new LspStore(this)
     }
 }

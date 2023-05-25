@@ -36,7 +36,7 @@ export const connectToRelay = async (rel: string[]): Promise<any> => {
     const conn = relayInit(relay)
     await conn.connect()
     conn.on('connect', () => {
-      console.log(`Connected to ${relay}`)
+      console.log(`Connected: ✅ ${relay}`)
       connectedRelays[relay] = conn
     })
     conn.on('error', () => {
@@ -52,6 +52,7 @@ export const getNostrEvents = async (relays: Relay[], filter: Filter[]): Promise
   await Promise.all(relays.map(async relay => {
     const sub = await relay.list(filter)
     return sub.map(event => {
+      if (!event.content || event.content === undefined) return
       eventsById[event.id] = event
     })
   }))

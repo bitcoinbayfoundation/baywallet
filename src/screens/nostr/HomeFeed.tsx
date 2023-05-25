@@ -14,12 +14,18 @@ type HomeFeedProps = NativeStackNavigationProp<NostrParamList, "nostr-home-feed"
 export const HomeFeed = observer(() => {
   const navigation = useNavigation<HomeFeedProps>()
   const { nostrStore, nostrStore: {events, relays} } = useDataStore()
-  
+   
   useEffect(() => {
     if (!relays) return
     nostrStore.getFollowingFeed()
   }, [])
-
+  // const {events} = useNostrEvents({
+  //   filter: {
+  //     since: dateToUnix(new Date()),
+  //     kinds: [1],
+  //     authors: ["3f194d7cf5c59eca0145ed7804f0a67c0cc17b6ff6b4bd585821160dcf9d785b"]
+  //   }
+  // })
   return (
     <BaseComponent>
       <TopNavigation

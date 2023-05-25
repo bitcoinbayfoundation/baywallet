@@ -25,7 +25,7 @@ const Home = observer(() => {
   const {lightningStore: {transactions}} = useDataStore()
   const {appReady} = useLightningNode(logSubscription, paymentSubscription, onChannelSubscription, backupSubscriptionId)
 
-  if(!appReady) return <Loading />
+  if (!appReady) return <Loading />
 
   return (
     <BaseComponent>

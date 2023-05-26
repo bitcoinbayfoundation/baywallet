@@ -13,6 +13,7 @@ import { AdvancedSettings } from "../screens/settings/AdvancedSettings"
 import { HomeFeed } from "../screens/nostr/HomeFeed"
 import { Profile } from "../screens/nostr/Profile"
 import { Channels } from "../screens/settings/Channels"
+import { NostrProvider } from "../nostr/core"
 
 export const BayWalletAppNavigator = () => {
   const BayWalletStack = createNativeStackNavigator()
@@ -40,12 +41,20 @@ export const SettingsNavigator = () => {
 
 export const NostrNavigator = () => {
   const NostrStack = createNativeStackNavigator()
-  
+  const relayUrls: string[] = [
+    "wss://nostr.bitcoinbay.engineering",
+    "wss://nos.lol",
+    "wss://relay.damus.io",
+    "wss://eden.nostr.land",
+    "wss://offchain.pub"
+  ]
   return (
-    <NostrStack.Navigator>
-      <NostrStack.Screen options={{headerShown: false}} name="nostr-home-feed" component={HomeFeed} />
-      <NostrStack.Screen options={{headerShown: false}} name="nostr-profile" component={Profile} />
-    </NostrStack.Navigator>
+    <NostrProvider relayUrls={relayUrls} debug={true}>
+      <NostrStack.Navigator>
+        <NostrStack.Screen options={{headerShown: false}} name="nostr-home-feed" component={HomeFeed} />
+        <NostrStack.Screen options={{headerShown: false}} name="nostr-profile" component={Profile} />
+      </NostrStack.Navigator>
+    </NostrProvider>
   )
 }
 

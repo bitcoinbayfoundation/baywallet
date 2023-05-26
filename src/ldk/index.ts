@@ -40,7 +40,6 @@ export const setupLdk = async (): Promise<Result<string>> => {
 		}
 		const lmStart = await lm.start({
 			account,
-			genesisHash: genesisHash.value,
 			getBestBlock,
 			getTransactionData,
 			getTransactionPosition,
@@ -145,7 +144,6 @@ export const getTransactionData = async (
   const voutData = vout.map(({n, value, scriptPubKey: {hex}}) => {
     return {n, hex, value};
   });
-  console.log("GOT TRANSACTION DATA", voutData)
   return {
     header: hexEncodedHeader.value,
     height: confirmedHeight,

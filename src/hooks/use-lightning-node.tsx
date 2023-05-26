@@ -17,8 +17,6 @@ export const useLightningNode = (
   const [appReady, setAppReady] = useState<boolean>(false)
   const { lightningStore } = useDataStore()
 
-
-
   useEffect(() => {
     if (nodeStarted) {
       initLightningInfo()

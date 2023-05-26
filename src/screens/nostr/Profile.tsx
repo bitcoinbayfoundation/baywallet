@@ -1,25 +1,36 @@
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Divider, Layout, Text, TopNavigation } from "@ui-kitten/components";
+import { Avatar, Divider, Icon, Layout, Text, TopNavigation } from "@ui-kitten/components";
 import React from "react";
 import { NostrParamList } from "../../navigation/NostrParamList";
-import { useDataStore } from "../../store/DataProvider";
 import { BaseComponent } from "../../components/base-component";
 import { observer } from "mobx-react";
 import { useProfile } from "../../nostr/useProfile";
-import { Loading } from "../../components/loading";
+import { Pressable } from "react-native";
+import { useDataStore } from "../../store/DataProvider";
+import { useNostrEvents } from "../../nostr/core";
+import { Note } from "../../components/note";
+import { NavParamList } from "../../navigation/NavParamList";
 
-type ProfileProps = NativeStackNavigationProp<NostrParamList, "nostr-profile">
+type ProfileScreenProps = NativeStackNavigationProp<NostrParamList, "nostr-profile">
 
-export const Profile = observer(() => {
-  const navigation = useNavigation<ProfileProps>()
-  // const { nostrStore, nostrStore: {me} } = useDataStore()
+type ProfileProps = {
+  route?: RouteProp<NostrParamList, "nostr-profile">;
+};
 
-  // useEffect(() => {
-  //   nostrStore.getMe()
-  // }, [])
+export const Profile = observer((props: ProfileProps) => {
+  const navigation = useNavigation<ProfileScreenProps>()
+  const { nostrStore: {nostrKeys} } = useDataStore()
   const { data: profile } = useProfile({
-    pubkey: "3f194d7cf5c59eca0145ed7804f0a67c0cc17b6ff6b4bd585821160dcf9d785b"
+    pubkey: props.route.params.pubkey
+  })
+console.log(props.route.params)
+  const {events} = useNostrEvents({
+    filter: {
+      since: 1,
+      kinds: [1],
+      authors: [props.route.params.pubkey]
+    }
   })
 
   return (
@@ -27,11 +38,28 @@ export const Profile = observer(() => {
       <TopNavigation
         title='Profile'
         alignment='center'
+        accessoryLeft={
+          <Pressable onPress={() => navigation.navigate("nostr-profile")}>
+            <Avatar size="small" source={{uri: profile?.picture}} />
+          </Pressable>
+        }
       />
       <Divider />
-      <Layout>
-        <Text>{JSON.stringify(profile)}</Text>
+      <Layout style={{padding: 5, display: "flex", flexDirection: "row"}}>
+        <Avatar size="giant" source={{uri: profile?.picture}} />
+        <Layout style={{paddingLeft: 10, justifyContent: "center"}}>
+          <Text category="h5">{profile?.display_name}</Text>
+          <Layout style={{flexDirection: "row", alignItems: "center"}}>
+            <Text style={{color: "#AAA"}}>@{profile?.name}</Text>
+            <Icon style={{width: 15, height: 15, paddingHorizontal: 10 }} fill="#F7EF8A" name="checkmark-circle-2-outline"/>
+            <Text>{profile?.nip05.split("@")[1]}</Text>
+          </Layout>
+          {/* <Text style={{width: "50%", overflow: "hidden" }}>{profile?.npub}</Text> */}
+        </Layout>
       </Layout>
+      <Text style={{padding: 5}}>{profile?.about}</Text>
+      <Divider />
+      {events?.map(event => <Note key={event.id} note={event} />)}
     </BaseComponent>
   )
 })

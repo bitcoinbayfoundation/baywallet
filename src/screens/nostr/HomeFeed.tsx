@@ -2,14 +2,12 @@ import React, {useEffect, useState} from "react";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Divider, Avatar, Layout, TopNavigation, Button } from "@ui-kitten/components";
-import { NostrParamList } from "../../navigation/NostrParamList";
-import { useDataStore } from "../../store/DataProvider";
-import { BaseComponent } from "../../components/base-component";
 import { Pressable, ScrollView } from "react-native";
-import { Note } from "../../components/note";
 import { observer } from "mobx-react";
-import { useNostrEvents } from "../../nostr/core";
-import { useProfile } from "../../nostr/useProfile";
+import { NostrParamList } from "../../navigation";
+import { useDataStore } from "../../store";
+import { BaseComponent, Note } from "../../components";
+import { useNostrEvents, useProfile } from "../../nostr";
 
 type HomeFeedProps = NativeStackNavigationProp<NostrParamList, "nostr-home-feed">
 

@@ -1,7 +1,7 @@
 import {TAccount} from '@synonymdev/react-native-ldk';
 import {randomBytes} from 'crypto';
 import {action, makeObservable, observable, runInAction} from 'mobx';
-import {getItem, setItem} from '../storage';
+import {getItem, setItem} from '../util/storage';
 import * as bip39 from 'bip39';
 import { DataStore } from '.';
 

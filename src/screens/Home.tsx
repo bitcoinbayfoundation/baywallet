@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NavParamList } from '../navigation/NavParamList';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useDataStore } from '../store/DataProvider';
-import { Loading } from '../components/loading';
+import { Loading } from '../components';
 import { Transaction } from '../components/lightning/transactions';
 import { useLightningNode } from '../hooks/use-lightning-node';
 import { Balance } from '../components/lightning/balance';

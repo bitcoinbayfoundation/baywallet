@@ -1,6 +1,6 @@
 import { Filter, generatePrivateKey, getPublicKey, Kind, Relay, relayInit } from "nostr-tools"
-import { getItem, setItem } from "./storage"
-import { NostrKeys, Profile } from "./types/nostr"
+import { getItem, setItem } from "../util/storage"
+import { NostrKeys, Profile } from "../types/nostr"
 
 const TIMEOUT = 3000
 const LIMIT = 45

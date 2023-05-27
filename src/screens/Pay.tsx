@@ -1,8 +1,8 @@
+import React from "react";
 import { RouteProp } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React from "react";
-import { BaseComponent } from "../components/base-component";
-import { NavParamList } from "../navigation/NavParamList";
+import { BaseComponent } from "../components";
+import { NavParamList } from "../navigation";
 import { Text } from "@ui-kitten/components";
 
 type PayScreenProps = NativeStackScreenProps<NavParamList, "pay">
@@ -14,7 +14,7 @@ type Props = {
 export const Pay = (props: Props) => {
   return (
     <BaseComponent>
-      <Text>hey</Text>
+      <Text>NOT IMPLEMENTED</Text>
     </BaseComponent>
   )
 }

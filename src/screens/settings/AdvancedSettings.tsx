@@ -1,14 +1,14 @@
+import React from "react";
+import { observer } from "mobx-react";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Text, Layout, TopNavigation, Divider, Icon, TopNavigationAction, ListItem } from "@ui-kitten/components";
-import { observer } from "mobx-react";
-import React from "react";
-import { useDataStore } from "../../store/DataProvider";
-import { BaseComponent } from "../../components/base-component";
-import { SettingsParamList } from "../../navigation/SettingsParamList";
-import { lspNodeDev } from "../../util/config";
 import Toast from "react-native-toast-message";
-import { Modals, useModal } from "../../hooks/use-modal";
+import { Layout, TopNavigation, Divider, Icon, TopNavigationAction, ListItem } from "@ui-kitten/components";
+import { useDataStore } from "../../store";
+import { BaseComponent } from "../../components";
+import { SettingsParamList } from "../../navigation";
+import { lspNodeDev } from "../../util/config";
+import { Modals, useModal } from "../../hooks";
 
 type AdvancedSettingProps = NativeStackNavigationProp<SettingsParamList, "advanced-settings">
 

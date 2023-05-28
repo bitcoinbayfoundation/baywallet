@@ -4,8 +4,8 @@ import {observer} from 'mobx-react';
 import { Layout, Text } from '@ui-kitten/components';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Camera, useCameraDevices } from "react-native-vision-camera"
-import { BaseComponent } from '../components';
-import { NavParamList } from '../navigation';
+import { BaseComponent } from '../../components';
+import { NavParamList } from '../../navigation';
 
 type ScanScreenProp = NativeStackNavigationProp<NavParamList, 'scan'>
 

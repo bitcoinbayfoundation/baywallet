@@ -15,8 +15,8 @@ import QRCode from 'react-native-qrcode-svg';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RouteProp, useNavigation} from '@react-navigation/native';
-import {BaseComponent} from '../components';
-import {NavParamList} from '../navigation';
+import {BaseComponent} from '../../components';
+import {NavParamList} from '../../navigation';
 
 type InvoiceScreenProp = NativeStackNavigationProp<NavParamList, 'invoice'>;
 

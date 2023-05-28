@@ -1,5 +1,7 @@
 import React from 'react';
+import {Share} from 'react-native';
 import {observer} from 'mobx-react';
+import Toast from 'react-native-toast-message';
 import {
   Divider,
   Icon,
@@ -9,14 +11,12 @@ import {
   TopNavigationAction,
   Button,
 } from '@ui-kitten/components';
-import Clipboard from "@react-native-clipboard/clipboard"
-import {BaseComponent} from '../components/base-component';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {NavParamList} from '../navigation/NavParamList';
-import {RouteProp, useNavigation} from '@react-navigation/native';
 import QRCode from 'react-native-qrcode-svg';
-import {Share} from 'react-native';
-import Toast from 'react-native-toast-message';
+import Clipboard from '@react-native-clipboard/clipboard';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RouteProp, useNavigation} from '@react-navigation/native';
+import {BaseComponent} from '../components';
+import {NavParamList} from '../navigation';
 
 type InvoiceScreenProp = NativeStackNavigationProp<NavParamList, 'invoice'>;
 
@@ -30,7 +30,7 @@ export const Invoice = observer((props: InvoiceProps) => {
   const onShare = async () => {
     try {
       await Share.share({
-        message: "lightning:" + props.route.params.invoice.to_str,
+        message: 'lightning:' + props.route.params.invoice.to_str,
       });
     } catch (error) {
       alert(`Error: ${error}`);
@@ -55,17 +55,29 @@ export const Invoice = observer((props: InvoiceProps) => {
           display: 'flex',
           justifyContent: 'space-between',
           paddingTop: 20,
-          height: "60%",
+          height: '60%',
           alignItems: 'center',
         }}
       >
         <Text style={{fontSize: 30, paddingBottom: 30}}>
-          {Number(props.route.params.invoice.amount_satoshis).toLocaleString()} sats
+          {Number(props.route.params.invoice.amount_satoshis).toLocaleString()}{' '}
+          sats
         </Text>
         <QRCode value={props.route.params.invoice.to_str} size={300} />
         <Layout style={{display: 'flex', flexDirection: 'row', paddingTop: 30}}>
-          <Button style={{width: 100, marginHorizontal: 5}} onPress={() => onShare()}>Share</Button>
-          <Button style={{width: 100, marginHorizontal: 5}} onPress={() => { Clipboard.setString(props.route.params.invoice.to_str); Toast.show({type: "success", text1: 'Copied to clipboard.'})}}>
+          <Button
+            style={{width: 100, marginHorizontal: 5}}
+            onPress={() => onShare()}
+          >
+            Share
+          </Button>
+          <Button
+            style={{width: 100, marginHorizontal: 5}}
+            onPress={() => {
+              Clipboard.setString(props.route.params.invoice.to_str);
+              Toast.show({type: 'success', text1: 'Copied to clipboard.'});
+            }}
+          >
             Copy
           </Button>
         </Layout>

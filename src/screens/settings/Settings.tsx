@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import { BaseComponent } from "../../components/base-component";
-import { Button, Icon, ListItem, Text, Toggle, TopNavigation, TopNavigationAction } from "@ui-kitten/components";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useNavigation } from "@react-navigation/native";
+import React from "react";
 import { observer } from "mobx-react";
-import { useDataStore } from "../../store/DataProvider";
-import { SettingsParamList } from "../../navigation/SettingsParamList";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { Button, Icon, ListItem, Toggle, TopNavigation } from "@ui-kitten/components";
+import { BaseComponent } from "../../components";
+import { useDataStore } from "../../store";
+import { SettingsParamList } from "../../navigation";
 
 type SettingsScreenProp = NativeStackNavigationProp<SettingsParamList, 'settings'>
 

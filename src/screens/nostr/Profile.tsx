@@ -1,16 +1,13 @@
+import React from "react";
+import { Pressable } from "react-native";
+import { observer } from "mobx-react";
 import { RouteProp, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Avatar, Divider, Icon, Layout, Text, TopNavigation } from "@ui-kitten/components";
-import React from "react";
-import { NostrParamList } from "../../navigation/NostrParamList";
-import { BaseComponent } from "../../components/base-component";
-import { observer } from "mobx-react";
-import { useProfile } from "../../nostr/useProfile";
-import { Pressable } from "react-native";
-import { useDataStore } from "../../store/DataProvider";
-import { useNostrEvents } from "../../nostr/core";
-import { Note } from "../../components/note";
-import { NavParamList } from "../../navigation/NavParamList";
+import { NostrParamList } from "../../navigation";
+import { BaseComponent, Note } from "../../components";
+import { useProfile, useNostrEvents } from "../../nostr";
+import { useDataStore } from "../../store";
 
 type ProfileScreenProps = NativeStackNavigationProp<NostrParamList, "nostr-profile">
 

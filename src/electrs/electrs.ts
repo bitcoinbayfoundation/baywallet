@@ -1,6 +1,6 @@
 import * as electrum from 'rn-electrum-client/helpers';
 import {err, ok, Result} from '../util/result';
-import {getItem} from '../storage';
+import {getItem} from '../util/storage';
 import { updateHeader } from '../ldk';
 import {Block} from 'bitcoinjs-lib';
 import * as tls from './tls';

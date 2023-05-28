@@ -1,6 +1,5 @@
 import { action, makeAutoObservable } from "mobx";
 import { getInfo } from "../lsp";
-import ldk from "@synonymdev/react-native-ldk/dist/ldk"
 import { DataStore } from ".";
 import lm from "@synonymdev/react-native-ldk";
 import { lspNodeDev } from "../util/config";

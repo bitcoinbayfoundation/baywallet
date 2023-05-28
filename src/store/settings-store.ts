@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { action, makeAutoObservable, observable, runInAction } from "mobx"
-import { getItem, setItem } from "../storage"
+import { getItem, setItem } from "../util/storage"
 import { BayWalletSettings, SettingsKey, defaultSettings } from "../types/settings"
 import {DataStore} from "./index"
 

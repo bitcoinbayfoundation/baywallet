@@ -30,13 +30,13 @@ export const getNetwork = (
 	}
 };
 
-//Electrum Server Info (Synonym Regtest Set By Default)
+//Electrum Server Info (Bitcoin Bay regtest by default)
 export const customPeers = {
 	bitcoin: [],
 	bitcoinTestnet: [],
 	bitcoinRegtest: [
 		{
-			host: '127.0.0.1',
+			host: '64.225.50.85',
 			tcp: 50001,
 			protocol: 'tcp',
 		},

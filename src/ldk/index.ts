@@ -13,7 +13,7 @@ import {err, ok, Result} from '../types/result';
 import { getBlockHashFromHeight, getBlockHex, getScriptPubKeyHistory } from '../electrs/electrs';
 import * as electrum from "rn-electrum-client/helpers"
 import { getAccount } from '../util/account';
-import { getItem, setItem } from '../storage';
+import { getItem, setItem } from '../util/storage';
 
 /**
  * Used to spin-up LDK services.

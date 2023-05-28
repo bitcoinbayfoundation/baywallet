@@ -1,13 +1,12 @@
-import { Divider, Icon, Layout, TopNavigation, TopNavigationAction } from "@ui-kitten/components";
-import { observer } from "mobx-react";
 import React, { useEffect } from "react";
-import { useDataStore } from "../../store/DataProvider";
-import { BaseComponent } from "../../components/base-component";
-import { Channel } from "../../components/lightning/channel";
+import { observer } from "mobx-react";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { SettingsParamList } from "../../navigation/SettingsParamList";
-import { useModal, Modals } from "../../hooks/use-modal";
+import { Divider, Icon, Layout, TopNavigation, TopNavigationAction } from "@ui-kitten/components";
+import { useDataStore } from "../../store";
+import { BaseComponent, Channel } from "../../components";
+import { SettingsParamList } from "../../navigation";
+import { useModal, Modals } from "../../hooks";
 
 type ChannelsScreenProp = NativeStackNavigationProp<SettingsParamList, "channels">
 

@@ -14,6 +14,9 @@ import { HomeFeed } from "../screens/nostr/HomeFeed"
 import { Profile } from "../screens/nostr/Profile"
 import { Channels } from "../screens/settings/Channels"
 import { NostrProvider } from "../nostr/core"
+export * from "./NavParamList"
+export * from "./NostrParamList"
+export * from "./SettingsParamList"
 
 export const BayWalletAppNavigator = () => {
   const BayWalletStack = createNativeStackNavigator()

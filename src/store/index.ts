@@ -3,6 +3,8 @@ import { LightningStore } from "./lightning-store"
 import { LspStore } from "./lsp-store"
 import { NostrStore } from "./nostr-store"
 import { SettingsStore } from "./settings-store"
+export * from "./DataProvider"
+
 export class DataStore {
     public lightningStore: LightningStore
     public accountStore: AccountStore

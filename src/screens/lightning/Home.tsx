@@ -1,17 +1,13 @@
 import React from 'react';
-import {observer} from 'mobx-react';
-import {Button, TopNavigation, Layout, Divider} from '@ui-kitten/components';
-import {BaseComponent} from '../components/base-component';
-import { BottomDrawer } from '../components/bottom-drawer';
-import { useNavigation } from '@react-navigation/native';
-import { NavParamList } from '../navigation/NavParamList';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useDataStore } from '../store/DataProvider';
-import { Loading } from '../components';
-import { Transaction } from '../components/lightning/transactions';
-import { useLightningNode } from '../hooks/use-lightning-node';
-import { Balance } from '../components/lightning/balance';
 import { EmitterSubscription } from 'react-native';
+import { observer } from 'mobx-react';
+import { Button, TopNavigation, Layout, Divider } from '@ui-kitten/components';
+import { BaseComponent, BottomDrawer, Loading, Transaction, Balance } from '../../components';
+import { useNavigation } from '@react-navigation/native';
+import { NavParamList } from '../../navigation';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useDataStore } from '../../store';
+import { useLightningNode } from '../../hooks';
 
 type HomeScreenProp = NativeStackNavigationProp<NavParamList, 'home'>
 
@@ -20,7 +16,7 @@ let paymentSubscription: EmitterSubscription | undefined;
 let onChannelSubscription: EmitterSubscription | undefined;
 let backupSubscriptionId: string | undefined;
 
-const Home = observer(() => {
+export const Home = observer(() => {
   const navigation = useNavigation<HomeScreenProp>()
   const {lightningStore: {transactions}} = useDataStore()
   const {appReady} = useLightningNode(logSubscription, paymentSubscription, onChannelSubscription, backupSubscriptionId)
@@ -47,5 +43,3 @@ const Home = observer(() => {
     </BaseComponent>
   );
 });
-
-export default Home;

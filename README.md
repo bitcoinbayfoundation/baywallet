@@ -32,7 +32,7 @@ yarn rn-setup
 ```
 
 ## Setup local Bitcoin Environment
-* Bay Wallet has a default electrum environment. If you want to test electrum locally, follow below*
+*** Bay Wallet has a default electrum environment. If you want to test electrum locally, follow below***
 Developers must be running a Bitcoin node with `electrs` to be able to get block information. This repositroy has a docker configuration for developers to setup an environment easily. [Docker has to be installed](https://www.docker.com/) to be able to run the developer environment.
 
 ```

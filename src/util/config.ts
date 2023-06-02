@@ -44,8 +44,8 @@ export const customPeers = {
 };
 
 export const lspNodeDev: TAddPeerReq = {
-	address: "127.0.0.1",
+	address: "64.225.50.85",
 	port: 9735,
-	pubKey: "02cd9665a22b50b7dacdbac9a3254946fc6961982e59842560c51e30774fecd623",
+	pubKey: "037247419cb395f0f691908bf88663eb07cabf3fde8e7184ea922a9814cb16fd8e",
 	timeout: 3600
 }

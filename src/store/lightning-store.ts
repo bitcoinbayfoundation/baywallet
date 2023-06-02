@@ -85,10 +85,10 @@ export class LightningStore {
   @action
   async getNodeBalance()  {
     let balance:number = 0
-    if (this.channels.length !== 0) {
-      this.channels?.map(chan => {
-        console.log(chan.balance_sat)
-        if (chan.is_usable) balance += chan.balance_sat
+    const channels = await this.getChannels()
+    if (channels.length !== 0) {
+      channels?.map(chan => {
+        balance += chan.balance_sat
       })
     }
     runInAction(() => this.balance = balance)

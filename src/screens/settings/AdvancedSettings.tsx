@@ -45,7 +45,6 @@ export const AdvancedSettings = observer(() => {
         <ListItem
           title="Get peers"
           onPress={async () => {
-            console.log("peers")
             const peers = await lightningStore.getPeers()
             if (peers.length === 0) return alert("No peers")
             return Toast.show({ type: "success", text1: "Peers", text2: JSON.stringify(peers)})

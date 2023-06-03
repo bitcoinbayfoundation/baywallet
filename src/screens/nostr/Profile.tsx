@@ -17,11 +17,11 @@ type ProfileProps = {
 
 export const Profile = observer((props: ProfileProps) => {
   const navigation = useNavigation<ProfileScreenProps>()
-  const { nostrStore: {nostrKeys} } = useDataStore()
+  const { keyStore: {nostrKeys} } = useDataStore()
   const { data: profile } = useProfile({
     pubkey: props.route.params.pubkey
   })
-console.log(props.route.params)
+  console.log(props.route.params)
   const {events} = useNostrEvents({
     filter: {
       since: 1,

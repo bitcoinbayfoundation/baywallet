@@ -15,7 +15,7 @@ type HomeFeedProps = NativeStackNavigationProp<NostrParamList, "nostr-home-feed"
 
 export const HomeFeed = observer(() => {
   const navigation = useNavigation<HomeFeedProps>()
-  const { nostrStore: {nostrKeys} } = useDataStore()
+  const { keyStore: {nostrKeys} } = useDataStore()
   const [getFeed, setGetFeed] = useState<boolean>(false)
   const {followingPubkeys} = useFollowingPubkeys()
 

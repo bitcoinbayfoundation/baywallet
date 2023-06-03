@@ -8,24 +8,35 @@ import { NostrParamList } from "../../navigation";
 import { useDataStore } from "../../store";
 import { BaseComponent, Note } from "../../components";
 import { useNostrEvents, useProfile } from "../../nostr";
+import { useFollowingPubkeys } from "../../hooks/nostr/useFollowingPubkeys";
+import { Kind } from "nostr-tools";
 
 type HomeFeedProps = NativeStackNavigationProp<NostrParamList, "nostr-home-feed">
 
 export const HomeFeed = observer(() => {
   const navigation = useNavigation<HomeFeedProps>()
-  const { nostrStore: {me, nostrKeys} } = useDataStore()
+  const { nostrStore: {nostrKeys} } = useDataStore()
+  const [getFeed, setGetFeed] = useState<boolean>(false)
+  const {followingPubkeys} = useFollowingPubkeys()
+
+  useEffect(() => {
+    if (followingPubkeys === null) return
+    setGetFeed(true)
+  }, [followingPubkeys])
 
   const {events} = useNostrEvents({
     filter: {
       since: 1,
-      kinds: [1],
-      authors: ["3f194d7cf5c59eca0145ed7804f0a67c0cc17b6ff6b4bd585821160dcf9d785b"]
-    }
+      kinds: [Kind.Text],
+      authors: followingPubkeys
+    },
+    enabled: getFeed
   })
 
   const {data: profile} = useProfile({
     pubkey: nostrKeys.pubkey
   })
+  
   return (
     <BaseComponent>
       <TopNavigation

@@ -5,15 +5,19 @@ import { log } from "../../util/logger"
 import { useNostrEvents } from "../../nostr"
 import { Kind, Event } from "nostr-tools"
 
+/**
+ * Maybe in the future have a pubkey param for viewing others feeds?
+ */
+
 export type FollowingCache = {
   created_at: number,
   following: string[]
 }
 
-export const useFollowingPubkeys = () => {
+export const useFollowing = () => {
   const {keyStore: {nostrKeys}} = useDataStore()
   const [callRelay, setCallRelay] = useState<boolean>(false)
-  const [followingPubkeys, setFollowingPubkeys] = useState(null)
+  const [following, setFollowing] = useState(null)
   const storageKey = `${nostrKeys.pubkey}-following`
   
   useEffect(() => {
@@ -33,7 +37,7 @@ export const useFollowingPubkeys = () => {
       return setCallRelay(true)
     }
 
-    return setFollowingPubkeys(JSON.parse(following))
+    return setFollowing(JSON.parse(following))
   }
 
   /**
@@ -53,7 +57,7 @@ export const useFollowingPubkeys = () => {
         arrayOfFollowing.push(tag[1])
       }) 
       await setItem(storageKey, JSON.stringify(arrayOfFollowing))
-      return setFollowingPubkeys(arrayOfFollowing)
+      return setFollowing(arrayOfFollowing)
     }    
   }
   
@@ -73,5 +77,5 @@ export const useFollowingPubkeys = () => {
     await storeFollowing(event)
   })
   
-  return { followingPubkeys }
+  return { following }
 }

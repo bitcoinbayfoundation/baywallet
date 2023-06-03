@@ -67,3 +67,6 @@ buck-out/
 /docker/bitcoin/regtest
 /docker/lnd/*
 /docker/electrumx/*
+
+# Development env
+.env

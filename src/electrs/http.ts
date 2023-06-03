@@ -1,5 +1,5 @@
 import axios from "axios"
-import { getItem, setItem } from "../storage"
+import { getItem, setItem } from "../util/storage"
 import { THeader, TTransactionData, TVout } from "@synonymdev/react-native-ldk"
 import { convertElectrsVoutToLdkVout, ElectrsTransactionData, ElectrsTxPosition } from "../types/electrs"
 import { getAddressFromScriptPubKey, getScriptHash } from "../ldk/wallet"

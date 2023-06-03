@@ -64,9 +64,7 @@ export const AdvancedSettings = observer(() => {
             console.log(balance)
             return alert(balance + " sats")
           }}
-        />
-        
-        
+        /> 
       </Layout>
     </BaseComponent>
   )

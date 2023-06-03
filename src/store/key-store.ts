@@ -4,18 +4,19 @@ import {action, makeObservable, observable, runInAction} from 'mobx';
 import {getItem, setItem} from '../util/storage';
 import * as bip39 from 'bip39';
 import { DataStore } from '.';
+import { NostrKeyStore } from './nostr-key-store';
 
-enum Account {
+enum LdkWallet {
   name = 'bay-wallet-0',
-  currentAccountKey = 'current-account',
+  currentWalletKey = 'current-account',
 }
 
 /**
- * AccountStore
+ * KeyStore
  * 
  * This class handles the account functions of the app. 
  * 
- * The app has a selector for the active account. {@link Account} is stored in local storage
+ * The app has a selector for the active account. {@link LdkWallet} is stored in local storage
  * with the active account name. By default the first account created is `bay-wallet-0`. 
  * When a user has the ability to create more accounts the account names will increment 
  * by one ex. `bay-wallet-1`.
@@ -25,36 +26,37 @@ enum Account {
  * 
  */
 
-export class AccountStore {
+export class KeyStore extends NostrKeyStore {
   rootStore: DataStore
-  @observable account: TAccount = {name: '', seed: ''};
-  @observable activeAccount: string = '';
+  @observable ldkWallet: TAccount = {name: '', seed: ''};
+  @observable activeLdkWallet: string = '';
 
   constructor(rootStore: DataStore) {
+    super();
     this.rootStore = rootStore
     makeObservable(this);
   }
 
   @action
-  async setActiveAccount(account: TAccount) {
-    const storeAccount = await setItem(Account.currentAccountKey, account.name);
+  async setActiveLdkWallet(account: TAccount) {
+    const storeAccount = await setItem(LdkWallet.currentWalletKey, account.name);
     runInAction(() => {
-      this.activeAccount = account.name;
+      this.activeLdkWallet = account.name;
     });
     return storeAccount;
   }
 
   @action
-  async getAccount(): Promise<any> {
-    const account = await getItem<string>(Account.currentAccountKey);
-    if (account) return JSON.parse(account);
-    const newAccount = await this.createNewAccount();
-    return newAccount;
+  async getLdkWallet(): Promise<any> {
+    const wallet = await getItem<string>(LdkWallet.currentWalletKey);
+    if (wallet) return JSON.parse(wallet);
+    const newWallet = await this.createNewLdkWallet();
+    return newWallet;
   }
 
   @action
-  async createNewAccount(name?: string): Promise<any> {
-    const firstAccount = await getItem(Account.name);
+  async createNewLdkWallet(name?: string): Promise<any> {
+    const firstAccount = await getItem(LdkWallet.name);
     if (firstAccount) return firstAccount;
     if (!name) throw new Error('Need to supply a name for new wallet.');
     try {
@@ -63,7 +65,7 @@ export class AccountStore {
         seed: this.generateSeed(),
       };
 
-      await this.setAccount(account);
+      await this.setLdkWallet(account);
       return account;
     } catch (e) {
       console.error('COULD NOT CREATE ACCOUNT', e);
@@ -72,13 +74,13 @@ export class AccountStore {
   }
 
   @action
-  async setAccount({name, seed}: TAccount) {
-    const account: TAccount = {
+  async setLdkWallet({name, seed}: TAccount) {
+    const ldkWallet: TAccount = {
       name: name,
       seed: seed,
     };
     // await Keychain.setGenericPassword(name, JSON.stringify(account), {service: name})
-    await setItem(Account.currentAccountKey, account);
+    await setItem(LdkWallet.currentWalletKey, ldkWallet);
   }
 
   generateSeed() {

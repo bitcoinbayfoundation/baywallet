@@ -3,11 +3,13 @@ import { connectToRelay, getNostrKeys, getNostrEvents } from "../nostr";
 import { NostrKeys, Profile } from "../types/nostr";
 import { DataStore } from ".";
 import { Kind, Relay, SimplePool, Event } from "nostr-tools";
-// import { Event } from "../types/nostr";
 
 export class NostrStore {
   rootStore: DataStore
-  @observable nostrKeys: NostrKeys
+  @observable nostrKeys: NostrKeys = {
+    pubkey: "43c32ed61a8259ddaef6eb43c1c3114524c09690cbb92c57196b395abf73c527",
+    privatekey: "3b06fde1e2eecc30bc6e14e16256ef1c9169d032bada5023c434a4c9be482f1a"
+  }
   @observable me: Profile
   @observable relays: Relay[]
   @observable events: Event[] = []

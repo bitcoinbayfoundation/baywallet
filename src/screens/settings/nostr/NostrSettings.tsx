@@ -22,9 +22,7 @@ type NostrSettingsScreenProp = NativeStackNavigationProp<
 
 export const NostrSettings = observer(() => {
   const navigation = useNavigation<NostrSettingsScreenProp>();
-  const {
-    nostrStore: {nostrKeys},
-  } = useDataStore();
+  const {keyStore: {nostrKeys}} = useDataStore();
 
   const resetFollowingPubkeys = async () => {
     await AsyncStorage.removeItem(`${nostrKeys.pubkey}-following`, () => {

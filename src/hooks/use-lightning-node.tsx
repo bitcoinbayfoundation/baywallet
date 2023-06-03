@@ -15,7 +15,7 @@ export const useLightningNode = (
 ) => {
   const [nodeStarted, setNodeStarted] = useState<boolean>(false)
   const [appReady, setAppReady] = useState<boolean>(false)
-  const { lightningStore } = useDataStore()
+  const { lightningStore, keyStore } = useDataStore()
 
   useEffect(() => {
     if (nodeStarted) {
@@ -50,7 +50,7 @@ export const useLightningNode = (
 		}
 		await updateHeader({ header: headerInfo.value });
 		// Setup LDK
-		const setupResponse = await setupLdk();
+		const setupResponse = await setupLdk(keyStore.getLdkWallet);
 		if (setupResponse.isErr()) {
 			console.log("Start error", setupResponse.error.message)
 			return;

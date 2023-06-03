@@ -73,7 +73,7 @@ export const BayWalletNavigator = () => {
   const { Navigator, Screen } = createBottomTabNavigator()
   return (
     <NavigationContainer>
-      <Navigator tabBar={props => <BottomTabBar {...props} />} initialRouteName="nostr">
+      <Navigator tabBar={props => <BottomTabBar {...props} />} initialRouteName="baywallet">
         <Screen name='baywallet' options={{headerShown:false}} component={BayWalletAppNavigator} />
         <Screen name='nostr' options={{headerShown:false}} component={NostrNavigator} />
         <Screen name='baywallet-settings' options={{headerShown:false}} component={SettingsNavigator} />

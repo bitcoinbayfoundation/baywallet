@@ -50,14 +50,14 @@ export class KeyStore extends NostrKeyStore {
   async getLdkWallet(): Promise<any> {
     const wallet = await getItem<string>(LdkWallet.currentWalletKey);
     if (wallet) return JSON.parse(wallet);
-    const newWallet = await this.createNewLdkWallet();
+    const newWallet = await this.createNewLdkWallet(LdkWallet.name);
     return newWallet;
   }
 
   @action
-  async createNewLdkWallet(name?: string): Promise<any> {
+  async createNewLdkWallet(name?: string): Promise<TAccount> {
     const firstAccount = await getItem(LdkWallet.name);
-    if (firstAccount) return firstAccount;
+    if (firstAccount) return JSON.parse(firstAccount);
     if (!name) throw new Error('Need to supply a name for new wallet.');
     try {
       const account: TAccount = {
@@ -69,7 +69,7 @@ export class KeyStore extends NostrKeyStore {
       return account;
     } catch (e) {
       console.error('COULD NOT CREATE ACCOUNT', e);
-      return 'Create wallet failed.';
+      return
     }
   }
 
@@ -80,7 +80,7 @@ export class KeyStore extends NostrKeyStore {
       seed: seed,
     };
     // await Keychain.setGenericPassword(name, JSON.stringify(account), {service: name})
-    await setItem(LdkWallet.currentWalletKey, ldkWallet);
+    await setItem(LdkWallet.currentWalletKey, JSON.stringify(ldkWallet));
   }
 
   generateSeed() {

@@ -13,6 +13,8 @@ Bay Wallet is built with LDK, a Lightning implementation library. LDK allows dev
 Included with Bay Wallet is a nostr client. Having a nostr client included with a Lightning wallet creates a seamless UX for zaps, community engagement, as well as app support.
 
 ***Resources***
+* [nostr-tools](https://github.com/nbd-wtf/nostr-tools)
+* [nostr-react](https://github.com/t4t5/nostr-react)
 * [LDK (rust-lightning)](https://github.com/lightningdevkit/rust-lightning)
 * [LDK Project Website](https://lightningdevkit.org/)
 * [React-Native LDK by Synonym](https://github.com/synonymdev/react-native-ldk)

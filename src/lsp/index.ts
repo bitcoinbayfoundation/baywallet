@@ -10,10 +10,8 @@ const getLndRequest = async (endpoint: string) => {
         "Grpc-Metadata-macaroon": mac
       }
     })
-    console.log("THING", thing)
     return thing
   } catch (e) {
-    console.log("things", e)
   }
 }
 
@@ -22,6 +20,5 @@ export const getInfo = async () => {
     const info = await getLndRequest("/v1/getinfo")
     return info
   } catch (e) {
-    console.log("error", e)
   }
 }

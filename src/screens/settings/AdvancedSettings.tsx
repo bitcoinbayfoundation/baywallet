@@ -9,6 +9,7 @@ import { BaseComponent } from "../../components";
 import { SettingsParamList } from "../../navigation";
 import { lspNodeDev } from "../../util/config";
 import { Modals, useModal } from "../../hooks";
+import { log } from "../..//util/logger";
 
 type AdvancedSettingProps = NativeStackNavigationProp<SettingsParamList, "advanced-settings">
 
@@ -37,7 +38,6 @@ export const AdvancedSettings = observer(() => {
         <ListItem
           title="Add peer"
           onPress={async () => {
-            console.log(lspNodeDev)
             const peer = await lightningStore.addPeer(lspNodeDev.address, lspNodeDev.port, lspNodeDev.pubKey)
             return alert(peer)
           }}
@@ -54,14 +54,13 @@ export const AdvancedSettings = observer(() => {
           title="Create Invoice"
           onPress={async () => {
             const invoice = await lightningStore.createInvoice(100, "who you callin pinhead?")
-            console.log(invoice.to_str)
+            log.ldk(invoice.to_str)
           }}
         />
         <ListItem
           title="Get node balance"
           onPress={async () => {
             const balance = await lightningStore.getNodeBalance()
-            console.log(balance)
             return alert(balance + " sats")
           }}
         /> 

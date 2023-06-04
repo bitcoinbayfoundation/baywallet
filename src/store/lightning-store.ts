@@ -1,9 +1,10 @@
 import { action, makeAutoObservable, observable, runInAction } from 'mobx';
 import ldk from "@synonymdev/react-native-ldk/dist/ldk"
-import lm, { TAddPeerReq, TInvoice } from "@synonymdev/react-native-ldk"
+import { TAddPeerReq, TInvoice } from "@synonymdev/react-native-ldk"
 import { TChannel } from '@synonymdev/react-native-ldk';
 import { DataStore } from '.';
 import { invoice } from '../stubs/ldk';
+import { log } from '../util/logger';
 
 export class LightningStore {
   rootStore: DataStore
@@ -47,7 +48,7 @@ export class LightningStore {
     }
 
     const peerAdded = await ldk.addPeer(peerConfig)
-    if (peerAdded.isErr()) return console.log("no peer")
+    if (peerAdded.isErr()) return log.ldk("no peer")
 
     return peerAdded.value
   }

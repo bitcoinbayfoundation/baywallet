@@ -21,7 +21,7 @@ export const Profile = observer((props: ProfileProps) => {
   const { data: profile } = useProfile({
     pubkey: props.route.params.pubkey
   })
-  console.log(props.route.params)
+
   const {events} = useNostrEvents({
     filter: {
       since: 1,

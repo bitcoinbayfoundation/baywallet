@@ -29,11 +29,11 @@ export const useFollowing = () => {
    * @returns following from storage or call to relays
    */
   const getFollowingFromStorage = async () => {
-    log.debug(`getFollowingFromStorage: Reading ${storageKey}`)
+    log.nostr(`getFollowingFromStorage: Reading ${storageKey}`)
     const following = await getItem(storageKey)
 
     if (!following) {
-      log.debug(`getFollowingFromStorage: fetching from relays`)
+      log.nostr(`getFollowingFromStorage: fetching from relays`)
       return setCallRelay(true)
     }
 

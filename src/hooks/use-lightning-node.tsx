@@ -6,6 +6,7 @@ import { EmitterSubscription } from "react-native";
 import lm, { EEventTypes, TChannelManagerClaim, TChannelUpdate } from "@synonymdev/react-native-ldk";
 import Toast from "react-native-toast-message";
 import { connectToElectrum, subscribeToHeader } from "../electrs/electrs";
+import { log } from "../util/logger"
 
 export const useLightningNode = (
 	logSubscription: EmitterSubscription | undefined, 
@@ -40,7 +41,7 @@ export const useLightningNode = (
 			onReceive: async (): Promise<void> => {
 				const syncRes = await syncLdk();
 				if (syncRes.isErr()) {
-					console.log("Sync error", syncRes.error)
+					log.ldk("Sync error", syncRes.error)
 					return;
 				}
 			},
@@ -52,7 +53,7 @@ export const useLightningNode = (
 		// Setup LDK
 		const setupResponse = await setupLdk(keyStore.getLdkWallet);
 		if (setupResponse.isErr()) {
-			console.log("Start error", setupResponse.error.message)
+			log.ldk("Start error", setupResponse.error.message)
 			return;
 		}
 		
@@ -97,7 +98,7 @@ export const useLightningNode = (
 					return alert('Backup required but failed to export account');
 				}
 
-				console.log(
+				log.ldk(
 					`Backup updated for account ${backupRes.value.account.name}`,
 				);
 			});

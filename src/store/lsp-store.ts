@@ -12,7 +12,6 @@ export class LspStore {
   constructor(rootStore: DataStore) {
     this.rootStore = rootStore
     makeAutoObservable(this)
-    console.log("LSP init")
     getInfo()
   }
 
@@ -20,7 +19,6 @@ export class LspStore {
   async connectToLsp() {
     const peer = await lm.addPeer(lspNodeDev)
     if (peer.isErr()) throw Error(`NOT CONNECTED TO LSP: ${lspNodeDev.pubKey}`)
-    console.log(`CONNECTING PEER: ${lspNodeDev.pubKey}`, peer.value)
     return peer.value
   }
 
@@ -28,7 +26,7 @@ export class LspStore {
   async checkForLspChannel() {
     const channels = await this.rootStore.lightningStore.getChannels()
     const lspChannelExists = channels.find(chan => chan.counterparty_node_id === lspNodeDev.pubKey)
-    if (!lspChannelExists) return console.log("LSP channel does not exist")
-    return console.log("LSP CHANNEL EXISTS")
+    if (!lspChannelExists) 
+    return 
   }
 }

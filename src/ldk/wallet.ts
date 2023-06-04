@@ -3,6 +3,7 @@ import * as bitcoin from "bitcoinjs-lib"
 import * as bip39 from "bip39"
 import * as bip32 from "bip32"
 import { getAccount } from "../util/account";
+import { log } from "../util/logger";
 
 export const getAddress = async () => {
   const network = getNetwork("bitcoinRegtest")
@@ -42,7 +43,7 @@ export const getScriptHash = (address: string): string => {
 		const reversedHash = new Buffer(hash.reverse());
 		return reversedHash.toString('hex');
 	} catch (e) {
-		console.log(e);
+		log.keys(e);
 		return '';
 	}
 };

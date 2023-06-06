@@ -23,6 +23,7 @@ export const useLightningNode = (
       initLightningInfo()
       return
     }
+		log.ldk("Connecting to electrum...")
     connectToLightning()
   }, [nodeStarted])
 
@@ -34,6 +35,7 @@ export const useLightningNode = (
   const connectToLightning = async () => {
 		const electrumResponse = await connectToElectrum({});
 		if (electrumResponse.isErr()) {
+			log.ldk(`Could not connect to electrum: ${electrumResponse.error}`)
 			return;
 		}
 		// Subscribe to new blocks and sync LDK accordingly.
@@ -51,7 +53,7 @@ export const useLightningNode = (
 		}
 		await updateHeader({ header: headerInfo.value });
 		// Setup LDK
-		const setupResponse = await setupLdk(keyStore.getLdkWallet);
+		const setupResponse = await setupLdk();
 		if (setupResponse.isErr()) {
 			log.ldk("Start error", setupResponse.error.message)
 			return;

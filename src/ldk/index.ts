@@ -13,6 +13,7 @@ import {err, ok, Result} from '../types/result';
 import { getBlockHashFromHeight, getBlockHex, getScriptPubKeyHistory } from '../electrs/electrs';
 import * as electrum from "rn-electrum-client/helpers"
 import { getItem, setItem } from '../util/storage';
+import { getAccount } from '../util/account';
 
 /**
  * Used to spin-up LDK services.
@@ -23,7 +24,7 @@ import { getItem, setItem } from '../util/storage';
  * 4. Adds/Connects saved peers from storage. (Note: Not needed as LDK handles this automatically once a peer has been added successfully. Only used to make example app easier to test.)
  * 5. Syncs LDK.
  */
-export const setupLdk = async (getAccount: () => Promise<any>): Promise<Result<string>> => {
+export const setupLdk = async (/*getAccount?: () => Promise<any>*/): Promise<Result<string>> => {
 	try {
 		await ldk.reset();
 		const genesisHash = await getBlockHashFromHeight({height:0});

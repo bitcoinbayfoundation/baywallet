@@ -25,5 +25,6 @@ export type Profile = {
   display_name?: string,
   about?: string,
   name?: string,
-  nip05?: string
+  nip05?: string,
+  pubkey: string
 }

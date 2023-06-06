@@ -7,6 +7,7 @@ const config = {
     nostr: 2,
     keys: 3,
     error: 4,
+    dev: 5
   },
   severity: "debug",
   transport: consoleTransport,
@@ -16,6 +17,7 @@ const config = {
       ldk: "blue",
       nostr: "magenta",
       key: "yellow",
+      dev: "cyan",
       warn: "yellowBright",
       error: "redBright",
     },
@@ -24,5 +26,5 @@ const config = {
   enabled: true,
 }
 
-export const log = logger.createLogger<"info" | "ldk" | "nostr" | "keys" | "error">(config);
+export const log = logger.createLogger<"info" | "ldk" | "nostr" | "keys" | "error" | "dev">(config);
 

@@ -17,7 +17,7 @@ export type FollowingCache = {
 export const useFollowing = () => {
   const {keyStore: {nostrKeys}} = useDataStore()
   const [callRelay, setCallRelay] = useState<boolean>(false)
-  const [following, setFollowing] = useState(null)
+  const [following, setFollowing] = useState<string[]>(null)
   const storageKey = `${nostrKeys.pubkey}-following`
   
   useEffect(() => {

@@ -15,6 +15,7 @@ import {BaseComponent} from '../../../components';
 import {useDataStore} from '../../../store';
 import {SettingsParamList} from '../../../navigation';
 import {Toast} from 'react-native-toast-message/lib/src/Toast';
+import { setItem, storage } from '../../../util/storage';
 type NostrSettingsScreenProp = NativeStackNavigationProp<
   SettingsParamList,
   'nostr-settings'
@@ -49,6 +50,14 @@ export const NostrSettings = observer(() => {
         title="Following Pubkeys"
         accessoryRight={
           <Button onPress={async () => await resetFollowingPubkeys()}>
+            reset
+          </Button>
+        }
+      />
+      <ListItem
+        title="Following Pubkeys"
+        accessoryRight={
+          <Button onPress={() => storage.set("nostr-profiles", JSON.stringify([]))}>
             reset
           </Button>
         }

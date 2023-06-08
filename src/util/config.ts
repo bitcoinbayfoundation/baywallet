@@ -1,7 +1,7 @@
 import { ENetworks, TAddPeerReq, TAvailableNetworks } from "@synonymdev/react-native-ldk";
 import * as bitcoin from "bitcoinjs-lib"
-import Toast, {BaseToast, ErrorToast} from "react-native-toast-message";
 
+// LDK config
 export const selectedNetwork: TAvailableNetworks = 'bitcoinRegtest'
 
 export const ldkNetwork = (network: TAvailableNetworks): ENetworks => {
@@ -49,3 +49,12 @@ export const lspNodeDev: TAddPeerReq = {
 	pubKey: "037247419cb395f0f691908bf88663eb07cabf3fde8e7184ea922a9814cb16fd8e",
 	timeout: 3600
 }
+
+// Nostr config
+export const relayUrls: string[] = [
+	"wss://nostr.bitcoinbay.engineering",
+	"wss://nos.lol",
+	"wss://relay.damus.io",
+	"wss://eden.nostr.land",
+	"wss://offchain.pub"
+]

@@ -15,6 +15,7 @@ export interface Metadata {
   lud06?: string
   lud16?: string
   nip05?: string
+  pubkey?: string
 }
 
 const QUEUE_DEBOUNCE_DURATION = 100

@@ -16,8 +16,7 @@ export const useCachedProfile = (pubkey: string) => {
 
   const getProfileFromStorage = useCallback(() => {
     log.nostr(`getProfileFromStorage: Reading ${pk}`)
-    const profiles = JSON.parse(storage.getString(storageKey))
-    log.nostr(`Profiles in storage ${profiles.length} ${profiles}`)
+    const profiles: Metadata[] = JSON.parse(storage.getString(storageKey))
 
     if (!profiles || profiles.length === 0) {
       log.nostr("Nothing in storage.")
@@ -26,11 +25,12 @@ export const useCachedProfile = (pubkey: string) => {
     
     const pubkey = profiles.find(profile => profile.pubkey === pk)
 
-    if (!pubkey) {
+    if (pubkey === undefined) {
+      log.nostr(`Nothing found in storage. Calling to relay for metadata. `)
       return setEnable(true)
     }
 
-    log.nostr(`getProfileFromStorage: result ${pubkey}`)
+    log.nostr(`getProfileFromStorage: ${pubkey}`)
     return setProfile(pubkey)
   }, [])
 

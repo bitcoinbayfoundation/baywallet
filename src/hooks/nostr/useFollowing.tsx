@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useDataStore } from "../../store"
 import { getItem, setItem } from "../../util/storage"
 import { log } from "../../util/logger"
-import { useNostrEvents } from "../../nostr"
+import { useNostrEvents } from "../../../.archive"
 import { Kind, Event } from "nostr-tools"
 
 /**
@@ -15,11 +15,11 @@ export type FollowingCache = {
 }
 
 export const useFollowing = () => {
-  const {keyStore: {nostrKeys}} = useDataStore()
+  const { keyStore: { nostrKeys } } = useDataStore()
   const [callRelay, setCallRelay] = useState<boolean>(false)
   const [following, setFollowing] = useState<string[]>(null)
   const storageKey = `${nostrKeys.pubkey}-following`
-  
+
   useEffect(() => {
     getFollowingFromStorage()
   }, [])
@@ -55,12 +55,12 @@ export const useFollowing = () => {
       if (event.tags.length === 0) return
       event.tags.forEach(tag => {
         arrayOfFollowing.push(tag[1])
-      }) 
+      })
       await setItem(storageKey, JSON.stringify(arrayOfFollowing))
       return setFollowing(arrayOfFollowing)
-    }    
+    }
   }
-  
+
   const event = useNostrEvents({
     filter: {
       since: 1,
@@ -76,6 +76,6 @@ export const useFollowing = () => {
   event.onEvent(async (event: Event) => {
     await storeFollowing(event)
   })
-  
+
   return { following }
 }

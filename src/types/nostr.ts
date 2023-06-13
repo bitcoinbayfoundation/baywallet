@@ -17,14 +17,16 @@ export type Event = {
   tags: Array<Array<string>>,
   sig?: string
 }
-
-export type Profile = {
-  lud06?: string,
-  website?: string,
-  picture?: string,
-  display_name?: string,
-  about?: string,
-  name?: string,
-  nip05?: string,
-  pubkey: string
+export interface Metadata {
+  name?: string
+  username?: string
+  display_name?: string
+  picture?: string
+  banner?: string
+  about?: string
+  website?: string
+  lud06?: string
+  lud16?: string
+  nip05?: string
+  pubkey?: string
 }

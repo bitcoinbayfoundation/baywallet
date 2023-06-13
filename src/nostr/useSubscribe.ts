@@ -7,7 +7,7 @@ import { useNostrStore } from './store';
 
 import { generateSubId } from './utils';
 
-const useSubscribe = ({ filters, relays, options }: Config) => {
+export const useSubscribe = ({ filters, relays, options }: Config) => {
   const subId = useRef(generateSubId());
   const shouldCreateSub = useRef(true);
 
@@ -74,5 +74,3 @@ const useSubscribe = ({ filters, relays, options }: Config) => {
     loadMore: () => loadMore(subId.current),
   };
 };
-
-export default useSubscribe;

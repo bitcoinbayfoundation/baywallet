@@ -1,8 +1,9 @@
 import { useFollowing } from "./useFollowing"
 import { useEffect, useState } from "react"
-import { useNostrEvents } from "../../nostr"
 import { Kind } from "nostr-tools"
 import { log } from "../../util/logger"
+import { useSubscribe } from "../../nostr"
+import { relayUrls } from "../../util/config"
 
 /**
  * Retrieves the cached following for the user and then fetches events from those pubkeys.
@@ -10,23 +11,19 @@ import { log } from "../../util/logger"
  * @returns users feed from who they are following
  */
 export const useHomeFeed = () => {
-  const {following} = useFollowing()
-  const [enable, setEnable] = useState<boolean>(false)
+  const { following } = useFollowing()
   // const now = useRef(new Date().getUTCDate() / 1000 - ONE_WEEK_AGO)
-  
-  useEffect(() => {
-    if (following === null) return
-    setEnable(true)
-  }, [following])
-
-  const {events: feed} = useNostrEvents({
-    filter: {
-      since: 1685923717,
-      kinds: [Kind.Text],
+  const feed = useSubscribe({
+    relays: relayUrls,
+    filters: [{
+      since: 1686542688,
+      kinds: [1],
       authors: following
-    },
-    enabled: enable
+    }],
+    options: {
+      enabled: following !== null
+    }
   })
 
-  return { feed }
+  return { feed: feed.events, eose: feed.eose }
 }

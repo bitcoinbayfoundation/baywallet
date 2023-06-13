@@ -13,7 +13,8 @@ if (typeof process === 'undefined') {
 
 global.TextDecoder = require("text-decoding").TextDecoder
 global.TextEncoder = require("text-encoding").TextEncoder
-
+global.URL = require("react-native-url-polyfill").URL
+global.URLSearchParams = require("react-native-url-polyfill").URLSearchParams
 process.browser = false
 if (typeof Buffer === 'undefined') global.Buffer = require('buffer').Buffer
 

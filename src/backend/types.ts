@@ -1,9 +1,13 @@
 import { TAvailableNetworks } from '@synonymdev/react-native-ldk';
+import { TVout } from "@synonymdev/react-native-ldk";
 
-export enum Account {
-	name = 'bay-wallet-0',
-	currentAccountKey = 'current-account',
+export type EsploraMerkleProof = {
+  merkle: string[],
+  block_height: number,
+  pos: number
 }
+
+export type TGetAddressHistory = { txid: string; height: number };
 
 export interface IGetHeaderResponse {
 	id: Number;
@@ -22,10 +26,6 @@ export interface ISubscribeToHeader {
 	id: string;
 	method: string;
 }
-
-export type TGetAddressHistory = { txid: string; height: number };
-
-import { TVout } from "@synonymdev/react-native-ldk";
 
 export type ElectrsTransactionData = {
   txid: string;
@@ -82,8 +82,7 @@ export const convertElectrsVoutToLdkVout = (electrs:ElectrsVout[]): TVout[] => {
   electrs.map(vout => {
     const ldkVout: TVout = {
       hex: vout.scriptpubkey,
-      // TODO: what is n?
-      n: 0,
+      n: electrs.indexOf(vout),
       value: vout.value
     } 
     voutArray.push(ldkVout)

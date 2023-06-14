@@ -11,8 +11,6 @@ if (typeof process === 'undefined') {
   }
 }
 
-global.net = require('./src/electrs/net');
-global.tls = require('./src/electrs/tls');
 global.TextDecoder = require("text-decoding").TextDecoder
 global.TextEncoder = require("text-encoding").TextEncoder
 

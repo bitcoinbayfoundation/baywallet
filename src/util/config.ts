@@ -30,6 +30,8 @@ export const getNetwork = (
 	}
 };
 
+export const mempoolHostname = 'mempool.bitcoinbay.engineering';
+
 //Electrum Server Info (Bitcoin Bay regtest by default)
 export const customPeers = {
 	bitcoin: [],
@@ -45,7 +47,7 @@ export const customPeers = {
 
 export const lspNodeDev: TAddPeerReq = {
 	address: "64.225.50.85",
-	port: 9735,
+	port: 9736,
 	pubKey: "037247419cb395f0f691908bf88663eb07cabf3fde8e7184ea922a9814cb16fd8e",
 	timeout: 3600
 }

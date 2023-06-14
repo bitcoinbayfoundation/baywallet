@@ -39,7 +39,7 @@ export const invoice: TInvoice[] = [{
   payment_secret: "4t4g3g4g",
   timestamp: 21234353,
   features: "BOLT12",
-  currency: 1,
+  currency: "usd",
   to_str: "wfwefwef",
   route_hints: [],
 }]

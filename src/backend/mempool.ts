@@ -61,7 +61,7 @@ export const getTransactionPosition = async ({
 	height,
 }): Promise<TTransactionPosition> => {
 	console.log("trying here for transacion position", tx_hash, height)
-	const txMerkleProof = await axios.get<EsploraMerkleProof>(`http://${mempoolHostname}:3003/tx/${tx_hash}/merkle-proof`)
+	const txMerkleProof = await axios.get<EsploraMerkleProof>(`http://64.225.50.85:3003/tx/${tx_hash}/merkle-proof`)
 	console.log("txMerkleProof", txMerkleProof.status, txMerkleProof.data)
 	return txMerkleProof.data.pos;
 	// const merkleProof = await transactions.getTxMerkleProof({ txid: tx_hash });

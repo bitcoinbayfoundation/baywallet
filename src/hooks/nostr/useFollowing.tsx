@@ -2,8 +2,9 @@ import { useState, useEffect } from "react"
 import { useDataStore } from "../../store"
 import { getItem, setItem } from "../../util/storage"
 import { log } from "../../util/logger"
-import { useNostrEvents } from "../../nostr"
 import { Kind, Event } from "nostr-tools"
+import { useSubscribe } from "../../nostr"
+import { relayUrls } from "../../util/config"
 
 /**
  * Maybe in the future have a pubkey param for viewing others feeds?
@@ -15,11 +16,11 @@ export type FollowingCache = {
 }
 
 export const useFollowing = () => {
-  const {keyStore: {nostrKeys}} = useDataStore()
+  const { keyStore: { nostrKeys } } = useDataStore()
   const [callRelay, setCallRelay] = useState<boolean>(false)
   const [following, setFollowing] = useState<string[]>(null)
   const storageKey = `${nostrKeys.pubkey}-following`
-  
+
   useEffect(() => {
     getFollowingFromStorage()
   }, [])
@@ -32,11 +33,10 @@ export const useFollowing = () => {
     log.nostr(`getFollowingFromStorage: Reading ${storageKey}`)
     const following = await getItem(storageKey)
 
-    if (!following) {
+    if (!following || following === undefined) {
       log.nostr(`getFollowingFromStorage: fetching from relays`)
       return setCallRelay(true)
     }
-
     return setFollowing(JSON.parse(following))
   }
 
@@ -55,27 +55,33 @@ export const useFollowing = () => {
       if (event.tags.length === 0) return
       event.tags.forEach(tag => {
         arrayOfFollowing.push(tag[1])
-      }) 
+      })
       await setItem(storageKey, JSON.stringify(arrayOfFollowing))
       return setFollowing(arrayOfFollowing)
-    }    
+    }
   }
-  
-  const event = useNostrEvents({
-    filter: {
+
+  const { events, eose } = useSubscribe({
+    relays: relayUrls,
+    filters: [{
       since: 1,
       kinds: [Kind.Contacts],
       authors: [nostrKeys.pubkey]
-    },
-    enabled: callRelay
+    }],
+    options: {
+      enabled: callRelay
+    }
   })
 
-  /**
-   * When we get an event, see if we need to store it.
-   */
-  event.onEvent(async (event: Event) => {
-    await storeFollowing(event)
-  })
-  
-  return { following }
+  useEffect(() => {
+    if (!eose) return
+    const arrayOfFollowing = []
+    if (events[0].tags.length === 0) return
+    events[0].tags.forEach(tag => {
+      arrayOfFollowing.push(tag[1])
+    })
+    storeFollowing(events[0])
+  }, [eose])
+
+  return following
 }

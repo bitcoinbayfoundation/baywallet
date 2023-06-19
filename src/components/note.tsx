@@ -2,12 +2,11 @@ import React from "react"
 import { Avatar, Divider, Layout, Text } from "@ui-kitten/components"
 import { Event } from "nostr-tools"
 import { Pressable } from "react-native"
-import { useCachedProfile } from "../hooks/nostr"
+import { Metadata } from "../types/nostr"
 
-type NoteProps = { note: Event, navigation?: any }
-export const Note = ({ note, navigation }: NoteProps) => {
-  const { profile } = useCachedProfile(note.pubkey)
-
+type NoteProps = { note: Event, profile: Metadata, navigation?: any }
+export const Note = ({ note, profile, navigation }: NoteProps) => {
+  // const { profile } = useCachedProfile(note.pubkey)
   return (
     <>
       <Layout style={{ marginVertical: 10, display: "flex", flexDirection: "row" }}>

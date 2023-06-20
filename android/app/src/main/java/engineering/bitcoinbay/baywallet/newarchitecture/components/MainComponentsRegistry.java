@@ -1,4 +1,4 @@
-package com.baywallet.newarchitecture.components;
+package engineering.bitcoinbay.baywallet.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

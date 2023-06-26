@@ -1,4 +1,4 @@
-package com.baywallet.newarchitecture;
+package engineering.bitcoinbay.baywallet.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.baywallet.BuildConfig;
-import com.baywallet.newarchitecture.components.MainComponentsRegistry;
-import com.baywallet.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.facebook.react.BuildConfig;
+import engineering.bitcoinbay.baywallet.newarchitecture.components.MainComponentsRegistry;
+import engineering.bitcoinbay.baywallet.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

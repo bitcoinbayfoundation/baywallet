@@ -13,6 +13,7 @@ type Props = {
 
 export const Pay = (props: Props) => {
   const {route} = props;
+  console.log('route', route);
   return (
     <BaseComponent>
       <Text>NOT IMPLEMENTED</Text>

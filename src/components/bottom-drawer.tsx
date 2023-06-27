@@ -63,7 +63,7 @@ export const BottomDrawer = ({children}: Props) => {
   const getNextState = (
     currentState: DrawerState,
     val: number,
-    margin: number,
+    nextMargin: number,
   ) => {
     switch (currentState) {
       case DrawerState.Open:
@@ -71,7 +71,7 @@ export const BottomDrawer = ({children}: Props) => {
         return val >= currentState ? DrawerState.Open : DrawerState.Closed;
       case DrawerState.Closed:
         setLabel(true);
-        return val >= currentState + margin
+        return val >= currentState + nextMargin
           ? DrawerState.Open
           : DrawerState.Closed;
       default:

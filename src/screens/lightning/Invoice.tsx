@@ -42,12 +42,12 @@ export const Invoice = observer((props: InvoiceProps) => {
       <TopNavigation
         title="Receive"
         alignment="center"
-        accessoryLeft={
+        accessoryLeft={() => (
           <TopNavigationAction
             onPress={() => navigation.navigate('home')}
             icon={<Icon name="arrow-back" />}
           />
-        }
+        )}
       />
       <Divider />
       <Layout

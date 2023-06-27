@@ -12,16 +12,16 @@ interface Props {
   children?: React.ReactNode
 }
 
-export const BottomDrawer = ({children}: Props) => {
+export const BottomDrawer = ({ children }: Props) => {
   const [label, setLabel] = useState(false)
   const theme = useTheme()
-  const {height} = Dimensions.get("window")
+  const { height } = Dimensions.get("window")
   const y = useRef(new Animated.Value(DrawerState.Closed)).current
   const state = useRef(new Animated.Value(DrawerState.Closed)).current
   const margin = height * .05
   const movementValue = (moveY: number) => height - moveY
 
-  const onPanResponderMove = (_: GestureResponderEvent, {moveY}: PanResponderGestureState) => {
+  const onPanResponderMove = (_: GestureResponderEvent, { moveY }: PanResponderGestureState) => {
     const val = movementValue(moveY)
     animateMove(y, val)
   }
@@ -34,7 +34,7 @@ export const BottomDrawer = ({children}: Props) => {
     animateMove(y, nextState);
   };
 
-  const onMoveShouldSetPanResponder = (_: GestureResponderEvent, {dy}: PanResponderGestureState) => Math.abs(dy) >= 10
+  const onMoveShouldSetPanResponder = (_: GestureResponderEvent, { dy }: PanResponderGestureState) => Math.abs(dy) >= 10
 
   const panResponder = useRef(PanResponder.create({
     onMoveShouldSetPanResponder,
@@ -62,9 +62,9 @@ export const BottomDrawer = ({children}: Props) => {
 
   const HorizontalLine = () => {
     return (
-      <View 
+      <View
         style={{
-          margin: "3% 0% 3% 0%",
+          marginVertical: 3,
           // backgroundColor: "#FFF",
           height: 25,
           width: "50%",
@@ -72,13 +72,13 @@ export const BottomDrawer = ({children}: Props) => {
           borderRadius: 100
         }}
       >
-        {label ? <Text style={{textAlign: "center"}}>Transactions</Text> : <Icon name='arrow-ios-upward-outline' fill="#FFF" />}
+        {label ? <Text style={{ textAlign: "center" }}>Transactions</Text> : <Icon name='arrow-ios-upward-outline' fill="#FFF" />}
       </View>
     )
   }
 
   return (
-    <Animated.View 
+    <Animated.View
       style={{
         width: "100%",
         backgroundColor: theme["background-basic-color-1"],
@@ -87,10 +87,10 @@ export const BottomDrawer = ({children}: Props) => {
         position: "absolute",
         bottom: -height + 40,
         transform: [{ translateY: y }],
-      }} 
+      }}
       {...panResponder.panHandlers}
     >
-      <HorizontalLine />      
+      <HorizontalLine />
       {children}
     </Animated.View>
   )

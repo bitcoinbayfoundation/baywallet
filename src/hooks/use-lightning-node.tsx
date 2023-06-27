@@ -24,7 +24,7 @@ export const useLightningNode = (
 			initLightningInfo()
 			return
 		}
-		log.ldk("Connecting to electrum...")
+		log.ldk("Connecting to mempool...")
 		connectToLightning()
 	}, [nodeStarted])
 
@@ -54,8 +54,8 @@ export const useLightningNode = (
 				lm.syncLdk();
 			}
 		});
-		// Setup LDK
 
+		// Setup LDK
 		const setupResponse = await startBayWalletNode();
 		if (setupResponse.isErr()) {
 			log.ldk("Start error", setupResponse.error.message)

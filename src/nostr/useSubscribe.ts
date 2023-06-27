@@ -1,27 +1,29 @@
-import { Event } from 'nostr-tools';
-import { useCallback, useEffect, useRef } from 'react';
+import {Event} from 'nostr-tools';
+import {useCallback, useEffect, useRef} from 'react';
 
-import { Config } from './types';
+import {Config} from './types';
 
-import { useNostrStore } from './store';
+import {useNostrStore} from './store';
 
-import { generateSubId } from './utils';
+import {generateSubId} from './utils';
 
-export const useSubscribe = ({ filters, relays, options }: Config) => {
+export const useSubscribe = ({filters, relays, options}: Config) => {
   const subId = useRef(generateSubId());
   const shouldCreateSub = useRef(true);
 
-  const handleSub = useNostrStore(useCallback((store) => store.handleNewSub, []));
-  const handleUnSub = useNostrStore(useCallback((store) => store.unSub, []));
-  const handleInvalidate = useNostrStore(useCallback((store) => store.handleInvalidate, []));
-  const loadMore = useNostrStore(useCallback((store) => store.loadMore, []));
+  const handleSub = useNostrStore(useCallback(store => store.handleNewSub, []));
+  const handleUnSub = useNostrStore(useCallback(store => store.unSub, []));
+  const handleInvalidate = useNostrStore(
+    useCallback(store => store.handleInvalidate, []),
+  );
+  const loadMore = useNostrStore(useCallback(store => store.loadMore, []));
   const sub = useNostrStore(
-    useCallback((store) => store.subMap.get(subId.current), [subId.current])
+    useCallback(store => store.subMap.get(subId.current), [subId.current]),
   );
 
   const events = useNostrStore(
     useCallback(
-      (store) => {
+      store => {
         const subscribedEvents = [] as Event[];
         store.eventMap.forEach((subIds, event) => {
           if (subIds.has(subId.current)) {
@@ -31,8 +33,8 @@ export const useSubscribe = ({ filters, relays, options }: Config) => {
 
         return subscribedEvents;
       },
-      [subId.current]
-    )
+      [subId.current],
+    ),
   );
 
   useEffect(() => {
@@ -57,9 +59,16 @@ export const useSubscribe = ({ filters, relays, options }: Config) => {
   useEffect(() => {
     if (shouldCreateSub.current) {
       shouldCreateSub.current = false;
-      handleSub({ filters, relays, options }, subId.current);
+      handleSub({filters, relays, options}, subId.current);
     }
-  }, [shouldCreateSub.current, filters, relays, options, handleSub, subId.current]);
+  }, [
+    shouldCreateSub.current,
+    filters,
+    relays,
+    options,
+    handleSub,
+    subId.current,
+  ]);
 
   useEffect(() => {
     return () => {
@@ -70,7 +79,8 @@ export const useSubscribe = ({ filters, relays, options }: Config) => {
   return {
     events,
     eose: sub?.eose || false,
-    invalidate: () => handleInvalidate(subId.current, { filters, relays, options }),
+    invalidate: () =>
+      handleInvalidate(subId.current, {filters, relays, options}),
     loadMore: () => loadMore(subId.current),
   };
 };

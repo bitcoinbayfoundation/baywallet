@@ -3,8 +3,8 @@ import {randomBytes} from 'crypto';
 import {action, makeObservable, observable, runInAction} from 'mobx';
 import {getItem, setItem} from '../util/storage';
 import * as bip39 from 'bip39';
-import { DataStore } from '.';
-import { NostrKeyStore } from './nostr-key-store';
+import {DataStore} from '.';
+import {NostrKeyStore} from './nostr-key-store';
 
 enum LdkWallet {
   name = 'bay-wallet-0',
@@ -13,33 +13,36 @@ enum LdkWallet {
 
 /**
  * KeyStore
- * 
- * This class handles the account functions of the app. 
- * 
+ *
+ * This class handles the account functions of the app.
+ *
  * The app has a selector for the active account. {@link LdkWallet} is stored in local storage
- * with the active account name. By default the first account created is `bay-wallet-0`. 
- * When a user has the ability to create more accounts the account names will increment 
+ * with the active account name. By default the first account created is `bay-wallet-0`.
+ * When a user has the ability to create more accounts the account names will increment
  * by one ex. `bay-wallet-1`.
- * 
+ *
  * The account seed is stored in local storage under the `currentAccountKey` as of this
  * commit. Secure storage is needed in the future {@link https://www.npmjs.com/package/react-native-keychain#android}.
- * 
+ *
  */
 
 export class KeyStore extends NostrKeyStore {
-  rootStore: DataStore
+  rootStore: DataStore;
   @observable ldkWallet: TAccount = {name: '', seed: ''};
   @observable activeLdkWallet: string = '';
 
   constructor(rootStore: DataStore) {
     super();
-    this.rootStore = rootStore
+    this.rootStore = rootStore;
     makeObservable(this);
   }
 
   @action
   async setActiveLdkWallet(account: TAccount) {
-    const storeAccount = await setItem(LdkWallet.currentWalletKey, account.name);
+    const storeAccount = await setItem(
+      LdkWallet.currentWalletKey,
+      account.name,
+    );
     runInAction(() => {
       this.activeLdkWallet = account.name;
     });
@@ -49,7 +52,9 @@ export class KeyStore extends NostrKeyStore {
   @action
   async getLdkWallet(): Promise<any> {
     const wallet = await getItem<string>(LdkWallet.currentWalletKey);
-    if (wallet) return JSON.parse(wallet);
+    if (wallet) {
+      return JSON.parse(wallet);
+    }
     const newWallet = await this.createNewLdkWallet(LdkWallet.name);
     return newWallet;
   }
@@ -57,8 +62,12 @@ export class KeyStore extends NostrKeyStore {
   @action
   async createNewLdkWallet(name?: string): Promise<TAccount> {
     const firstAccount = await getItem(LdkWallet.name);
-    if (firstAccount) return JSON.parse(firstAccount);
-    if (!name) throw new Error('Need to supply a name for new wallet.');
+    if (firstAccount) {
+      return JSON.parse(firstAccount);
+    }
+    if (!name) {
+      throw new Error('Need to supply a name for new wallet.');
+    }
     try {
       const account: TAccount = {
         name: name,
@@ -69,7 +78,7 @@ export class KeyStore extends NostrKeyStore {
       return account;
     } catch (e) {
       console.error('COULD NOT CREATE ACCOUNT', e);
-      return
+      return;
     }
   }
 

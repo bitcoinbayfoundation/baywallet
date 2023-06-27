@@ -57,8 +57,7 @@ export const Invoice = observer((props: InvoiceProps) => {
           paddingTop: 20,
           height: '60%',
           alignItems: 'center',
-        }}
-      >
+        }}>
         <Text style={{fontSize: 30, paddingBottom: 30}}>
           {Number(props.route.params.invoice.amount_satoshis).toLocaleString()}{' '}
           sats
@@ -67,8 +66,7 @@ export const Invoice = observer((props: InvoiceProps) => {
         <Layout style={{display: 'flex', flexDirection: 'row', paddingTop: 30}}>
           <Button
             style={{width: 100, marginHorizontal: 5}}
-            onPress={() => onShare()}
-          >
+            onPress={() => onShare()}>
             Share
           </Button>
           <Button
@@ -76,8 +74,7 @@ export const Invoice = observer((props: InvoiceProps) => {
             onPress={() => {
               Clipboard.setString(props.route.params.invoice.to_str);
               Toast.show({type: 'success', text1: 'Copied to clipboard.'});
-            }}
-          >
+            }}>
             Copy
           </Button>
         </Layout>

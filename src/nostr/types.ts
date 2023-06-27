@@ -1,6 +1,6 @@
-import { Filter } from 'nostr-tools';
+import {Filter} from 'nostr-tools';
 
-export { Event, EventTemplate, Filter, Kind, UnsignedEvent } from 'nostr-tools';
+export {Event, EventTemplate, Filter, Kind, UnsignedEvent} from 'nostr-tools';
 
 export interface Config {
   filters: Filter[];

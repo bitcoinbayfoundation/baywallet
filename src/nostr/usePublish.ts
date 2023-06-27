@@ -1,12 +1,12 @@
-import { Event, EventTemplate } from 'nostr-tools';
-import { useCallback } from 'react';
+import {Event, EventTemplate} from 'nostr-tools';
+import {useCallback} from 'react';
 
-import { useNostrStore } from './store';
+import {useNostrStore} from './store';
 
-import { signEventWithNip07, signEventWithPrivateKey } from './utils';
+import {signEventWithNip07, signEventWithPrivateKey} from './utils';
 
 const usePublish = (relays: string[], privateKey?: string) => {
-  const pool = useNostrStore(useCallback((store) => store.pool, []));
+  const pool = useNostrStore(useCallback(store => store.pool, []));
 
   const publish = useCallback(
     (partialEvent: Partial<EventTemplate>) =>
@@ -40,7 +40,7 @@ const usePublish = (relays: string[], privateKey?: string) => {
           reject(error);
         }
       }),
-    [relays, privateKey, pool]
+    [relays, privateKey, pool],
   );
 
   return publish;

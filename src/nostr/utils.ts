@@ -15,16 +15,24 @@ export const generateSubId = () => {
 };
 
 export const signEventWithNip07 = async (eventTemplate: EventTemplate) => {
-  if (!(window as any).nostr) throw new Error('Nostr extension not found');
+  if (!(window as any).nostr) {
+    throw new Error('Nostr extension not found');
+  }
 
-  const signedEvent: Event = (await (window as any).nostr.signEvent(eventTemplate)) || undefined;
+  const signedEvent: Event =
+    (await (window as any).nostr.signEvent(eventTemplate)) || undefined;
 
-  if (!signedEvent) throw new Error('Nostr extension failed to sign event');
+  if (!signedEvent) {
+    throw new Error('Nostr extension failed to sign event');
+  }
 
   return signedEvent;
 };
 
-export const signEventWithPrivateKey = (eventTemplate: EventTemplate, privateKey: string) => {
+export const signEventWithPrivateKey = (
+  eventTemplate: EventTemplate,
+  privateKey: string,
+) => {
   const unsignedEvent: UnsignedEvent = {
     ...eventTemplate,
     pubkey: getPublicKey(privateKey),
@@ -40,13 +48,16 @@ export const signEventWithPrivateKey = (eventTemplate: EventTemplate, privateKey
 };
 
 export const isFilterCorrupted = (filter: Filter) => {
-  return _.find(filter, (value) => {
+  return _.find(filter, value => {
     if (typeof value === 'number') {
       return false;
     }
 
     if (typeof value === 'object') {
-      return value.length === 0 || value.some((v) => typeof v === 'string' && v.length === 0);
+      return (
+        value.length === 0 ||
+        value.some(v => typeof v === 'string' && v.length === 0)
+      );
     }
 
     return typeof value === 'string' && value.length === 0;
@@ -55,25 +66,26 @@ export const isFilterCorrupted = (filter: Filter) => {
 
 export const mergeFilters = (filters: Filter[]): Filter[] => {
   return _.chain(filters)
-    .filter((f) => !isFilterCorrupted(f))
-    .groupBy((f) => {
+    .filter(f => !isFilterCorrupted(f))
+    .groupBy(f => {
       const joinedKeys = _.keys(f).join(',');
       const joinedValues = _.values(f).join(',');
-      return `${joinedKeys},${f.kinds ? f.kinds.join(',') : ''},${f.since || ''},${f.until || ''},${
-        f.limit ? joinedValues : ''
-      },${f.search ? joinedValues : ''}`;
+      return `${joinedKeys},${f.kinds ? f.kinds.join(',') : ''},${
+        f.since || ''
+      },${f.until || ''},${f.limit ? joinedValues : ''},${
+        f.search ? joinedValues : ''
+      }`;
     })
-    .flatMap((groupedFilters) =>
+    .flatMap(groupedFilters =>
       _.mergeWith({}, ...groupedFilters, (objValue: Filter, srcValue: Filter) =>
-      // @ts-ignore
-        _.isArray(objValue) ? _.uniq(objValue.concat(srcValue)) : undefined
-      )
+        // @ts-ignore
+        _.isArray(objValue) ? _.uniq(objValue.concat(srcValue)) : undefined,
+      ),
     )
     .value();
 };
 
 export const npubToHex = (npub: string): string => {
-  const {data} = nip19.decode(npub)
-  return data as string
-}
-
+  const {data} = nip19.decode(npub);
+  return data as string;
+};

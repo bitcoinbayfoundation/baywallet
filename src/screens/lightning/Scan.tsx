@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { observer } from 'mobx-react';
-import { Layout, Text } from '@ui-kitten/components';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { BaseComponent } from '../../components';
-import { NavParamList } from '../../navigation';
+import React from 'react';
+// import {useNavigation} from '@react-navigation/native';
+import {observer} from 'mobx-react';
+import {Text} from '@ui-kitten/components';
+// import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {BaseComponent} from '../../components';
+// import {NavParamList} from '../../navigation';
 
-type ScanScreenProp = NativeStackNavigationProp<NavParamList, 'scan'>
+// type ScanScreenProp = NativeStackNavigationProp<NavParamList, 'scan'>;
 
 export const Scan = observer(() => {
-  const navigation = useNavigation<ScanScreenProp>()
-  const [permissions, setPermissions] = useState<boolean>(false)
+  // const navigation = useNavigation<ScanScreenProp>();
+  // const [permissions, setPermissions] = useState<boolean>(false);
   // const devices = useCameraDevices()
   // const device = devices.back
-
 
   // useEffect(() => {
   //   getCameraPermission()

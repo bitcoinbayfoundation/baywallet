@@ -1,11 +1,11 @@
 export type BayWalletSettings = {
-  hideBalance: boolean
-  usd: boolean
-}
+  hideBalance: boolean;
+  usd: boolean;
+};
 
 export const defaultSettings: BayWalletSettings = {
   hideBalance: false,
-  usd: false
-}
+  usd: false,
+};
 
-export type SettingsKey = "hideBalance" | "usd"
+export type SettingsKey = 'hideBalance' | 'usd';

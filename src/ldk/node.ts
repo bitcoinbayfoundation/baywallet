@@ -10,6 +10,8 @@ import {err, ok, Result} from '../types/result';
 import { getScriptPubKeyHistory, broadcastTransaction, getTransactionPosition, getTransactionData } from '../backend/mempool';
 import { getItem, setItem } from '../util/storage';
 import { getAccount } from '../util/account';
+import mempool from '@mempool/mempool.js';
+import { mempoolHostname } from '../util/config';
 
 /**
  * Used to spin-up LDK services.
@@ -30,7 +32,16 @@ export const startBayWalletNode = async (/*getAccount?: () => Promise<any>*/): P
 		if (storageRes.isErr()) {
 			return err(storageRes.error);
 		}
-    
+
+		const bestBlock = mempool({
+			hostname: mempoolHostname,
+		})
+
+		const tip = await bestBlock.bitcoin.blocks.getBlocksTipHeight()
+		const hash = await bestBlock.bitcoin.blocks.getBlocksTipHash()
+		const hex = await bestBlock.bitcoin.blocks.getBlockHeader({hash: hash})
+    await updateHeader({header: {height: tip, hex: hex, hash: hash}})
+
 		const lmStart = await lm.start({
 			account,
 			getBestBlock,
@@ -95,5 +106,9 @@ export const updateHeader = async ({
  */
 export const getBestBlock = async (): Promise<THeader> => {
 	const bestBlock = await getItem('header');
-	return bestBlock ? JSON.parse(bestBlock) : { height: 0, hex: '', hash: '' };
+	log.ldk(`Best block: ${bestBlock}`);
+
+	const block =  bestBlock ? JSON.parse(bestBlock) : { height: 0, hex: '', hash: '' };
+	log.ldk(`Best block: ${JSON.stringify(block)}`)
+	return block;
 };

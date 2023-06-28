@@ -1,9 +1,12 @@
 {
   "name": "baywallet",
   "displayName": "Bay Wallet",
-  "extra": {
-    "eas": {
-      "projectId": "a577a1c2-5382-4c5f-b8b2-68b9000bb911"
-    }
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "7205a122-a5de-4abb-bb7d-fd3edc4ab0d1"
+      }
+    },
+    "owner": "bennyhodl"
   }
 }

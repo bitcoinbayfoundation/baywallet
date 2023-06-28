@@ -24,46 +24,96 @@ Included with Bay Wallet is a nostr client. Having a nostr client included with 
 Download the code base and install dependencies.
 ```
 git clone https://github.com/bennyhodl/baywallet.git
+
 cd baywallet
+
 yarn install
+
+# For iOS development
+cd ios && pod install && cd ..
 ```
 
 Setup react-native for your operating system.
 ```
 yarn rn-setup
-```
 
-## Setup local Bitcoin Environment
-> ***Bay Wallet has a default electrum environment. If you want to test electrum locally, follow below***
-
-Developers must be running a Bitcoin node with `electrs` to be able to get block information. This repositroy has a docker configuration for developers to setup an environment easily. [Docker has to be installed](https://www.docker.com/) to be able to run the developer environment.
-
-```
-docker-compose up -d --build
-```
-
-This command spins up a `bitcoind` instance in regtest as well as `electrs` to expose an RPC for block data, transaction information, and account information for LDK to use.
-
-After running the docker configuration, run these commands to get fully setup to use Bay Wallet.
-
-```
-# Create a wallet on the `bitcoind` node to use.
-yarn bc:create-wallet
-
-# If you have started the node before, run this to load the wallet.
-yarn bc:load-wallet
-
-# Generate blocks on the node.
-yarn bc:generate <num-blocks>
-```
-
-After starting the Bitcoin node, creating a wallet, and generating a full block, the `electrs` REST API will be available. You can then start the application:
-```
-// iOS
+# iOS
 yarn ios
 
-// Android
+# Android
 // yarn android
 ```
+## Features
+> List of features that could be supported for Bay Wallet. This list serves as an entrypoint for developers to pick a feature they want to implement. New developers can implement from the list or check out the [issues](https://github.com/bennyhodl/baywallet/issues).
 
-Bay Wallet uses the `electrs` library to query the chain. To explore the API, the docs can be found [here.](https://github.com/Blockstream/esplora/blob/master/API.md)
+## Nostr
+
+Bay Wallet has the goal of being a full nostr client as well as supporting Tampa's meetup, Bitcoin Bay. With chats, marketplaces, and business discovery.
+
+- [x] [NIP-01: Basic protocol flow description](https://github.com/nostr-protocol/nips/blob/master/01.md)<br>
+- [x] [NIP-02: Contact List and Petnames](https://github.com/nostr-protocol/nips/blob/master/02.md)<br>
+- [ ] [NIP-03: OpenTimestamps Attestations for Events](https://github.com/nostr-protocol/nips/blob/master/03.md)<br>
+- [ ] [NIP-04: Encrypted Direct Message](https://github.com/nostr-protocol/nips/blob/master/04.md)<br>
+- [x] [NIP-05: Mapping Nostr keys to DNS-based internet identifiers](https://github.com/nostr-protocol/nips/blob/master/05.md)<br>
+- [ ] [NIP-06: Basic key derivation from mnemonic seed phrase](https://github.com/nostr-protocol/nips/blob/master/06.md)<br>
+- [ ] [NIP-08: Handling Mentions](https://github.com/nostr-protocol/nips/blob/master/08.md)<br>
+- [ ] [NIP-09: Event Deletion](https://github.com/nostr-protocol/nips/blob/master/09.md)<br>
+- [ ] [NIP-10: Conventions for clients' use of `e` and `p` tags in text events](https://github.com/nostr-protocol/nips/blob/master/10.md)<br>
+- [ ] [NIP-15: Nostr Marketplace](https://github.com/nostr-protocol/nips/blob/master/15.md)
+- [ ] [NIP-19: bech32-encoded entities](https://github.com/nostr-protocol/nips/blob/master/19.md)<br>
+- [ ] [NIP-20: Command Results](https://github.com/nostr-protocol/nips/blob/master/20.md)<br>
+- [ ] [NIP-21: `nostr:` URL scheme](https://github.com/nostr-protocol/nips/blob/master/21.md)<br>
+- [ ] [NIP-23: Long-form Content](https://github.com/nostr-protocol/nips/blob/master/23.md)<br>
+- [ ] [NIP-25: Reactions](https://github.com/nostr-protocol/nips/blob/master/25.md)<br>
+- [ ] [NIP-26: Delegated Event Signing](https://github.com/nostr-protocol/nips/blob/master/26.md)<br>
+- [ ] [NIP-28: Public Chat](https://github.com/nostr-protocol/nips/blob/master/28.md)<br>
+- [ ] [NIP-33: Parameterized Replaceable Events](https://github.com/nostr-protocol/nips/blob/master/33.md)<br>
+- [ ] [NIP-39: External Identities in Profiles](https://github.com/nostr-protocol/nips/blob/master/39.md)<br>
+- [ ] [NIP-40: Expiration Timestamp](https://github.com/nostr-protocol/nips/blob/master/40.md)<br>
+- [ ] [NIP-42: Authentication of clients to relays](https://github.com/nostr-protocol/nips/blob/master/42.md)<br>
+- [ ] [NIP-46: Nostr Connect](https://github.com/nostr-protocol/nips/blob/master/46.md)<br>
+- [ ] [NIP-50: Keywords filter](https://github.com/nostr-protocol/nips/blob/master/50.md)<br>
+- [ ] [NIP-51: Lists](https://github.com/nostr-protocol/nips/blob/master/51.md)<br>
+- [ ] [NIP-56: Reporting](https://github.com/nostr-protocol/nips/blob/master/56.md)<br>
+- [ ] [NIP-57: Lightning Zaps](https://github.com/nostr-protocol/nips/blob/master/57.md)<br>
+- [ ] [NIP-58: Badges](https://github.com/nostr-protocol/nips/blob/master/58.md)<br>
+- [ ] [NIP-65: Relay List Metadata](https://github.com/nostr-protocol/nips/blob/master/65.md)<br>
+
+## Lightning
+
+- [x] Bitcoin only wallet
+- [x] Non-custodial
+- [x] No processing fees
+- [x] No KYC
+- [x] Fully open source (MIT)
+- [x] Node runs on the device
+- [ ] On-chain accounts
+- [ ] NFC payments and requests
+- [ ] PIN or passphrase encryption
+- [ ] Privacy mode - hide your sensitive data
+- [ ] Lightning address send
+- [ ] Lightning address receive
+- [ ] Full LNURL support (pay, withdraw, auth, channel)
+- [x] Lightning channel management
+- [ ] MPP/AMP support
+- [ ] Keysend support
+- [ ] Fiat currency integrations
+- [ ] On-chain coin control
+- [ ] Contact list for easier payments
+- [ ] Multiple profile types (payments, merchant etc.)
+- [ ] Notifications 
+- [ ] Flow v2 LSP
+- [ ] Zero conf channels
+
+## LDK chain backend
+Bay Wallet uses `esplora` and `mempool.space` for the chain backend. To change the Bitcoin environment you can edit the `mempoolBackend` in `src/util/config.ts`
+```
+# Regtest
+mempool.bitcoinbay.engineering
+
+# Signet
+mutinynet.com
+
+# Mainnet
+mempool.space
+```

@@ -1,6 +1,6 @@
 {
   "name": "baywallet",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -31,6 +31,7 @@
     "buffer": "^6.0.3",
     "crypto": "^1.0.1",
     "events": "^3.3.0",
+    "expo": "^48.0.19",
     "jotai": "^2.1.0",
     "mobx": "^6.7.0",
     "mobx-react": "^7.6.0",

@@ -1,6 +1,7 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
 import { View, Colors } from 'react-native-ui-lib';
+import { BottomTabBar } from '../navigation/bottom-tab-bar';
 
 export const BaseComponent = ({ children }) => {
   return (

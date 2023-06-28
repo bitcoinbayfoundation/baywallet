@@ -1,3 +1,28 @@
+import {Colors} from "react-native-ui-lib"
+
+Colors.loadColors({
+  error: "#FF391A",
+  success: "#1AFF57",
+  primary: "#FF581A",
+  backgroundLight: "#FFFFFF",
+  backgroundDark: "#000000",
+})
+
+Colors.loadSchemes({
+  light: {
+    primary: Colors.primary,
+    screenBG: Colors.backgroundLight,
+    text: Colors.black,
+    button: Colors.primary
+  },
+  dark: {
+    primary: Colors.primary,
+    screenBG: Colors.backgroundDark,
+    text: Colors.white,
+    button: Colors.primary
+  }
+})
+
 const AZURE_BLUE = "#3393FF"
 const AZURE_BLUE_DARK_BG = "#000431"
 const CESTASIAN_BLUE = "#01065A"

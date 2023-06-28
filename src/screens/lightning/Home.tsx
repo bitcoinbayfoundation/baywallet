@@ -1,7 +1,8 @@
 import React from 'react';
-import { EmitterSubscription } from 'react-native';
+import { EmitterSubscription, StyleSheet } from 'react-native';
 import { observer } from 'mobx-react';
-import { Button, TopNavigation, Layout, Divider } from '@ui-kitten/components';
+import { View } from "react-native-ui-lib"
+import { Button } from '../../components';
 import { BaseComponent, BottomDrawer, Loading, Transaction, Balance } from '../../components';
 import { useNavigation } from '@react-navigation/native';
 import { NavParamList } from '../../navigation';
@@ -18,28 +19,32 @@ let backupSubscriptionId: string | undefined;
 
 export const Home = observer(() => {
   const navigation = useNavigation<HomeScreenProp>()
-  const {lightningStore: {transactions}} = useDataStore()
-  const {appReady} = useLightningNode(logSubscription, paymentSubscription, onChannelSubscription, backupSubscriptionId)
+  const { lightningStore: { transactions } } = useDataStore()
+  const { appReady } = useLightningNode(logSubscription, paymentSubscription, onChannelSubscription, backupSubscriptionId)
 
   if (!appReady) return <Loading />
 
   return (
     <BaseComponent>
-      <TopNavigation
-        title='Bay Wallet'
-        alignment='center'
-      />
-      <Divider />
-      <Layout style={{alignItems: "center", marginTop: "25%"}}>
+      <View style={styles.balance} center>
         <Balance />
-        <Layout style={{ flexDirection: "row", marginTop: "10%" }}>
-          <Button style={{height: 10, width: 150, marginRight: 5}} onPress={() => navigation.navigate('receive')}>Receive</Button>
-          <Button style={{height: 10, width: 150, marginLeft: 5}} onPress={() => navigation.navigate('scan')}>Send</Button>
-        </Layout>
-      </Layout>
+        <View style={styles.walletButtons} row>
+          <Button label="Receive" onPress={() => navigation.navigate('receive')} />
+          <Button label="Send" onPress={() => navigation.navigate('scan')} />
+        </View>
+      </View>
       <BottomDrawer>
         {transactions?.map(tx => <Transaction key={tx.payment_hash} transaction={tx} />)}
       </BottomDrawer>
     </BaseComponent>
   );
 });
+
+const styles = StyleSheet.create({
+  balance: {
+    marginTop: "25%"
+  },
+  walletButtons: {
+    marginTop: "10%"
+  }
+})

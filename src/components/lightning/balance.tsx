@@ -1,25 +1,28 @@
 import React from "react"
-import { Layout, Text } from "@ui-kitten/components"
+import { View, Text, Colors } from "react-native-ui-lib"
 import { observer } from "mobx-react"
-import { useEffect, useState } from "react"
-import { Pressable } from "react-native"
+import { useState } from "react"
+import { Pressable, StyleSheet } from "react-native"
 import { useDataStore } from "../../store/DataProvider"
 
- // TODO: Add symbol referenced by user preference.
+// TODO: Add symbol referenced by user preference.
 export const Balance = observer(() => {
-  const {lightningStore: {balance}, settingsStore: {settings}} = useDataStore()
+  const { lightningStore: { balance }, settingsStore: { settings } } = useDataStore()
   const [hideBalance, setHideBalance] = useState<boolean>(settings.hideBalance)
 
-  useEffect(() => {
-    setHideBalance(settings.hideBalance)
-  }, [settings])
-  
   return (
     <Pressable onPress={() => setHideBalance(!hideBalance)}>
-      <Layout style={{display: "flex", alignItems: "center", flexDirection: "row"}}>
-        {/* <Satoshi color="#ff0000" style={{marginTop: , marginRight: 10}}/> */}
-        <Text style={{textAlign: 'center', paddingTop: '10%', fontSize: 50}}>{hideBalance ? "*********" : balance.toLocaleString() + " sats"}</Text>
-      </Layout>
+      <View row center>
+        {/* <Satoshi color="#ff0000" style={{ marginTop: , marginRight: 10 }} /> */}
+        <Text style={styles.balance} color={Colors.text} center>{hideBalance ? "*********" : balance.toLocaleString() + " sats"}</Text>
+      </View>
     </Pressable>
   )
+})
+
+const styles = StyleSheet.create({
+  balance: {
+    fontSize: 50,
+    paddingTop: "30%"
+  }
 })

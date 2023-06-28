@@ -1,10 +1,11 @@
-import { Icon, Text, useTheme } from "@ui-kitten/components"
-import React, { useEffect, useRef, useState } from "react"
-import { Animated, Dimensions, GestureResponderEvent, PanResponder, PanResponderGestureState, View } from "react-native"
+import { Icon } from "@ui-kitten/components"
+import React, { useRef, useState } from "react"
+import { View, Colors, Text } from "react-native-ui-lib"
+import { Animated, Dimensions, GestureResponderEvent, PanResponder, PanResponderGestureState } from "react-native"
 
 const { height } = Dimensions.get("window")
 export enum DrawerState {
-  Open = height - 175,
+  Open = height - 250,
   Closed = 0
 }
 
@@ -14,7 +15,6 @@ interface Props {
 
 export const BottomDrawer = ({ children }: Props) => {
   const [label, setLabel] = useState(false)
-  const theme = useTheme()
   const { height } = Dimensions.get("window")
   const y = useRef(new Animated.Value(DrawerState.Closed)).current
   const state = useRef(new Animated.Value(DrawerState.Closed)).current
@@ -72,7 +72,7 @@ export const BottomDrawer = ({ children }: Props) => {
           borderRadius: 100
         }}
       >
-        {label ? <Text style={{ textAlign: "center" }}>Transactions</Text> : <Icon name='arrow-ios-upward-outline' fill="#FFF" />}
+        {label ? <Text style={{ fontSize: 18 }} center>Transactions</Text> : <Icon name='arrow-ios-upward-outline' fill="#FFF" />}
       </View>
     )
   }
@@ -81,7 +81,7 @@ export const BottomDrawer = ({ children }: Props) => {
     <Animated.View
       style={{
         width: "100%",
-        backgroundColor: theme["background-basic-color-1"],
+        backgroundColor: Colors.screenBG,
         height: height,
         borderRadius: 25,
         position: "absolute",

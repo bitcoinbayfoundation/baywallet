@@ -1,13 +1,13 @@
 import React from 'react';
-import {Layout, useTheme} from '@ui-kitten/components';
-import {SafeAreaView} from 'react-native';
-export const BaseComponent = ({children}) => {
-  const theme = useTheme()
+import { SafeAreaView } from 'react-native';
+import { View, Colors } from 'react-native-ui-lib';
+
+export const BaseComponent = ({ children }) => {
   return (
-    <SafeAreaView style={{backgroundColor:theme["background-basic-color-1"]}}>
-      <Layout style={{margin: 0, padding: 0, height: '100%', width: '100%', }}>
+    <SafeAreaView style={{ backgroundColor: Colors.screenBG }}>
+      <View width="100%" height="100%">
         {children}
-      </Layout>
+      </View>
     </SafeAreaView>
   );
 };

@@ -3,6 +3,7 @@ export * from "./bottom-drawer"
 export * from "./loading"
 export * from "./note"
 export * from "./toast"
+export * from "./button"
 
 export * from "./lightning/balance"
 export * from "./lightning/channel"

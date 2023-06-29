@@ -38,7 +38,7 @@ yarn install
 # Upgrade hombrew
 brew upgrade
 
-# Pods (Ruby - Optional)
+# Pods (Ruby - optional)
 sudo gem install cocoapods
 
 # Install Pods (with Ruby)

@@ -1,15 +1,14 @@
 import React from "react";
-import { Pressable, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 import { observer } from "mobx-react";
 import { RouteProp, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Avatar, Divider, Text, TopNavigation } from "@ui-kitten/components";
 import { NostrParamList } from "../../navigation";
-import { BaseComponent, Note } from "../../components";
-import { useCachedProfile } from "../../hooks/nostr";
-import { Banner } from "../../components/nostr/banner";
+import { BaseComponent } from "../../components";
+import { ProfileInfo, FullPost } from "../../components/nostr";
 import { useSubscribe } from "../../nostr";
 import { relayUrls } from "../../util/config";
+import { Kind } from "nostr-tools";
 
 type ProfileScreenProps = NativeStackNavigationProp<NostrParamList, "nostr-profile">
 
@@ -19,34 +18,22 @@ type ProfileProps = {
 
 export const Profile = observer((props: ProfileProps) => {
   const navigation = useNavigation<ProfileScreenProps>()
-  const { profile } = useCachedProfile(props.route.params.pubkey)
+  const { pubkey, profile } = props.route.params
 
   const { events } = useSubscribe({
     relays: relayUrls,
     filters: [{
-      since: 1686542688,
-      kinds: [1],
-      authors: [props.route.params.pubkey]
+      since: 1,
+      kinds: [Kind.Text],
+      authors: [pubkey]
     }]
   })
 
   return (
     <BaseComponent>
-      <TopNavigation
-        title='Profile'
-        alignment='center'
-        accessoryLeft={
-          <Pressable onPress={() => navigation.navigate("nostr-profile")}>
-            <Avatar size="small" source={{ uri: profile?.picture }} />
-          </Pressable>
-        }
-      />
-      <Divider />
+      <ProfileInfo profile={profile} />
       <ScrollView>
-        <Banner profile={profile} />
-        <Text style={{ padding: 5 }}>{profile?.about}</Text>
-        <Divider />
-        {events?.map(event => <Note key={event.id} profile={profile} note={event} />)}
+        {events?.map(event => <FullPost key={event.id} profile={profile} note={event} />)}
       </ScrollView >
     </BaseComponent>
   )

@@ -6,10 +6,9 @@ import { ScrollView, StyleSheet } from "react-native";
 import { observer } from "mobx-react";
 import { NostrParamList } from "../../navigation";
 import { useDataStore } from "../../store";
-import { BaseComponent, Loading, Note } from "../../components";
-import { useCachedProfile, useHomeFeed } from "../../hooks/nostr";
+import { BaseComponent, Loading } from "../../components";
+import { useHomeFeed } from "../../hooks/nostr";
 import { Event } from "nostr-tools"
-import { Metadata } from "../../types/nostr";
 import { FeedPost } from "../../components/nostr";
 
 type HomeFeedProps = NativeStackNavigationProp<NostrParamList, "nostr-home-feed">

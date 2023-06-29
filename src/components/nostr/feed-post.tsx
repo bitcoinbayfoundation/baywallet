@@ -27,7 +27,9 @@ export const FeedPost = ({ event, navigation }: PostProps) => {
       const rawContent = JSON.parse(profile.data.content);
       const metadata: Metadata = {
         name: rawContent.name,
+        username: rawContent.username,
         picture: rawContent.picture,
+        banner: rawContent.banner,
         about: rawContent.about,
         nip05: rawContent.nip05,
       };
@@ -69,7 +71,7 @@ export const FeedPost = ({ event, navigation }: PostProps) => {
                 }
                 : undefined
             }
-            onPress={() => null}
+            onPress={() => navigation.navigate('nostr-profile', { pubkey: event.pubkey, profile: metadata })}
           />
         </View>
       </View>

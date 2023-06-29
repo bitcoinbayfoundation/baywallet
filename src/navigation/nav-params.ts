@@ -28,7 +28,7 @@ export type PayScreenProps = {
 
 export type NostrParamList = {
   "nostr-home-feed": undefined
-  "nostr-profile": {pubkey: string}
+  "nostr-profile": {pubkey: string, profile?: Metadata}
   "nostr-post": {post: Event, profile: Metadata}
 }
 

@@ -8,9 +8,7 @@ import { Settings, AdvancedSettings, Channels, NostrSettings } from "../screens/
 import { HomeFeed, Profile } from "../screens/nostr"
 import { BottomTabBar } from "./bottom-tab-bar"
 
-export * from "./NavParamList"
-export * from "./NostrParamList"
-export * from "./SettingsParamList"
+export * from "./nav-params"
 
 export const WalletNavigator = () => {
   const BayWalletStack = createNativeStackNavigator()

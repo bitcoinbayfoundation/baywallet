@@ -2,10 +2,9 @@ import React from "react"
 import { NavigationContainer } from "@react-navigation/native"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { BottomNavigation, BottomNavigationTab, Icon } from "@ui-kitten/components"
 import { Receive, Home, Scan, Invoice, Pay } from "../screens/lightning"
 import { Settings, AdvancedSettings, Channels, NostrSettings } from "../screens/settings"
-import { HomeFeed, Profile } from "../screens/nostr"
+import { HomeFeed, Profile, Post } from "../screens/nostr"
 import { BottomTabBar } from "./bottom-tab-bar"
 
 export * from "./nav-params"
@@ -41,24 +40,10 @@ export const NostrNavigator = () => {
     <NostrStack.Navigator>
       <NostrStack.Screen options={{ headerShown: false }} name="nostr-home-feed" component={HomeFeed} />
       <NostrStack.Screen options={{ headerShown: false }} name="nostr-profile" component={Profile} />
+      <NostrStack.Screen options={{ headerShown: false }} name="nostr-post" component={Post} />
     </NostrStack.Navigator>
   )
 }
-
-// const BottomTabBarOld = ({ navigation, state }) => {
-//   // const {lightningStore: {balance}} = useDataStore()
-//   console.log("state", state)
-//   return (
-//     <BottomNavigation
-//       selectedIndex={state.index}
-//       onSelect={index => navigation.navigate(state.routeNames[index])}>
-//       {/* <BottomNavigationTab title={evaProps => <Text {...evaProps} style={{fontSize: 20}}>${balance}</Text>}/> */}
-//       <BottomNavigationTab icon={<Icon name="flash-outline" />} />
-//       <BottomNavigationTab icon={<Icon name="radio-outline" />} />
-//       <BottomNavigationTab icon={<Icon name="settings-outline" />} />
-//     </BottomNavigation>
-//   )
-// };
 
 export const BayWalletNavigator = () => {
   const { Navigator, Screen } = createBottomTabNavigator()

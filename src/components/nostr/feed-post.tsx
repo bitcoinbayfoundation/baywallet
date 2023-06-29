@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { StyleSheet, Pressable } from 'react-native';
 import { View, Avatar, Text, Colors } from 'react-native-ui-lib';
 import { Metadata } from '../../types/nostr';
 import { Event } from 'nostr-tools';
 import { TextWithClamp } from '../text-with-clamp';
 import { Engage } from './engagement/engage';
-import axios from 'axios';
 
 export type PostProps = {
   event: Event;
@@ -46,7 +46,7 @@ export const FeedPost = ({ event, navigation }: PostProps) => {
             <Text>•••</Text>
           </Pressable>
         </View>
-        <Pressable onPress={() => null}>
+        <Pressable onPress={() => navigation.navigate("nostr-post", { event: event, profile: metadata })}>
           <TextWithClamp
             ui={{ text70: true }}
             numberOfLines={clamp ? 10 : undefined}>

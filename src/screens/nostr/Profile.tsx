@@ -33,7 +33,7 @@ export const Profile = observer((props: ProfileProps) => {
     <BaseComponent>
       <ProfileInfo profile={profile} />
       <ScrollView>
-        {events?.map(event => <FullPost key={event.id} profile={profile} note={event} />)}
+        {events?.map(event => <FullPost key={event.id} metadata={profile} event={event} navigation={navigation} />)}
       </ScrollView >
     </BaseComponent>
   )

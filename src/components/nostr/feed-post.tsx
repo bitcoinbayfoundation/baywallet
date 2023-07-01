@@ -4,7 +4,7 @@ import { StyleSheet, Pressable } from 'react-native';
 import { View, Avatar, Text, Colors } from 'react-native-ui-lib';
 import { Metadata } from '../../types/nostr';
 import { Event } from 'nostr-tools';
-import { TextWithClamp } from '../text-with-clamp';
+import { TextWithClamp } from '../misc/text-with-clamp';
 import { Engage } from './engagement/engage';
 
 export type PostProps = {

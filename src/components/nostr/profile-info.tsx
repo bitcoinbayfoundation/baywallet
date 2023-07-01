@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Avatar, Image, View, Text, Icon } from 'react-native-ui-lib';
 import { Metadata } from '../../types/nostr';
-import { Button } from '../button';
+import { Button } from '../misc/button';
 
 type NostrProfile = {
   profile: Metadata;

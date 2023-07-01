@@ -1,13 +1,13 @@
-import { Layout, Spinner } from "@ui-kitten/components"
 import React from "react"
+import { Colors, LoaderScreen } from "react-native-ui-lib"
+
 import { BaseComponent } from "./base-component"
 
+// use memes shout out 
 export const Loading = () => {
   return (
     <BaseComponent>
-      <Layout style={{display: "flex", width: "100%", height: "100%", justifyContent: "center", alignItems: "center"}}>
-        <Spinner size="giant" />
-      </Layout>
+      <LoaderScreen backgroundColor={Colors.screenBG} color={Colors.primary} />
     </BaseComponent>
   )
 }

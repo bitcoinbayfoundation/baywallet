@@ -1,47 +1,82 @@
 import React, { useState } from 'react';
-import {observer} from 'mobx-react';
+import { observer } from 'mobx-react';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import {Divider, Icon, Text, Input, TopNavigation, TopNavigationAction, Button, Layout} from '@ui-kitten/components';
-import {BaseComponent} from '../../components';
+import { TextField, NumberInput, View } from 'react-native-ui-lib';
+import { BaseComponent, Button, LargeText } from '../../components';
 import { NavParamList } from '../../navigation';
 import { useNavigation } from '@react-navigation/native';
 import { useDataStore } from '../../store';
+import { StyleSheet } from 'react-native';
 
 type ReceiveScreenProps = NativeStackNavigationProp<NavParamList, 'receive'>
 
 export const Receive = observer(() => {
   const navigation = useNavigation<ReceiveScreenProps>()
-  const {lightningStore} = useDataStore()
+  const { lightningStore } = useDataStore()
   const [amount, setAmount] = useState<any>("")
-  const [description, setDescription] = useState("")
-  
+  const [description, setDescription] = useState(null)
+
   return (
     <BaseComponent>
-      <TopNavigation
-        title='Receive'
-        alignment='center'
-        accessoryLeft={<TopNavigationAction onPress={() => navigation.goBack()} icon={<Icon name="arrow-back" />}/>}
-      />
-      <Divider />
-      <Layout>
-        <Text>Receive</Text>
-        <Input
-          placeholder='Amount of sats'
-          autoFocus={true}
-          keyboardType="numeric"
-          value={amount}
-          onChange={change => setAmount(change.nativeEvent.text)}
+      <View style={styles.container}>
+        <View>
+          <NumberInput
+            placeholder="0"
+            placeholderTextColor="#888"
+            trailingText='sats'
+            trailingTextStyle={styles.sats}
+            style={styles.amount}
+            // autoFocus={true}
+            initialValue={0}
+            onChangeNumber={change => setAmount(change.number)}
           />
-        <Input
-          placeholder='Description'
-          value={description}
-          onChange={change =>  setDescription(change.nativeEvent.text)}
+          <TextField
+            style={styles.description}
+            placeholder='Bay Wallet Invoice'
+            placeholderTextColor="#444"
+            label='Description (optional)'
+            labelStyle={styles.label}
+            value={description}
+            onChange={change => setDescription(change.nativeEvent.text)}
           />
-        <Button onPress={async () => {
-          const invoice = await lightningStore.createInvoice(Number(amount), description)
-          navigation.navigate("invoice", {invoice: invoice})
-        }}>Create Invoice</Button>
-      </Layout>
+        </View>
+        <Button
+          label='Create Invoice'
+          size='large'
+          onPress={async () => {
+            const invoice = await lightningStore.createInvoice(Number(amount), description ?? "Bay Wallet Invoice")
+            navigation.navigate("invoice", { invoice: invoice })
+          }}
+        />
+      </View>
     </BaseComponent>
   );
 });
+
+const styles = StyleSheet.create({
+  container: {
+    height: '100%',
+    justifyContent: 'space-between',
+    paddingTop: 150,
+    paddingBottom: 20,
+  },
+  amount: {
+    textAlign: 'center',
+    fontSize: 50,
+    marginBottom: 20
+  },
+  sats: {
+    fontSize: 25,
+    marginLeft: 10,
+    marginBottom: 5
+  },
+  description: {
+    fontSize: 25,
+    width: "100%",
+    paddingLeft: 20
+  },
+  label: {
+    paddingLeft: 20,
+    marginTop: 20
+  }
+})

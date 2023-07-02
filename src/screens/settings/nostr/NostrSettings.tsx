@@ -39,7 +39,7 @@ export const NostrSettings = observer(() => {
       <TopNavigation
         title="Nostr Settings"
         alignment="center"
-        accessoryLeft={
+        accessoryLeft={() =>
           <TopNavigationAction
             onPress={() => navigation.goBack()}
             icon={<Icon name="arrow-ios-back-outline" />}

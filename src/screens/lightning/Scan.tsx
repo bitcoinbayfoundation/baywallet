@@ -4,9 +4,9 @@ import { observer } from 'mobx-react';
 import { Layout, Text } from '@ui-kitten/components';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { BaseComponent } from '../../components';
-import { NavParamList } from '../../navigation';
+import { LightningParamList } from '../../navigation';
 
-type ScanScreenProp = NativeStackNavigationProp<NavParamList, 'scan'>
+type ScanScreenProp = NativeStackNavigationProp<LightningParamList, 'scan'>
 
 export const Scan = observer(() => {
   const navigation = useNavigation<ScanScreenProp>()

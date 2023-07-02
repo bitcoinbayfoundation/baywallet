@@ -2,7 +2,7 @@ import React from "react"
 import { NavigationContainer } from "@react-navigation/native"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { Receive, Wallet, Scan, Invoice, Pay } from "../screens/lightning"
+import { CreateInvoice, Wallet, Scan, Receive, Pay } from "../screens/lightning"
 import { Settings, LightningSettings, Channels, NostrSettings } from "../screens/settings"
 import { HomeFeed, Profile, Post } from "../screens/nostr"
 import { BottomTabBar } from "./bottom-tab-bar"
@@ -14,7 +14,7 @@ export const WalletNavigator = () => {
       <BayWalletStack.Screen options={{ headerShown: false }} name="wallet" component={Wallet} />
       <BayWalletStack.Screen options={{ headerShown: false }} name="receive" component={Receive} />
       <BayWalletStack.Screen options={{ headerShown: false }} name="scan" component={Scan} />
-      <BayWalletStack.Screen options={{ headerShown: false }} name="invoice" component={Invoice} />
+      <BayWalletStack.Screen options={{ headerShown: false }} name="create-invoice" component={CreateInvoice} />
       <BayWalletStack.Screen options={{ headerShown: false }} name="pay" component={Pay} />
     </BayWalletStack.Navigator>
   )

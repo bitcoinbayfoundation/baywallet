@@ -5,12 +5,12 @@ import { Event } from "nostr-tools"
 /**
  * Lightning
  */
-export type NavParamList = {
-  home: undefined
+export type LightningParamList = {
+  wallet: undefined
   settings: undefined
-  receive: undefined
+  "create-invoice": undefined
   scan: undefined
-  invoice: InvoiceScreenProps
+  receive: InvoiceScreenProps
   pay: PayScreenProps
 }
 

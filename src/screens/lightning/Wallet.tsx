@@ -5,12 +5,12 @@ import { View } from "react-native-ui-lib"
 import { Button } from '../../components';
 import { BaseComponent, BottomDrawer, Loading, Transaction, Balance } from '../../components';
 import { useNavigation } from '@react-navigation/native';
-import { NavParamList } from '../../navigation';
+import { LightningParamList } from '../../navigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useDataStore } from '../../store';
 import { useLightningNode } from '../../hooks';
 
-type WalletScreenProp = NativeStackNavigationProp<NavParamList, 'home'>
+type WalletScreenProp = NativeStackNavigationProp<LightningParamList, 'wallet'>
 
 let logSubscription: EmitterSubscription | undefined;
 let paymentSubscription: EmitterSubscription | undefined;

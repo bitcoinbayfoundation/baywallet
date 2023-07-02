@@ -1,82 +1,87 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Share } from 'react-native';
 import { observer } from 'mobx-react';
+import Toast from 'react-native-toast-message';
+import {
+  Divider,
+  Icon,
+  Layout,
+  Text,
+  TopNavigation,
+  TopNavigationAction,
+  Button,
+} from '@ui-kitten/components';
+import QRCode from 'react-native-qrcode-svg';
+import Clipboard from '@react-native-clipboard/clipboard';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { TextField, NumberInput, View } from 'react-native-ui-lib';
-import { BaseComponent, Button, LargeText } from '../../components';
-import { NavParamList } from '../../navigation';
-import { useNavigation } from '@react-navigation/native';
-import { useDataStore } from '../../store';
-import { StyleSheet } from 'react-native';
+import { RouteProp, useNavigation } from '@react-navigation/native';
+import { BaseComponent } from '../../components';
+import { LightningParamList } from '../../navigation';
 
-type ReceiveScreenProps = NativeStackNavigationProp<NavParamList, 'receive'>
+type InvoiceScreenProp = NativeStackNavigationProp<LightningParamList, 'receive'>;
 
-export const Receive = observer(() => {
-  const navigation = useNavigation<ReceiveScreenProps>()
-  const { lightningStore } = useDataStore()
-  const [amount, setAmount] = useState<any>("")
-  const [description, setDescription] = useState(null)
+type ReceiveProps = {
+  route?: RouteProp<LightningParamList, 'receive'>;
+};
+
+export const Receive = observer((props: ReceiveProps) => {
+  const navigation = useNavigation<InvoiceScreenProp>();
+
+  const onShare = async () => {
+    try {
+      await Share.share({
+        message: 'lightning:' + props.route.params.invoice.to_str,
+      });
+    } catch (error) {
+      alert(`Error: ${error}`);
+    }
+  };
 
   return (
     <BaseComponent>
-      <View style={styles.container}>
-        <View>
-          <NumberInput
-            placeholder="0"
-            placeholderTextColor="#888"
-            trailingText='sats'
-            trailingTextStyle={styles.sats}
-            style={styles.amount}
-            // autoFocus={true}
-            initialValue={0}
-            onChangeNumber={change => setAmount(change.number)}
+      <TopNavigation
+        title="Receive"
+        alignment="center"
+        accessoryLeft={() =>
+          <TopNavigationAction
+            onPress={() => navigation.navigate('wallet')}
+            icon={<Icon name="arrow-back" />}
           />
-          <TextField
-            style={styles.description}
-            placeholder='Bay Wallet Invoice'
-            placeholderTextColor="#444"
-            label='Description (optional)'
-            labelStyle={styles.label}
-            value={description}
-            onChange={change => setDescription(change.nativeEvent.text)}
-          />
-        </View>
-        <Button
-          label='Create Invoice'
-          size='large'
-          onPress={async () => {
-            const invoice = await lightningStore.createInvoice(Number(amount), description ?? "Bay Wallet Invoice")
-            navigation.navigate("invoice", { invoice: invoice })
-          }}
-        />
-      </View>
+        }
+      />
+      <Divider />
+      <Layout
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          paddingTop: 20,
+          height: '60%',
+          alignItems: 'center',
+        }}
+      >
+        <Text style={{ fontSize: 30, paddingBottom: 30 }}>
+          {Number(props.route.params.invoice.amount_satoshis).toLocaleString()}{' '}
+          sats
+        </Text>
+        <QRCode value={props.route.params.invoice.to_str} size={300} />
+        <Layout style={{ display: 'flex', flexDirection: 'row', paddingTop: 30 }}>
+          <Button
+            style={{ width: 100, marginHorizontal: 5 }}
+            onPress={() => onShare()}
+          >
+            Share
+          </Button>
+          <Button
+            style={{ width: 100, marginHorizontal: 5 }}
+            onPress={() => {
+              Clipboard.setString(props.route.params.invoice.to_str);
+              Toast.show({ type: 'success', text1: 'Copied to clipboard.' });
+            }}
+          >
+            Copy
+          </Button>
+        </Layout>
+      </Layout>
     </BaseComponent>
   );
 });
-
-const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-    justifyContent: 'space-between',
-    paddingTop: 150,
-    paddingBottom: 20,
-  },
-  amount: {
-    textAlign: 'center',
-    fontSize: 50,
-    marginBottom: 20
-  },
-  sats: {
-    fontSize: 25,
-    marginLeft: 10,
-    marginBottom: 5
-  },
-  description: {
-    fontSize: 25,
-    width: "100%",
-    paddingLeft: 20
-  },
-  label: {
-    paddingLeft: 20,
-    marginTop: 20
-  }
-})

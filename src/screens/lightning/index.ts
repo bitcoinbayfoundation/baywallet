@@ -1,4 +1,4 @@
-export * from "./Home"
+export * from "./Wallet"
 export * from "./Invoice"
 export * from "./Pay"
 export * from "./Receive"

@@ -14,7 +14,7 @@ type ChannelsScreenProp = NativeStackNavigationProp<SettingsParamList, "channels
  * TODO: Add modal to view channel details
  * TODO: Pull to refresh
  */
-export const Channels = observer((_: ChannelsScreenProp) => {
+export const Channels = observer(() => {
   const { lightningStore, lightningStore: { channels } } = useDataStore()
 
   useEffect(() => {

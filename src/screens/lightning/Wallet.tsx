@@ -10,15 +10,15 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useDataStore } from '../../store';
 import { useLightningNode } from '../../hooks';
 
-type HomeScreenProp = NativeStackNavigationProp<NavParamList, 'home'>
+type WalletScreenProp = NativeStackNavigationProp<NavParamList, 'home'>
 
 let logSubscription: EmitterSubscription | undefined;
 let paymentSubscription: EmitterSubscription | undefined;
 let onChannelSubscription: EmitterSubscription | undefined;
 let backupSubscriptionId: string | undefined;
 
-export const Home = observer(() => {
-  const navigation = useNavigation<HomeScreenProp>()
+export const Wallet = observer(() => {
+  const navigation = useNavigation<WalletScreenProp>()
   const { lightningStore: { transactions } } = useDataStore()
   const { appReady } = useLightningNode(logSubscription, paymentSubscription, onChannelSubscription, backupSubscriptionId)
 

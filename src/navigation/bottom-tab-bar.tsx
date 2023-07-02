@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
-import { View, Colors, TouchableOpacity } from "react-native-ui-lib"
+import { StyleSheet } from 'react-native';
+import { View, Colors, TouchableOpacity, Text } from "react-native-ui-lib"
 
 export const BottomTabBar = ({ state, descriptors, navigation }) => {
   return (
-    <View centerH>
+    <View style={styles.bottomTab} centerH>
       <View row width="75%">
         {state.routes.map((route, index) => {
           const { options } = descriptors[route.key];
@@ -37,19 +37,42 @@ export const BottomTabBar = ({ state, descriptors, navigation }) => {
             });
           };
 
+          // Use Platfrom for android specific
+          const styles = StyleSheet.create({
+            tab: {
+              flex: 1,
+              textAlign: 'center',
+              margin: 5,
+              borderRadius: 10,
+              borderWidth: 1,
+              borderColor: isFocused ? Colors.primary : "#555",
+              height: 50,
+              shadowOffset: isFocused ? { width: 0, height: 0 } : undefined,
+              shadowColor: isFocused ? Colors.primary : undefined,
+              shadowOpacity: 1,
+              shadowRadius: 5,
+            },
+            text: {
+              color: isFocused ? Colors.primary : Colors.white,
+            }
+          })
+
           return (
             <TouchableOpacity
               accessibilityRole="button"
               accessibilityState={isFocused ? { selected: true } : {}}
               accessibilityLabel={options.tabBarAccessibilityLabel}
+              activeOpacity={1.0}
+              backgroundColor={Colors.screenBG}
               testID={options.tabBarTestID}
               onPress={onPress}
               onLongPress={onLongPress}
               style={styles.tab}
+              key={`bottom-tab-${label}`}
               row
               center
             >
-              <Text style={{ color: isFocused ? '#673ab7' : '#222' }}>
+              <Text style={styles.text}>
                 {label}
               </Text>
             </TouchableOpacity>
@@ -61,10 +84,7 @@ export const BottomTabBar = ({ state, descriptors, navigation }) => {
 }
 
 const styles = StyleSheet.create({
-  tab: {
-    flex: 1,
-    textAlign: 'center',
-    backgroundColor: Colors.white,
-    height: 50,
+  bottomTab: {
+    backgroundColor: "transparent",
   }
 })

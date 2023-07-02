@@ -5,6 +5,7 @@ import { View } from "react-native-ui-lib";
 import { useDataStore } from "../../../store";
 import { BaseComponent, Channel } from "../../../components";
 import { SettingsParamList } from "../../../navigation";
+import * as stubs from "../../../stubs/ldk";
 
 type ChannelsScreenProp = NativeStackNavigationProp<SettingsParamList, "channels">
 

@@ -4,31 +4,31 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import Toast from "react-native-toast-message";
 import { Layout, TopNavigation, Divider, Icon, TopNavigationAction, ListItem } from "@ui-kitten/components";
-import { useDataStore } from "../../store";
-import { BaseComponent } from "../../components";
-import { SettingsParamList } from "../../navigation";
-import { lspNodeDev } from "../../util/config";
-import { Modals, useModal } from "../../hooks";
-import { log } from "../..//util/logger";
+import { useDataStore } from "../../../store";
+import { BaseComponent } from "../../../components";
+import { SettingsParamList } from "../../../navigation";
+import { lspNodeDev } from "../../../util/config";
+import { Modals, useModal } from "../../../hooks";
+import { log } from "../../../util/logger";
 
-type AdvancedSettingProps = NativeStackNavigationProp<SettingsParamList, "advanced-settings">
+type LightningSettingProps = NativeStackNavigationProp<SettingsParamList, "lightning-settings">
 
-export const AdvancedSettings = observer(() => {
-  const navigation = useNavigation<AdvancedSettingProps>()
-  const {lightningStore, lightningStore: {nodeId}} = useDataStore()
-  const {showModal} = useModal()
+export const LightningSettings = observer(() => {
+  const navigation = useNavigation<LightningSettingProps>()
+  const { lightningStore, lightningStore: { nodeId } } = useDataStore()
+  const { showModal } = useModal()
   return (
     <BaseComponent>
       <TopNavigation
         title='Advanced Settings (LDK)'
         alignment='center'
-        accessoryLeft={<TopNavigationAction onPress={() => navigation.goBack()} icon={<Icon name="arrow-ios-back-outline" />}/>}
+        accessoryLeft={() => <TopNavigationAction onPress={() => navigation.goBack()} icon={<Icon name="arrow-ios-back-outline" />} />}
       />
       <Divider />
       <Layout>
         <ListItem
           title="Get node id"
-          onPress={() => showModal(Modals.NodeId, {nodeId: nodeId})}
+          onPress={() => showModal(Modals.NodeId, { nodeId: nodeId })}
         />
         <ListItem
           title="Channels"
@@ -47,7 +47,7 @@ export const AdvancedSettings = observer(() => {
           onPress={async () => {
             const peers = await lightningStore.getPeers()
             if (peers.length === 0) return alert("No peers")
-            return Toast.show({ type: "success", text1: "Peers", text2: JSON.stringify(peers)})
+            return Toast.show({ type: "success", text1: "Peers", text2: JSON.stringify(peers) })
           }}
         />
         <ListItem
@@ -63,7 +63,7 @@ export const AdvancedSettings = observer(() => {
             const balance = await lightningStore.getNodeBalance()
             return alert(balance + " sats")
           }}
-        /> 
+        />
       </Layout>
     </BaseComponent>
   )

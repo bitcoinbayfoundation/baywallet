@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { Receive, Home, Scan, Invoice, Pay } from "../screens/lightning"
-import { Settings, AdvancedSettings, Channels, NostrSettings } from "../screens/settings"
+import { Settings, LightningSettings, Channels, NostrSettings } from "../screens/settings"
 import { HomeFeed, Profile, Post } from "../screens/nostr"
 import { BottomTabBar } from "./bottom-tab-bar"
 
@@ -27,7 +27,7 @@ export const SettingsNavigator = () => {
   return (
     <SettingsStack.Navigator initialRouteName="settings-main">
       <SettingsStack.Screen options={{ headerShown: false }} name="settings-main" component={Settings} />
-      <SettingsStack.Screen options={{ headerShown: false }} name="advanced-settings" component={AdvancedSettings} />
+      <SettingsStack.Screen options={{ headerShown: false }} name="lightning-settings" component={LightningSettings} />
       <SettingsStack.Screen options={{ headerShown: false }} name="channels" component={Channels} />
       <SettingsStack.Screen options={{ headerShown: false }} name="nostr-settings" component={NostrSettings} />
     </SettingsStack.Navigator>

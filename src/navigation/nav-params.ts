@@ -37,7 +37,7 @@ export type NostrParamList = {
  */
 export type SettingsParamList = {
   settings: undefined
-  "advanced-settings": undefined
+  "lightning-settings": undefined
   channels: undefined
   "nostr-settings": undefined
 }

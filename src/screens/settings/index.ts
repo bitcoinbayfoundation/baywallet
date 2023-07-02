@@ -1,5 +1,5 @@
-export * from "./AdvancedSettings"
-export * from "./Channels"
+export * from "./lightning/LightningSettings"
+export * from "./lightning/Channels"
 export * from "./Settings"
 
 // Nostr settings

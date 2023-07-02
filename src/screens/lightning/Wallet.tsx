@@ -29,7 +29,7 @@ export const Wallet = observer(() => {
       <View style={styles.balance} center>
         <Balance />
         <View style={styles.walletButtons} row>
-          <Button label="Receive" size="large" onPress={() => navigation.navigate('receive')} />
+          <Button label="Receive" size="large" onPress={() => navigation.navigate('create-invoice')} />
           <Button label="Send" size="large" onPress={() => navigation.navigate('scan')} />
         </View>
       </View>

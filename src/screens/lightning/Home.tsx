@@ -29,8 +29,8 @@ export const Home = observer(() => {
       <View style={styles.balance} center>
         <Balance />
         <View style={styles.walletButtons} row>
-          <Button label="Receive" onPress={() => navigation.navigate('receive')} />
-          <Button label="Send" onPress={() => navigation.navigate('scan')} />
+          <Button label="Receive" size="large" onPress={() => navigation.navigate('receive')} />
+          <Button label="Send" size="large" onPress={() => navigation.navigate('scan')} />
         </View>
       </View>
       <BottomDrawer>

@@ -13,7 +13,7 @@ export const ProfileInfo = ({ profile }: NostrProfile) => {
     <>
       <Image source={{ uri: profile.banner }} width={'100%'} height={125} />
       <View row right style={styles.action}>
-        <Button label="Follow" onPress={() => null} />
+        <Button label="Follow" size='medium' onPress={() => null} />
       </View>
       <View style={styles.avatar}>
         <Avatar size={75} source={{ uri: profile.picture }} />

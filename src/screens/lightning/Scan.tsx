@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
-import { Layout, Text } from '@ui-kitten/components';
+import { LargeText } from '../../components';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { BaseComponent } from '../../components';
 import { LightningParamList } from '../../navigation';
@@ -33,7 +33,7 @@ export const Scan = observer(() => {
   return (
     <BaseComponent>
       {/* <Camera device={device} isActive={true} style={{width: "100%", height: "100%"}} /> */}
-      <Text>not implemented</Text>
+      <LargeText content='NOT IMPLEMENTED' />
     </BaseComponent>
   );
 });

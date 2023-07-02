@@ -1,15 +1,15 @@
 import React from "react";
-import { Text } from "react-native-ui-lib";
+import { Text, TextProps as LibTextProps } from "react-native-ui-lib";
 
-type TextProps = { content: string, styles?: any }
-export const SmallText = ({ content, styles }: TextProps) => {
-  return <Text style={styles} text90>{content}</Text>
+type TextProps = { content: string, styles?: any, props?: LibTextProps }
+export const SmallText = ({ content, styles, props }: TextProps) => {
+  return <Text style={styles} {...props} text90>{content}</Text>
 }
 
-export const MediumText = ({ content, styles }: TextProps) => {
-  return <Text style={styles} text60>{content}</Text>
+export const MediumText = ({ content, styles, props }: TextProps) => {
+  return <Text style={styles} {...props} text60>{content}</Text>
 }
 
-export const LargeText = ({ content, styles }: TextProps) => {
-  return <Text style={styles} text40>{content}</Text>
+export const LargeText = ({ content, styles, props }: TextProps) => {
+  return <Text style={styles} {...props} text40>{content}</Text>
 }

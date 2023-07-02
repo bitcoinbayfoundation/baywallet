@@ -1,10 +1,7 @@
-import { useTheme } from "@ui-kitten/components"
 import React from "react"
-import Toast, { BaseToast } from "react-native-toast-message"
+import { BaseToast } from "react-native-toast-message"
 
-const theme = useTheme()
-
-export const toastConfig =  {
+export const toastConfig = {
   success: (props) => (
     <BaseToast
       {...props}

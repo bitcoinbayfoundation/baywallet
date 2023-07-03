@@ -1,17 +1,25 @@
 import React from "react"
 import { TInvoice } from "@synonymdev/react-native-ldk"
-import { Layout, Text } from "@ui-kitten/components"
+import { View, Text } from "react-native-ui-lib"
+import { StyleSheet } from "react-native"
 
-type TransactionProp = { transaction: TInvoice}
-export const Transaction = ({transaction}: TransactionProp) => {
+type TransactionProp = { transaction: TInvoice }
+export const Transaction = ({ transaction }: TransactionProp) => {
   return (
-    <Layout style={{display: "flex", flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 10}}>
-      <Layout style={{display: "flex", flexDirection: "column"}}>
+    <View style={styles.container} row>
+      <View>
         <Text>{transaction.description}</Text>
-      </Layout>
-      <Layout style={{display: "flex", flexDirection: "column"}}>
+      </View>
+      <View>
         <Text>{transaction.amount_satoshis} sats</Text>
-      </Layout>
-    </Layout>
+      </View>
+    </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 10,
+    justifyContent: "space-between",
+  }
+})

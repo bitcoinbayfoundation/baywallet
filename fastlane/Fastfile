@@ -1,0 +1,43 @@
+# before_all do
+#   ensure_git_branch
+#   ensure_git_status_clean
+#   git_pull
+# end
+
+platform :ios do
+  # private_lane :update_version do
+  #   app_store_version = get_app_store_version_number(bundle_id: "engineering.bitcoinbay.baywallet")
+  #   plist_version = get_version_from_plist(xcodeproj: "./ios/baywallet.xcodeproj")
+  #   if Gem::Version.new(plist_version.to_f) == Gem::Version.new(app_store_version.to_f)
+  #     UI.message "bumping minor"
+  #     increment_version_number_in_plist(xcodeproj: "./ios/baywallet.xcodeproj", bump_type: "minor")
+  #   else
+  #     increment_version_number_in_plist(xcodeproj: "./ios/baywallet.xcodeproj", bump_type: "patch")
+  # end
+
+  # private_lane :beta_build do
+  #   increment_build_number_in_plist(xcodeproj: "./ios/baywallet.xcodeproj", target: "BayWallet")
+  #   build_app(scheme: "BayWallet",
+  #     workspace: "baywallet.xcworkspace",
+  #     include_bitcode: true)
+  # end
+
+  # lane :staging do
+  #   staging_build
+  #   # upload_to_testflight('ben@bitcoinbay.live', app_ientifier: "engineering.bitcoinbay.baywallet")
+  #   commit_version_bump(message: "bumping version number")
+  #   push_to_git_remote
+  # end
+
+  lane :beta do
+    build_app(scheme: "BayWallet", workspace: "baywallet.xcworkspace")
+  end
+end
+
+platform :android do
+  desc "Android build beta"
+  lane :beta do
+    gradle(task: "clean", project_dir: "./android")
+    gradle(task: "assemble", build_type: "Debug", project_dir: "./android")
+  end
+end

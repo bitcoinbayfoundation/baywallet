@@ -537,8 +537,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = H66L2D9JNP;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = baywallet/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Bay Wallet";
@@ -547,6 +549,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.0.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -555,6 +558,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = engineering.bitcoinbay.baywallet;
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = engineering.bitcoinbay.engineering;
 				PRODUCT_NAME = baywallet;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -567,8 +571,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = H66L2D9JNP;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = baywallet/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Bay Wallet";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
@@ -576,6 +582,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.0.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -584,6 +591,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = engineering.bitcoinbay.baywallet;
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = engineering.bitcoinbay.engineering;
 				PRODUCT_NAME = baywallet;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

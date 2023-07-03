@@ -1,6 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet } from 'react-native';
-import { View, Icon, Text } from 'react-native-ui-lib';
+import { View, Text, Colors } from 'react-native-ui-lib';
+import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type ReactionProps = {
   engage: () => void;
@@ -10,11 +11,10 @@ export const Reaction = ({ engage, reactions }: ReactionProps) => {
   return (
     <Pressable onPress={() => engage()}>
       <View row centerV>
-        <Icon
-          source={{
-            uri: 'https://www.iconpacks.net/icons/2/free-heart-icon-3510-thumb.png',
-          }}
-          size={25}
+        <CommunityIcon
+          name="hand-clap"
+          size={23}
+          color={Colors.text}
         />
         <Text style={styles.reactions}>{reactions ?? ''}</Text>
       </View>
@@ -25,6 +25,6 @@ export const Reaction = ({ engage, reactions }: ReactionProps) => {
 const styles = StyleSheet.create({
   reactions: {
     paddingLeft: 5,
-    color: '#888',
+    color: Colors.text,
   },
 });

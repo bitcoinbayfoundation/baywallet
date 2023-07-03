@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Avatar, Image, View, Text, Icon } from 'react-native-ui-lib';
+import { Avatar, Image, View, Text, Colors } from 'react-native-ui-lib';
 import { Metadata } from '../../types/nostr';
 import { Button } from '../misc/button';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 type NostrProfile = {
   profile: Metadata;
@@ -23,11 +24,10 @@ export const ProfileInfo = ({ profile }: NostrProfile) => {
           <Text text60R>{profile.name}</Text>
           {profile.nip05 && (
             <>
-              <Icon
-                source={{
-                  uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/800px-Twitter_Verified_Badge.svg.png',
-                }}
+              <MaterialIcon
+                name="verified"
                 size={15}
+                color={Colors.primary}
               />
               <Text style={styles.nip5}>{profile.nip05.split('@')[1]}</Text>
             </>

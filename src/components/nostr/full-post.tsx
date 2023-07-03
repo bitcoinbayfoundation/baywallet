@@ -1,10 +1,11 @@
 import React from 'react';
 import { Event } from 'nostr-tools';
-import { Avatar, Icon, Text, View } from 'react-native-ui-lib';
+import { Avatar, Colors, Text, View } from 'react-native-ui-lib';
 import { Metadata } from '../../types/nostr';
 import { Pressable, StyleSheet } from 'react-native';
 import { formatDate } from '../../util/date';
 import { Engage } from './engagement/engage';
+import MaterialIcon from "react-native-vector-icons/MaterialIcons"
 
 export type PostDetailProps = {
   event: Event;
@@ -31,11 +32,10 @@ export const FullPost = ({
               </Text>
               {metadata.nip05 && (
                 <>
-                  <Icon
-                    source={{
-                      uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/800px-Twitter_Verified_Badge.svg.png',
-                    }}
+                  <MaterialIcon
+                    name="verified"
                     size={15}
+                    color={Colors.primary}
                   />
                   <Text style={styles.nip5}>
                     {metadata.nip05.split('@')[1]}
@@ -57,11 +57,10 @@ export const FullPost = ({
       <View row style={styles.share}>
         <Engage replyFn={() => null} repostFn={() => null} reactionFn={() => null} />
         <Pressable onPress={() => null}>
-          <Icon
-            source={{
-              uri: 'https://cdn.icon-icons.com/icons2/3415/PNG/512/ios_share_icon_218253.png',
-            }}
+          <MaterialIcon
+            name="share"
             size={20}
+            color={Colors.text}
           />
         </Pressable>
       </View>

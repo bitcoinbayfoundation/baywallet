@@ -8,13 +8,13 @@ import { useDataStore } from "../../store/DataProvider"
 // TODO: Add symbol referenced by user preference.
 export const Balance = observer(() => {
   const { lightningStore: { balance }, settingsStore: { settings } } = useDataStore()
-  const [hideBalance, setHideBalance] = useState<boolean>(settings.hideBalance)
+  const [hideBalance, setHideBalance] = useState<boolean>(settings?.hideBalance ?? false)
 
   return (
     <Pressable onPress={() => setHideBalance(!hideBalance)}>
       <View row center>
         {/* <Satoshi color="#ff0000" style={{ marginTop: , marginRight: 10 }} /> */}
-        <Text style={styles.balance} color={Colors.text} center>{hideBalance ? "*********" : balance.toLocaleString() + " sats"}</Text>
+        <Text style={styles.balance} color={Colors.text} center>{hideBalance ? "*********" : balance?.toLocaleString() + " sats"}</Text>
       </View>
     </Pressable>
   )

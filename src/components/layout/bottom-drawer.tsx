@@ -1,7 +1,7 @@
-import { Icon } from "@ui-kitten/components"
 import React, { useRef, useState } from "react"
 import { View, Colors, Text } from "react-native-ui-lib"
-import { Animated, Dimensions, GestureResponderEvent, PanResponder, PanResponderGestureState } from "react-native"
+import { Animated, Dimensions, GestureResponderEvent, PanResponder, PanResponderGestureState, StyleSheet } from "react-native"
+import CommunityIcon from "react-native-vector-icons/MaterialCommunityIcons"
 
 const { height } = Dimensions.get("window")
 export enum DrawerState {
@@ -60,19 +60,10 @@ export const BottomDrawer = ({ children }: Props) => {
     }
   }
 
-  const HorizontalLine = () => {
+  const Title = () => {
     return (
-      <View
-        style={{
-          marginVertical: 3,
-          // backgroundColor: "#FFF",
-          height: 25,
-          width: "50%",
-          alignSelf: "center",
-          borderRadius: 100
-        }}
-      >
-        {label ? <Text style={{ fontSize: 18 }} center>Transactions</Text> : <Icon name='arrow-ios-upward-outline' fill="#FFF" />}
+      <View style={styles.title} center>
+        {label ? <Text style={{ fontSize: 18 }}>Transactions</Text> : <CommunityIcon name="chevron-up" size={30} color="#FFF" />}
       </View>
     )
   }
@@ -86,11 +77,13 @@ export const BottomDrawer = ({ children }: Props) => {
         borderRadius: 25,
         position: "absolute",
         bottom: -height + 40,
+        alignItems: "center",
+        borderWidth: 1,
         transform: [{ translateY: y }],
       }}
       {...panResponder.panHandlers}
     >
-      <HorizontalLine />
+      <Title />
       {children}
     </Animated.View>
   )
@@ -105,3 +98,12 @@ const animateMove = (y: Animated.Value, toValue: number | Animated.Value, callba
     finished && callback && callback()
   })
 }
+
+const styles = StyleSheet.create({
+  title: {
+    marginVertical: 3,
+    height: 25,
+    width: "50%",
+    borderRadius: 100
+  }
+})

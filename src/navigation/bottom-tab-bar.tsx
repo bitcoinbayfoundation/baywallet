@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { View, Colors, TouchableOpacity, Text } from "react-native-ui-lib"
+import CommunityIcon from "react-native-vector-icons/MaterialCommunityIcons"
+import MaterialIcon from "react-native-vector-icons/MaterialIcons"
 
 export const BottomTabBar = ({ state, descriptors, navigation }) => {
   return (
@@ -36,6 +38,21 @@ export const BottomTabBar = ({ state, descriptors, navigation }) => {
               target: route.key,
             });
           };
+
+          const tabColor = isFocused ? Colors.primary : Colors.white
+
+          const getIcon = (label) => {
+            switch (label) {
+              case "nostr":
+                return <CommunityIcon name="island" size={30} color={tabColor} />
+              case "settings":
+                return <MaterialIcon name="settings" size={30} color={tabColor} />
+              case "baywallet":
+                return <CommunityIcon name="bitcoin" size={30} color={tabColor} />
+              default:
+                return <CommunityIcon name="surfing" size={30} color={tabColor} />
+            }
+          }
 
           // Use Platfrom for android specific
           const styles = StyleSheet.create({
@@ -73,7 +90,7 @@ export const BottomTabBar = ({ state, descriptors, navigation }) => {
               center
             >
               <Text style={styles.text}>
-                {label}
+                {getIcon(label)}
               </Text>
             </TouchableOpacity>
           );

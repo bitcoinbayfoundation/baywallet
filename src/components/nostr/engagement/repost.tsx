@@ -1,6 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet } from 'react-native';
-import { View, Icon, Text } from 'react-native-ui-lib';
+import { View, Text, Colors } from 'react-native-ui-lib';
+import CommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type RepostProps = {
   engage: () => void;
@@ -10,11 +11,10 @@ export const Repost = ({ engage, reposts }: RepostProps) => {
   return (
     <Pressable onPress={() => engage()}>
       <View row centerV>
-        <Icon
-          source={{
-            uri: 'https://cdn-icons-png.flaticon.com/512/5825/5825574.png',
-          }}
+        <CommunityIcons
+          name="repeat-variant"
           size={25}
+          color={Colors.text}
         />
         <Text style={styles.reposts}>{reposts ?? ''}</Text>
       </View>
@@ -25,6 +25,6 @@ export const Repost = ({ engage, reposts }: RepostProps) => {
 const styles = StyleSheet.create({
   reposts: {
     paddingLeft: 5,
-    color: '#888',
+    color: Colors.text,
   },
 });

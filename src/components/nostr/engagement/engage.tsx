@@ -26,6 +26,5 @@ const styles = StyleSheet.create({
     width: '75%',
     display: 'flex',
     justifyContent: 'space-around',
-    paddingHorizontal: 0,
   },
 });

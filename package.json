@@ -52,6 +52,7 @@
     "react-native-toast-message": "^2.1.5",
     "react-native-ui-lib": "^7.5.1",
     "react-native-url-polyfill": "^1.3.0",
+    "react-native-vector-icons": "^9.2.0",
     "readable-stream": "^1.0.33",
     "rn-electrum-client": "https://github.com/synonymdev/rn-electrum-client",
     "stream": "^0.0.2",

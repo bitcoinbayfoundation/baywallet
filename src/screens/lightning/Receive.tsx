@@ -1,47 +1,62 @@
-import React, { useState } from 'react';
-import {observer} from 'mobx-react';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import {Divider, Icon, Text, Input, TopNavigation, TopNavigationAction, Button, Layout} from '@ui-kitten/components';
-import {BaseComponent} from '../../components';
-import { NavParamList } from '../../navigation';
-import { useNavigation } from '@react-navigation/native';
-import { useDataStore } from '../../store';
+import React from 'react';
+import { Share, StyleSheet } from 'react-native';
+import { observer } from 'mobx-react';
+import Toast from 'react-native-toast-message';
+import { View } from 'react-native-ui-lib';
+import QRCode from 'react-native-qrcode-svg';
+import Clipboard from '@react-native-clipboard/clipboard';
+import { RouteProp } from '@react-navigation/native';
+import { BaseComponent, Button, LargeText } from '../../components';
+import { LightningParamList } from '../../navigation';
+// import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+// type InvoiceScreenProp = NativeStackNavigationProp<LightningParamList, 'receive'>;
 
-type ReceiveScreenProps = NativeStackNavigationProp<NavParamList, 'receive'>
+type ReceiveProps = {
+  route?: RouteProp<LightningParamList, 'receive'>;
+};
 
-export const Receive = observer(() => {
-  const navigation = useNavigation<ReceiveScreenProps>()
-  const {lightningStore} = useDataStore()
-  const [amount, setAmount] = useState<any>("")
-  const [description, setDescription] = useState("")
-  
+export const Receive = observer((props: ReceiveProps) => {
+  const invoiceAmount = Number(props.route.params.invoice.amount_satoshis).toLocaleString()
+  const payReq = props.route.params.invoice.to_str;
+
+  const onShare = async () => {
+    try {
+      await Share.share({
+        message: 'lightning:' + props.route.params.invoice.to_str,
+      });
+    } catch (error) {
+      Toast.show({ type: "error", text1: "Error sharing invoice." })
+    }
+  };
+
   return (
     <BaseComponent>
-      <TopNavigation
-        title='Receive'
-        alignment='center'
-        accessoryLeft={<TopNavigationAction onPress={() => navigation.goBack()} icon={<Icon name="arrow-back" />}/>}
-      />
-      <Divider />
-      <Layout>
-        <Text>Receive</Text>
-        <Input
-          placeholder='Amount of sats'
-          autoFocus={true}
-          keyboardType="numeric"
-          value={amount}
-          onChange={change => setAmount(change.nativeEvent.text)}
+      <View style={styles.receive} centerH>
+        <LargeText content={`${invoiceAmount} sats`} styles={{ paddingBottom: 20 }} />
+        <QRCode value={props.route.params.invoice.to_str} size={300} />
+        <View style={{ paddingTop: 30 }} row>
+          <Button
+            label='Copy'
+            size='large'
+            onPress={() => {
+              Clipboard.setString(payReq);
+              Toast.show({ type: 'success', text1: 'Copied to clipboard.' });
+            }}
           />
-        <Input
-          placeholder='Description'
-          value={description}
-          onChange={change =>  setDescription(change.nativeEvent.text)}
+          <Button
+            label='Share'
+            size='large'
+            onPress={() => onShare()}
           />
-        <Button onPress={async () => {
-          const invoice = await lightningStore.createInvoice(Number(amount), description)
-          navigation.navigate("invoice", {invoice: invoice})
-        }}>Create Invoice</Button>
-      </Layout>
+        </View>
+      </View>
     </BaseComponent>
   );
 });
+
+const styles = StyleSheet.create({
+  receive: {
+    justifyContent: "space-between",
+    paddingTop: 50,
+  }
+})

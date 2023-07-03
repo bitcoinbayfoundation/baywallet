@@ -1,11 +1,11 @@
 import React from "react"
-import { Text } from "@ui-kitten/components"
-import { BaseModal } from "./base"
+import { LargeText } from "../../misc/text"
+import { Modal } from "react-native-ui-lib"
 
 export const CreateNewChannel = () => {
   return (
-    <BaseModal>
-      <Text>ooo look at me, opening channels!</Text>
-    </BaseModal>
+    <Modal>
+      <LargeText content="ooo look at me, opening channels!" />
+    </Modal>
   )
 }

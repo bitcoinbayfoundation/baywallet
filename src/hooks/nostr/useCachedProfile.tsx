@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react"
 import { log } from "../../util/logger"
 import { Event, Kind, nip19 } from "nostr-tools"
-import { storage, getItem, setItem } from "../../util/storage"
+import { getItem, setItem } from "../../util/storage"
 import { useSubscribe } from "../../nostr"
 import { Metadata } from "../../types/nostr"
 import { npubToHex } from "../../nostr/utils"

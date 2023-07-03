@@ -5,7 +5,7 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "start": "react-native start --reset-cache",
+    "start": "watchman watch-del './' ; watchman watch-project './' && react-native start --reset-cache",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "rn-setup": "node rn-setup.js",
@@ -28,6 +28,7 @@
     "buffer": "^6.0.3",
     "crypto": "^1.0.1",
     "events": "^3.3.0",
+    "expo": "^48.0.19",
     "jotai": "^2.1.0",
     "mobx": "^6.7.0",
     "mobx-react": "^7.6.0",

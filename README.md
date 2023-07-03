@@ -30,23 +30,39 @@ cd baywallet
 yarn install
 
 # For iOS development
-cd ios && pod install && cd ..
+
 ```
 
-Setup react-native for your operating system.
+### iOS
 ```
+# Upgrade hombrew
+brew upgrade
+
+# Pods (Ruby - optional)
+sudo gem install cocoapods
+
+# Install Pods (with Ruby)
+cd ios && pod install && cd ..
+
+# or if not using Ruby
+npx pod-install
+```
+
+Start Bay Wallet!
+```
+# Setup react-native for your operating system.
 yarn rn-setup
 
 # iOS
 yarn ios
 
 # Android
-// yarn android
+yarn android
 ```
 ## Features
 > List of features that could be supported for Bay Wallet. This list serves as an entrypoint for developers to pick a feature they want to implement. New developers can implement from the list or check out the [issues](https://github.com/bennyhodl/baywallet/issues).
 
-## Nostr
+### Nostr
 
 Bay Wallet has the goal of being a full nostr client as well as supporting Tampa's meetup, Bitcoin Bay. With chats, marketplaces, and business discovery.
 
@@ -79,7 +95,7 @@ Bay Wallet has the goal of being a full nostr client as well as supporting Tampa
 - [ ] [NIP-58: Badges](https://github.com/nostr-protocol/nips/blob/master/58.md)<br>
 - [ ] [NIP-65: Relay List Metadata](https://github.com/nostr-protocol/nips/blob/master/65.md)<br>
 
-## Lightning
+### Lightning
 
 - [x] Bitcoin only wallet
 - [x] Non-custodial

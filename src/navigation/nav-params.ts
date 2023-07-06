@@ -41,3 +41,18 @@ export type SettingsParamList = {
   channels: undefined
   "nostr-settings": undefined
 }
+
+/**
+ * Onboard
+ */
+export type OnboardParamList = {
+  welcome: undefined
+  "nostr-introduction": undefined
+  "nostr-login": undefined
+  "nostr-create-account": undefined
+  "nostr-profile-setup": undefined
+  "nostr-follow-profiles": undefined
+  "lightning-introduction": undefined
+  "create-lightning-wallet": undefined
+  "sup-stud": undefined
+}

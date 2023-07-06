@@ -2,7 +2,7 @@ import { ENetworks, TAddPeerReq, TAvailableNetworks } from "@synonymdev/react-na
 import * as bitcoin from "bitcoinjs-lib"
 
 // LDK config
-export const selectedNetwork: TAvailableNetworks = 'bitcoinRegtest'
+export const selectedNetwork: TAvailableNetworks =  "bitcoinSignet"
 
 export const ldkNetwork = (network: TAvailableNetworks): ENetworks => {
 	switch (network) {
@@ -30,7 +30,7 @@ export const getNetwork = (
 	}
 };
 
-export const mempoolHostname = 'mempool.bitcoinbay.engineering';
+export const mempoolHostname = 'mutinynet.com';
 
 //Electrum Server Info (Bitcoin Bay regtest by default)
 export const customPeers = {

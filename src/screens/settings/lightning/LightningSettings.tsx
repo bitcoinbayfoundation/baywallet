@@ -20,7 +20,7 @@ export const LightningSettings = observer(() => {
 
   return (
     <BaseComponent>
-      <TouchableOpacity style={styles.lightningSettings} onPress={() => console.log(nodeId)}>
+      <TouchableOpacity style={styles.lightningSettings} onPress={() => Toast.show({ type: "success", text1: nodeId, text2: "Node Id" })}>
         <MediumText content="Node Id" />
       </TouchableOpacity>
       <TouchableOpacity style={styles.lightningSettings} onPress={() => navigation.navigate("channels")} row>

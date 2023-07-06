@@ -5,6 +5,7 @@ import { DataStoreProvider } from "./store/DataProvider"
 import { StatusBar } from "react-native"
 import Toast, { BaseToast } from "react-native-toast-message"
 import { Colors } from "react-native-ui-lib"
+import { LightningNodeProvider } from "./hooks";
 
 export const toastConfig = {
   success: (props) => (
@@ -23,9 +24,11 @@ export const BayWalletProvider = ({ children }) => {
   return (
     <BaseComponent>
       <DataStoreProvider>
-        <StatusBar barStyle="light-content" />
-        {children}
-        <Toast config={toastConfig} />
+        <LightningNodeProvider>
+          <StatusBar barStyle="light-content" />
+          {children}
+          <Toast config={toastConfig} />
+        </LightningNodeProvider>
       </DataStoreProvider>
     </BaseComponent>
   )

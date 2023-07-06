@@ -12,7 +12,6 @@ import axios from 'axios';
 
 const { bitcoin: { blocks, transactions, addresses }} = mempoolJS({
 	hostname: mempoolHostname,
-	network: 'regtest',
 });
 
 export const getTransactionData = async (

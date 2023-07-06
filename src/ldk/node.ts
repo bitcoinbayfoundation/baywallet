@@ -19,7 +19,7 @@ import {
 import {getItem, setItem} from '../util/storage';
 import {getAccount} from '../util/account';
 import mempool from '@mempool/mempool.js';
-import {mempoolHostname} from '../util/config';
+import {ldkNetwork, mempoolHostname, selectedNetwork} from '../util/config';
 import {EmitterSubscription} from 'react-native';
 import Toast from 'react-native-toast-message';
 
@@ -71,7 +71,7 @@ export const startBayWalletNode =
             background: 0,
           }),
         broadcastTransaction,
-        network: ENetworks.regtest,
+        network: ldkNetwork(selectedNetwork),
       });
 
       if (lmStart.isErr()) {

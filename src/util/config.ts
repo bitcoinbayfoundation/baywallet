@@ -1,4 +1,5 @@
-import { ENetworks, TAddPeerReq, TAvailableNetworks } from "@synonymdev/react-native-ldk";
+import { ENetworks, TAddPeerReq, TAvailableNetworks, } from "@synonymdev/react-native-ldk";
+import networks from "@synonymdev/react-native-ldk/dist/utils/networks"
 import * as bitcoin from "bitcoinjs-lib"
 
 // LDK config
@@ -10,6 +11,8 @@ export const ldkNetwork = (network: TAvailableNetworks): ENetworks => {
 			return ENetworks.regtest;
 		case 'bitcoinTestnet':
 			return ENetworks.testnet;
+			case "bitcoinSignet":
+			return ENetworks.signet;
 		case 'bitcoin':
 			return ENetworks.mainnet;
 	}
@@ -20,13 +23,15 @@ export const getNetwork = (
 ): bitcoin.networks.Network => {
 	switch (network) {
 		case 'bitcoin':
-			return bitcoin.networks.bitcoin;
+			return networks.bitcoin
 		case 'bitcoinTestnet':
-			return bitcoin.networks.testnet;
+			return networks.testnet;
 		case 'bitcoinRegtest':
-			return bitcoin.networks.regtest;
+			return networks.regtest;
+		case 'bitcoinSignet':
+			return networks.signet;
 		default:
-			return bitcoin.networks.regtest;
+			return networks.regtest;
 	}
 };
 

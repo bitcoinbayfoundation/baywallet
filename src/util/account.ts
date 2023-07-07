@@ -2,21 +2,48 @@ import { TAccount } from "@synonymdev/react-native-ldk";
 import { getItem, setItem } from "../util/storage";
 import * as bip39 from "bip39"
 import { randomBytes } from "crypto";
+import * as Keychain from 'react-native-keychain';
+import { log } from "./logger";
 
-enum Account {
-  name = 'bay-wallet-3',
-  currentAccountKey = 'current-account',
-}
-export async function setActiveAccount(account: TAccount) {
-  const storeAccount = await setItem(Account.currentAccountKey, account.name);
-  return storeAccount;
+enum Wallet {
+  name = 'bay-wallet',
+  currentWalletKey = 'current-account',
 }
 
-export async function getAccount(): Promise<any> {
-  const account = await getItem<string>("baywallet-account-test");
-  if (account) return JSON.parse(account);
-  const newAccount = await createNewAccount("baywallet-account-test");
-  return newAccount;
+export async function setActiveWallet(account: TAccount) {
+  const setCurrentWallet = await setItem(Wallet.currentWalletKey, account.name);
+  return setCurrentWallet;
+}
+
+export async function setWallet({name, seed}: TAccount): Promise<boolean> {
+  const account: TAccount = {
+    name: name,
+    seed: seed,
+  };
+  
+  try {
+    const keychain = await Keychain.setGenericPassword(name, JSON.stringify(account), {service: name})
+    console.log("KEYCHAIN", keychain)
+    if (!keychain || keychain?.service !== name || keychain?.storage !== "keychainn") {
+      return false
+    }
+
+    return true
+  } catch (e) {
+    log.keys(`Could not set wallet: ${e}`)
+    return false
+  }
+}
+
+
+
+export async function getAccount(name: string): Promise<any> {
+  const keychain = await Keychain.getGenericPassword({ service: name });
+  console.log("KEYCHAIN GETACCOUNT", keychain)
+  if (!!keychain && keychain?.password) {
+			// Return existing account.
+			return JSON.parse(keychain?.password);
+	}
 }
 
 export async function createNewAccount(name?: string): Promise<any> {

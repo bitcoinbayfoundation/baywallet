@@ -6,6 +6,7 @@ import { Metadata } from '../../types/nostr';
 import { Event } from 'nostr-tools';
 import { TextWithClamp } from '../misc/text-with-clamp';
 import { Engage } from './engagement/engage';
+import { parseMetadata } from '../../util/nostr';
 
 export type PostProps = {
   event: Event;
@@ -24,15 +25,7 @@ export const FeedPost = ({ event, navigation }: PostProps) => {
       const profile = await axios.get(
         `https://api.iris.to/profile/${event.pubkey}`,
       );
-      const rawContent = JSON.parse(profile.data.content);
-      const metadata: Metadata = {
-        name: rawContent.name,
-        username: rawContent.username,
-        picture: rawContent.picture,
-        banner: rawContent.banner,
-        about: rawContent.about,
-        nip05: rawContent.nip05,
-      };
+      const metadata = parseMetadata(profile.data)
       setMetadata(metadata);
     };
     getProfile();

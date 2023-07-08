@@ -31,3 +31,4 @@ export const BayWalletProvider = ({ children }) => {
     </BaseComponent>
   )
 }
+

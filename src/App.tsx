@@ -1,13 +1,37 @@
 require('react-native-ui-lib/config').setConfig({ appScheme: 'dark' })
 import { Colors } from 'react-native-ui-lib';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { BayWalletProvider } from './BayWalletProvider';
 import { BayWalletNavigator, OnboardNavigator } from './navigation';
+import { useKeysExist } from './hooks';
+import { BaseComponent, Loading } from './components';
+
+const AppNavigator = () => {
+  const { nostr, loading } = useKeysExist()
+
+  const AppRoot = useCallback(() => {
+    if (loading) {
+      return (
+        <BaseComponent>
+          <Loading />
+        </BaseComponent>
+      )
+    }
+
+    if (!nostr) {
+      return <OnboardNavigator />
+    }
+
+    return <BayWalletNavigator />
+  }, [nostr, loading])
+
+  return <AppRoot />
+}
+
 const App = () => {
-  return <OnboardNavigator />
   return (
     <BayWalletProvider>
-      <BayWalletNavigator />
+      <AppNavigator />
     </BayWalletProvider>
   );
 };

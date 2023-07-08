@@ -1,6 +1,8 @@
 export type NostrKeys = {
   pubkey: string
   privatekey: string
+  nsec: string
+  npub: string
 }
 
 export type EventType = {

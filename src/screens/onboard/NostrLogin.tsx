@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, TextField, View } from "react-native-ui-lib";
+import { TextField, View } from "react-native-ui-lib";
 import { BaseComponent, Button, LargeText } from "../../components";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { OnboardParamList } from "../../navigation";
@@ -10,7 +10,7 @@ type NostrLoginScreenProps = NativeStackNavigationProp<OnboardParamList, "nostr-
 
 export const NostrLogin = () => {
   const navigation = useNavigation<NostrLoginScreenProps>()
-  const [nsec, setNsec] = useState<any>("")
+  const [nsec, setNsec] = useState<any>(null)
 
   return (
     <BaseComponent>
@@ -26,7 +26,7 @@ export const NostrLogin = () => {
             onChange={change => setNsec(change.nativeEvent.text)}
           />
         </View>
-        <Button label="Login" size="large" onPress={() => navigation.navigate("verify-nostr-profile", { privatekey: "benjamin" })} />
+        <Button label="Login" size="large" disabled={!nsec} onPress={() => navigation.navigate("verify-nostr-profile", { privatekey: nsec })} />
       </View>
     </BaseComponent>
   )

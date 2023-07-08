@@ -329,6 +329,8 @@ PODS:
   - React-jsinspector (0.71.7)
   - React-logger (0.71.7):
     - glog
+  - react-native-image-picker (5.6.0):
+    - React-Core
   - react-native-ldk (0.0.87):
     - React
   - react-native-randombytes (3.6.1):
@@ -436,6 +438,8 @@ PODS:
     - React-Core
   - RNGestureHandler (2.12.0):
     - React-Core
+  - RNKeychain (8.1.1):
+    - React-Core
   - RNReanimated (3.3.0):
     - DoubleConversion
     - FBLazyVector
@@ -523,6 +527,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
+  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - "react-native-ldk (from `../node_modules/@synonymdev/react-native-ldk`)"
   - react-native-randombytes (from `../node_modules/react-native-randombytes`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -545,6 +550,7 @@ DEPENDENCIES:
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -610,6 +616,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
+  react-native-image-picker:
+    :path: "../node_modules/react-native-image-picker"
   react-native-ldk:
     :path: "../node_modules/@synonymdev/react-native-ldk"
   react-native-randombytes:
@@ -654,6 +662,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNKeychain:
+    :path: "../node_modules/react-native-keychain"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -699,6 +709,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: eaa5f71eb8f6861cf0e57f1a0f52aeb020d9e18e
   React-jsinspector: 9885f6f94d231b95a739ef7bb50536fb87ce7539
   React-logger: 3f8ebad1be1bf3299d1ab6d7f971802d7395c7ef
+  react-native-image-picker: db60857e03d63721f19b6f4027de20429ddd9cba
   react-native-ldk: b9b34c15067689e5aa7aef92ce278454b000ac39
   react-native-randombytes: 421f1c7d48c0af8dbcd471b0324393ebf8fe7846
   react-native-safe-area-context: b8979f5eda6ed5903d4dbc885be3846ea3daa753
@@ -721,6 +732,7 @@ SPEC CHECKSUMS:
   RNCClipboard: 3f0451a8100393908bea5c5c5b16f96d45f30bfc
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: dec4645026e7401a0899f2846d864403478ff6a5
+  RNKeychain: ff836453cba46938e0e9e4c22e43d43fa2c90333
   RNReanimated: 9976fbaaeb8a188c36026154c844bf374b3b7eeb
   RNScreens: 68fd1060f57dd1023880bf4c05d74784b5392789
   RNSVG: 53c661b76829783cdaf9b7a57258f3d3b4c28315

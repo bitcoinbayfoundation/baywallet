@@ -2,12 +2,12 @@ import { getNetwork, selectedNetwork } from "../util/config";
 import * as bitcoin from "bitcoinjs-lib"
 import * as bip39 from "bip39"
 import * as bip32 from "bip32"
-import { getAccount } from "../util/account";
+import { getLightningKeys } from "../util/keychain";
 import { log } from "../util/logger";
 
 export const getAddress = async () => {
   const network = getNetwork(selectedNetwork)
-  const account = await getAccount()
+  const account = await getLightningKeys()
   const mnemonic = bip39.entropyToMnemonic(account.seed)
   const mnemonicSeed = await bip39.mnemonicToSeed(mnemonic)
   const root = bip32.fromSeed(mnemonicSeed, network)

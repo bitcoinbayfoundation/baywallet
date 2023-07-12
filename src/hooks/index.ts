@@ -1,5 +1,3 @@
 export * from "./use-lightning-node"
 export * from "./use-modal"
 export * from "./use-lightning-seed"
-export * from "./use-nostr-keys"
-export * from "./use-keys-exists"

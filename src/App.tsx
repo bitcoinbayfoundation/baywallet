@@ -2,6 +2,7 @@ require('react-native-ui-lib/config').setConfig({ appScheme: 'dark' })
 import { Colors } from 'react-native-ui-lib';
 import React, { useCallback } from 'react';
 import { BayWalletProvider } from './BayWalletProvider';
+import { LightningNodeProvider } from "./hooks";
 import { BayWalletNavigator, OnboardNavigator } from './navigation';
 import { BaseComponent, Loading } from './components';
 import { useDataStore } from './store';
@@ -21,8 +22,12 @@ const AppNavigator = observer(() => {
 
     if (!done) return <OnboardNavigator />
 
+    return (
+      <LightningNodeProvider>
+        <BayWalletNavigator />
+      </LightningNodeProvider>
+    )
 
-    return <BayWalletNavigator />
   }, [done])
 
   return <AppRoot />

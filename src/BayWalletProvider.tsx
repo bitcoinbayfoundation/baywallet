@@ -3,7 +3,6 @@ import { BaseComponent } from "./components/"
 import { DataStoreProvider } from "./store/DataProvider"
 import { StatusBar } from "react-native"
 import Toast, { BaseToast } from "react-native-toast-message"
-import { LightningNodeProvider } from "./hooks";
 
 export const toastConfig = {
   success: (props) => (
@@ -22,11 +21,9 @@ export const BayWalletProvider = ({ children }) => {
   return (
     <BaseComponent>
       <DataStoreProvider>
-        <LightningNodeProvider>
-          <StatusBar barStyle="light-content" />
-          {children}
-          <Toast config={toastConfig} />
-        </LightningNodeProvider>
+        <StatusBar barStyle="light-content" />
+        {children}
+        <Toast config={toastConfig} />
       </DataStoreProvider>
     </BaseComponent>
   )

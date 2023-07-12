@@ -12,17 +12,12 @@ import { useLightningNode } from '../../hooks';
 
 type WalletScreenProp = NativeStackNavigationProp<LightningParamList, 'wallet'>
 
-let logSubscription: EmitterSubscription | undefined;
-let paymentSubscription: EmitterSubscription | undefined;
-let onChannelSubscription: EmitterSubscription | undefined;
-let backupSubscriptionId: string | undefined;
-
 export const Wallet = observer(() => {
   const navigation = useNavigation<WalletScreenProp>()
   const { lightningStore: { transactions } } = useDataStore()
-  const { appReady } = useLightningNode(logSubscription, paymentSubscription, onChannelSubscription, backupSubscriptionId)
+  const { nodeStarted } = useLightningNode()
 
-  if (!appReady) return <Loading />
+  if (!nodeStarted) return <Loading />
 
   return (
     <BaseComponent>

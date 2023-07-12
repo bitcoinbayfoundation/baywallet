@@ -3,14 +3,15 @@ import { Colors } from 'react-native-ui-lib';
 import React, { useCallback } from 'react';
 import { BayWalletProvider } from './BayWalletProvider';
 import { BayWalletNavigator, OnboardNavigator } from './navigation';
-import { useKeysExist } from './hooks';
 import { BaseComponent, Loading } from './components';
+import { useDataStore } from './store';
+import { observer } from 'mobx-react';
 
-const AppNavigator = () => {
-  const { nostr, loading } = useKeysExist()
+const AppNavigator = observer(() => {
+  const { onboardingStore: { done } } = useDataStore()
 
   const AppRoot = useCallback(() => {
-    if (loading) {
+    if (done === undefined) {
       return (
         <BaseComponent>
           <Loading />
@@ -18,15 +19,14 @@ const AppNavigator = () => {
       )
     }
 
-    if (!nostr) {
-      return <OnboardNavigator />
-    }
+    if (!done) return <OnboardNavigator />
+
 
     return <BayWalletNavigator />
-  }, [nostr, loading])
+  }, [done])
 
   return <AppRoot />
-}
+})
 
 const App = () => {
   return (

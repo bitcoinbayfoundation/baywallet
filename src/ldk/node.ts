@@ -22,6 +22,7 @@ import mempool from '@mempool/mempool.js';
 import {ldkNetwork, mempoolHostname, selectedNetwork} from '../util/config';
 import {EmitterSubscription} from 'react-native';
 import Toast from 'react-native-toast-message';
+import { getLightningKeys } from '../util/keychain';
 
 let paymentSubscription: EmitterSubscription | undefined;
 let onChannelSubscription: EmitterSubscription | undefined;
@@ -37,16 +38,16 @@ let logSubscription: EmitterSubscription | undefined;
  * 4. Adds/Connects saved peers from storage. (Note: Not needed as LDK handles this automatically once a peer has been added successfully. Only used to make example app easier to test.)
  * 5. Syncs LDK.
  */
-export const startBayWalletNode =
-  async (/*getAccount?: () => Promise<any>*/): Promise<Result<string>> => {
-    try {
-      const account = await getAccount();
-      const storageRes = await lm.setBaseStoragePath(
-        `${RNFS.DocumentDirectoryPath}/ldk/`,
-      );
-      if (storageRes.isErr()) {
-        return err(storageRes.error);
-      }
+export const startBayWalletNode = async (/*getAccount?: () => Promise<any>*/): Promise<Result<string>> => {
+	try {
+		await ldk.reset();
+		const account = await getLightningKeys();
+		const storageRes = await lm.setBaseStoragePath(
+			`${RNFS.DocumentDirectoryPath}/ldk/`,
+		);
+		if (storageRes.isErr()) {
+			return err(storageRes.error);
+		}
 
       const bestBlock = mempool({
         hostname: mempoolHostname,

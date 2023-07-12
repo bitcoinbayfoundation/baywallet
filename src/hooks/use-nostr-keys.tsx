@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { generateNostKeyPair, getNostrKeys, storeNostrKeys } from "../util/keychain"
 import { NostrKeys } from "../types/nostr"
 
@@ -19,13 +19,13 @@ export const useNostrKeys = (privkey?: string) => {
     return keys
   }
 
-  const getKeys = async () => {
+  const getKeys = useCallback(async () => {
     const keychain = await getNostrKeysFromKeychain()
     if (!keychain) {
       await generateNostrKeys()
     }
-    return
-  }
+    return keychain
+  }, [nostrKeys])
 
   const saveKeys = async () => storeNostrKeys(nostrKeys)
 

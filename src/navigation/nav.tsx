@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { CreateInvoice, Wallet, Scan, Receive, Pay } from "../screens/lightning"
 import { Settings, LightningSettings, Channels, NostrSettings } from "../screens/settings"
 import { HomeFeed, Profile, Post } from "../screens/nostr"
-import { Welcome, NostrIntroduction, NostrLogin, NostrCreateAccount, NostrProfileSetup, NostrFollowProfiles, LightningIntroduction, CreateLightningWallet, SupStud } from "../screens/onboard"
+import { Welcome, NostrIntroduction, NostrLogin, NostrCreateAccount, NostrProfileSetup, NostrFollowProfiles, LightningIntroduction, CreateLightningWallet, SupStud, VerifyNostrProfile } from "../screens/onboard"
 import { BottomTabBar } from "./bottom-tab-bar"
 
 export const WalletNavigator = () => {
@@ -60,17 +60,20 @@ export const BayWalletNavigator = () => {
 export const OnboardNavigator = () => {
   const OnboardStack = createNativeStackNavigator()
   return (
-    <OnboardStack.Navigator initialRouteName="welcome">
-      <OnboardStack.Screen options={{ headerShown: false }} name="welcome" component={Welcome} />
-      <OnboardStack.Screen options={{ headerShown: false }} name="nostr-introduction" component={NostrIntroduction} />
-      <OnboardStack.Screen options={{ headerShown: false }} name="nostr-login" component={NostrLogin} />
-      <OnboardStack.Screen options={{ headerShown: false }} name="nostr-create-account" component={NostrCreateAccount} />
-      <OnboardStack.Screen options={{ headerShown: false }} name="nostr-profile-setup" component={NostrProfileSetup} />
-      <OnboardStack.Screen options={{ headerShown: false }} name="nostr-follow-profiles" component={NostrFollowProfiles} />
-      <OnboardStack.Screen options={{ headerShown: false }} name="lightning-introduction" component={LightningIntroduction} />
-      <OnboardStack.Screen options={{ headerShown: false }} name="create-lightning-wallet" component={CreateLightningWallet} />
-      <OnboardStack.Screen options={{ headerShown: false }} name="sup-stud" component={SupStud} />
-    </OnboardStack.Navigator>
+    <NavigationContainer>
+      <OnboardStack.Navigator initialRouteName="welcome">
+        <OnboardStack.Screen options={{ headerShown: false }} name="welcome" component={Welcome} />
+        <OnboardStack.Screen options={{ headerShown: false }} name="nostr-introduction" component={NostrIntroduction} />
+        <OnboardStack.Screen options={{ headerShown: false }} name="nostr-login" component={NostrLogin} />
+        <OnboardStack.Screen options={{ headerShown: false }} name="verify-nostr-profile" component={VerifyNostrProfile} />
+        <OnboardStack.Screen options={{ headerShown: false }} name="nostr-create-account" component={NostrCreateAccount} />
+        <OnboardStack.Screen options={{ headerShown: false }} name="nostr-profile-setup" component={NostrProfileSetup} />
+        <OnboardStack.Screen options={{ headerShown: false }} name="nostr-follow-profiles" component={NostrFollowProfiles} />
+        <OnboardStack.Screen options={{ headerShown: false }} name="lightning-introduction" component={LightningIntroduction} />
+        <OnboardStack.Screen options={{ headerShown: false }} name="create-lightning-wallet" component={CreateLightningWallet} />
+        <OnboardStack.Screen options={{ headerShown: false }} name="sup-stud" component={SupStud} />
+      </OnboardStack.Navigator>
+    </NavigationContainer>
   )
 }
 

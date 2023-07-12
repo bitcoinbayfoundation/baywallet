@@ -49,6 +49,7 @@ export type OnboardParamList = {
   welcome: undefined
   "nostr-introduction": undefined
   "nostr-login": undefined
+  "verify-nostr-profile": {privatekey: string}
   "nostr-create-account": undefined
   "nostr-profile-setup": undefined
   "nostr-follow-profiles": undefined

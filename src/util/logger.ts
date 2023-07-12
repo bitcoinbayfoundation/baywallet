@@ -14,7 +14,7 @@ const config = {
   transportOptions: {
     colors: {
       info: "brightBlue",
-      ldk: "blue",
+      ldk: "green",
       nostr: "magenta",
       key: "yellow",
       dev: "cyan",

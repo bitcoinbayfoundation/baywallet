@@ -17,11 +17,11 @@ import {
   getTransactionData,
 } from '../backend/mempool';
 import {getItem, setItem} from '../util/storage';
-import {getAccount} from '../util/account';
 import mempool from '@mempool/mempool.js';
 import {ldkNetwork, mempoolHostname, selectedNetwork} from '../util/config';
 import {EmitterSubscription} from 'react-native';
 import Toast from 'react-native-toast-message';
+import { getLightningKeys } from '../util/keychain';
 
 let paymentSubscription: EmitterSubscription | undefined;
 let onChannelSubscription: EmitterSubscription | undefined;
@@ -37,62 +37,61 @@ let logSubscription: EmitterSubscription | undefined;
  * 4. Adds/Connects saved peers from storage. (Note: Not needed as LDK handles this automatically once a peer has been added successfully. Only used to make example app easier to test.)
  * 5. Syncs LDK.
  */
-export const startBayWalletNode =
-  async (/*getAccount?: () => Promise<any>*/): Promise<Result<string>> => {
-    try {
-      const account = await getAccount();
-      const storageRes = await lm.setBaseStoragePath(
-        `${RNFS.DocumentDirectoryPath}/ldk/`,
-      );
-      if (storageRes.isErr()) {
-        return err(storageRes.error);
-      }
+export const startBayWalletNode = async (/*getAccount?: () => Promise<any>*/): Promise<Result<string>> => {
+	try {
+		const account = await getLightningKeys();
+		const storageRes = await lm.setBaseStoragePath(
+			`${RNFS.DocumentDirectoryPath}/ldk/`,
+		);
+		if (storageRes.isErr()) {
+			return err(storageRes.error);
+		}
 
-      const bestBlock = mempool({
-        hostname: mempoolHostname,
-      });
+    const bestBlock = mempool({
+      hostname: mempoolHostname,
+    });
 
-      const tip = await bestBlock.bitcoin.blocks.getBlocksTipHeight();
-      const hash = await bestBlock.bitcoin.blocks.getBlocksTipHash();
-      const hex = await bestBlock.bitcoin.blocks.getBlockHeader({hash: hash});
-      await updateHeader({header: {height: tip, hex: hex, hash: hash}});
+    const tip = await bestBlock.bitcoin.blocks.getBlocksTipHeight();
+    const hash = await bestBlock.bitcoin.blocks.getBlocksTipHash();
+    const hex = await bestBlock.bitcoin.blocks.getBlockHeader({hash: hash});
+    await updateHeader({header: {height: tip, hex: hex, hash: hash}});
 
-      const lmStart = await lm.start({
-        account,
-        getBestBlock,
-        getTransactionData,
-        getTransactionPosition,
-        getAddress,
-        getScriptPubKeyHistory,
-        getFees: () =>
-          Promise.resolve({
-            highPriority: 100,
-            normal: 0,
-            background: 0,
-          }),
-        broadcastTransaction,
-        network: ldkNetwork(selectedNetwork),
-      });
+    const lmStart = await lm.start({
+      account,
+      getBestBlock,
+      getTransactionData,
+      getTransactionPosition,
+      getAddress,
+      getScriptPubKeyHistory,
+      getFees: () =>
+        Promise.resolve({
+          highPriority: 100,
+          normal: 0,
+          background: 0,
+        }),
+      broadcastTransaction,
+      network: ldkNetwork(selectedNetwork),
+    });
 
-      if (lmStart.isErr()) {
-        return err(lmStart.error.message);
-      }
-
-      const syncRes = await lm.syncLdk();
-      if (syncRes.isErr()) {
-        log.error(`Error syncing Bay Wallet Node: ${syncRes.error.message}`);
-        return err(syncRes.error.message);
-      }
-
-      subscribeToBlocks();
-			
-      await subscribeToTransactions();
-
-      return ok('Running Bay Wallet Node'); //e2e test needs to see this string
-    } catch (e) {
-      return err(e.toString());
+    if (lmStart.isErr()) {
+      return err(lmStart.error.message);
     }
-  };
+
+    const syncRes = await lm.syncLdk();
+    if (syncRes.isErr()) {
+      log.error(`Error syncing Bay Wallet Node: ${syncRes.error.message}`);
+      return err(syncRes.error.message);
+    }
+
+    subscribeToBlocks();
+    
+    await subscribeToTransactions();
+
+    return ok('Running Bay Wallet Node'); //e2e test needs to see this string
+  } catch (e) {
+    return err(e.toString());
+  }
+};
 
 /**
  * Syncs LDK to the current height.

@@ -15,7 +15,7 @@ type HomeFeedProps = NativeStackNavigationProp<NostrParamList, "nostr-home-feed"
 
 export const HomeFeed = observer(() => {
   const navigation = useNavigation<HomeFeedProps>()
-  const { keyStore: { nostrKeys } } = useDataStore()
+  const { nostrKeyStore: { nostrKeys } } = useDataStore()
   const { feed, feedEnded } = useHomeFeed()
   if (!feed && !feedEnded) return <BaseComponent><Loading /></BaseComponent>
 

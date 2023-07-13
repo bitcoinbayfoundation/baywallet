@@ -7,6 +7,8 @@ import { Settings, LightningSettings, Channels, NostrSettings } from "../screens
 import { HomeFeed, Profile, Post } from "../screens/nostr"
 import { Welcome, NostrIntroduction, NostrLogin, NostrCreateAccount, NostrProfileSetup, NostrFollowProfiles, LightningIntroduction, CreateLightningWallet, SupStud, VerifyNostrProfile } from "../screens/onboard"
 import { BottomTabBar } from "./bottom-tab-bar"
+/* Dev only */
+import { Dev } from "../screens/Dev"
 
 export const WalletNavigator = () => {
   const BayWalletStack = createNativeStackNavigator()
@@ -50,6 +52,7 @@ export const BayWalletNavigator = () => {
     <NavigationContainer>
       <Navigator tabBar={props => <BottomTabBar {...props} />} initialRouteName="nostr">
         <Screen name='nostr' options={{ headerShown: false }} component={NostrNavigator} />
+        <Screen name='dev' options={{ headerShown: false }} component={Dev} />
         <Screen name='baywallet' options={{ headerShown: false }} component={WalletNavigator} />
         <Screen name='settings' options={{ headerShown: false }} component={SettingsNavigator} />
       </Navigator>

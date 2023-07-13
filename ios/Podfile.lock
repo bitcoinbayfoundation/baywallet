@@ -331,7 +331,7 @@ PODS:
     - glog
   - react-native-image-picker (5.6.0):
     - React-Core
-  - react-native-ldk (0.0.87):
+  - react-native-ldk (0.0.101):
     - React
   - react-native-randombytes (3.6.1):
     - React-Core
@@ -429,6 +429,8 @@ PODS:
     - React-logger (= 0.71.7)
     - React-perflogger (= 0.71.7)
   - ReactNativeUiLib (4.0.0):
+    - React
+  - RealmJS (11.10.1):
     - React
   - RNCAsyncStorage (1.18.2):
     - React-Core
@@ -546,6 +548,7 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativeUiLib (from `../node_modules/react-native-ui-lib`)
+  - RealmJS (from `../node_modules/realm`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - RNFS (from `../node_modules/react-native-fs`)
@@ -654,6 +657,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   ReactNativeUiLib:
     :path: "../node_modules/react-native-ui-lib"
+  RealmJS:
+    :path: "../node_modules/realm"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCClipboard:
@@ -710,7 +715,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 9885f6f94d231b95a739ef7bb50536fb87ce7539
   React-logger: 3f8ebad1be1bf3299d1ab6d7f971802d7395c7ef
   react-native-image-picker: db60857e03d63721f19b6f4027de20429ddd9cba
-  react-native-ldk: b9b34c15067689e5aa7aef92ce278454b000ac39
+  react-native-ldk: dcf18b998cb115ed2228fd09268b9b45d8fb5036
   react-native-randombytes: 421f1c7d48c0af8dbcd471b0324393ebf8fe7846
   react-native-safe-area-context: b8979f5eda6ed5903d4dbc885be3846ea3daa753
   react-native-tcp-socket: e724380c910c2e704816ec817ed28f1342246ff7
@@ -728,6 +733,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: c5c89f8f543842dd864b63ded1b0bbb9c9445328
   ReactCommon: dbfbe2f7f3c5ce4ce44f43f2fd0d5950d1eb67c5
   ReactNativeUiLib: 511a5eb03809a0b27f6aefa2b4d6f7c2d6ae4053
+  RealmJS: 8deebf00c84f499c654bc585583c54f55b586751
   RNCAsyncStorage: ddc4ee162bfd41b0d2c68bf2d95acd81dd7f1f93
   RNCClipboard: 3f0451a8100393908bea5c5c5b16f96d45f30bfc
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688

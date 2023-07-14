@@ -331,7 +331,7 @@ PODS:
     - glog
   - react-native-image-picker (5.6.0):
     - React-Core
-  - react-native-ldk (0.0.87):
+  - react-native-ldk (0.0.101):
     - React
   - react-native-randombytes (3.6.1):
     - React-Core
@@ -710,7 +710,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 9885f6f94d231b95a739ef7bb50536fb87ce7539
   React-logger: 3f8ebad1be1bf3299d1ab6d7f971802d7395c7ef
   react-native-image-picker: db60857e03d63721f19b6f4027de20429ddd9cba
-  react-native-ldk: b9b34c15067689e5aa7aef92ce278454b000ac39
+  react-native-ldk: dcf18b998cb115ed2228fd09268b9b45d8fb5036
   react-native-randombytes: 421f1c7d48c0af8dbcd471b0324393ebf8fe7846
   react-native-safe-area-context: b8979f5eda6ed5903d4dbc885be3846ea3daa753
   react-native-tcp-socket: e724380c910c2e704816ec817ed28f1342246ff7

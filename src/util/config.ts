@@ -7,7 +7,7 @@ import networks from '@synonymdev/react-native-ldk/dist/utils/networks';
 import * as bitcoin from 'bitcoinjs-lib';
 
 // LDK config
-export const selectedNetwork: TAvailableNetworks = 'bitcoinRegtest';
+export const selectedNetwork: TAvailableNetworks = 'bitcoinSignet';
 
 export const ldkNetwork = (network: TAvailableNetworks): ENetworks => {
   switch (network) {
@@ -39,7 +39,7 @@ export const getNetwork = (
   }
 };
 
-export const mempoolHostname = 'mempool.bitcoinbay.engineering';
+export const mempoolHostname = 'mutinynet.com';
 
 //Electrum Server Info (Bitcoin Bay regtest by default)
 export const customPeers = {
@@ -69,7 +69,7 @@ export const lspNodeDev: {
     address: '64.225.50.85',
     port: 9735,
     pubKey:
-      '037247419cb395f0f691908bf88663eb07cabf3fde8e7184ea922a9814cb16fd8e',
+      '034baa26eac3185880d2d4e7f1b8615eb631689e092dd1e790c46ff5d64241e7fd',
     timeout: 3600,
   },
 };

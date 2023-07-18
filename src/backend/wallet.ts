@@ -24,10 +24,13 @@ export const getAddress = async () => {
  * @returns {string}
  */
 export const getAddressFromScriptPubKey = (scriptPubKey: string): string => {
-	return bitcoin.address.fromOutputScript(
+	log.error('getAddressFromScriptPubKey', scriptPubKey);
+	const script = bitcoin.address.fromOutputScript(
 		Buffer.from(scriptPubKey, 'hex'),
 		getNetwork(selectedNetwork),
 	);
+	log.error('getAddressFromScriptPubKey:script', script);
+	return script
 };
 
 /**
@@ -36,11 +39,13 @@ export const getAddressFromScriptPubKey = (scriptPubKey: string): string => {
  * @returns {string}
  */
 export const getScriptHash = (address: string): string => {
+	log.error('getScriptHash', address)
 	try {
 		const _network = getNetwork(selectedNetwork);
 		const script = bitcoin.address.toOutputScript(address, _network);
 		let hash = bitcoin.crypto.sha256(script);
 		const reversedHash = new Buffer(hash.reverse());
+		log.error('getScriptHash:reversedHash', address);
 		return reversedHash.toString('hex');
 	} catch (e) {
 		log.keys(e);

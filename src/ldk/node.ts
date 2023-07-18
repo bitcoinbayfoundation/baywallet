@@ -1,6 +1,7 @@
 import RNFS from 'react-native-fs';
 import lm, {
   EEventTypes,
+  ELdkLogLevels,
   ENetworks,
   TChannelManagerClaim,
   TChannelUpdate,
@@ -50,7 +51,7 @@ export const startBayWalletNode = async (/*getAccount?: () => Promise<any>*/): P
     const bestBlock = mempool({
       hostname: mempoolHostname,
     });
-
+    ldk.setLogLevel(ELdkLogLevels.trace, true)
     const tip = await bestBlock.bitcoin.blocks.getBlocksTipHeight();
     const hash = await bestBlock.bitcoin.blocks.getBlocksTipHash();
     const hex = await bestBlock.bitcoin.blocks.getBlockHeader({hash: hash});

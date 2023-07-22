@@ -9,7 +9,8 @@
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "rn-setup": "node rn-setup.js",
-    "clean": "rm -rf node_modules ios/Pods ios/build ios/Podfile.lock android/.gradle android/build && yarn install && cd ios && pod install && cd .. && yarn start --reset-cache"
+    "clean": "rm -rf node_modules ios/Pods ios/build ios/Podfile.lock android/.gradle android/build && yarn install && cd ios && pod install && cd .. && echo Cleaned Bay Wallet Project Folder",
+    "clean:android": "rm -rf node_modules yarn.lock android/.gradle android/build && yarn install && echo Cleaned Bay Wallet Project Folder"
   },
   "dependencies": {
     "@mempool/mempool.js": "^2.3.0",

@@ -14,10 +14,29 @@ Included with Bay Wallet is a nostr client. Having a nostr client included with 
 
 ***Resources***
 * [nostr-tools](https://github.com/nbd-wtf/nostr-tools)
-* [nostr-react](https://github.com/t4t5/nostr-react)
+* [nostr-hooks](https://github.com/sepehr-safari/nostr-hooks)
 * [LDK (rust-lightning)](https://github.com/lightningdevkit/rust-lightning)
 * [LDK Project Website](https://lightningdevkit.org/)
 * [React-Native LDK by Synonym](https://github.com/synonymdev/react-native-ldk)
+
+## Pre-requisites
+
+For andorid development (on ubuntu & mac) you need to follow this guide to [install Android Studio and setup an emulator](https://androidwave.com/install-and-setup-react-native-on-ubuntu/).
+
+For Windows follow [this guide](https://reactnative.dev/docs/environment-setup)
+
+The recommended node version is 18, if not installed we recommend using [nvm](https://github.com/nvm-sh/nvm).
+
+## Troubleshooting
+
+If you are having issues with the build, try the following:
+```
+yarn clean
+
+# If you are using Windows or Ubuntu
+yarn clean:android
+
+```
 
 ## Install Instructions
 

@@ -341,9 +341,6 @@ PODS:
     - RCTTypeSafety
     - React-Core
     - ReactCommon/turbomodule/core
-  - react-native-tcp-socket (6.0.6):
-    - CocoaAsyncSocket
-    - React-Core
   - React-perflogger (0.71.7)
   - React-RCTActionSheet (0.71.7):
     - React-Core/RCTActionSheetHeaders (= 0.71.7)
@@ -430,7 +427,7 @@ PODS:
     - React-perflogger (= 0.71.7)
   - ReactNativeUiLib (4.0.0):
     - React
-  - RNCAsyncStorage (1.18.2):
+  - RNCAsyncStorage (1.19.1):
     - React-Core
   - RNCClipboard (1.11.2):
     - React-Core
@@ -469,10 +466,10 @@ PODS:
     - React-RCTText
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.22.0):
+  - RNScreens (3.22.1):
     - React-Core
     - React-RCTImage
-  - RNSVG (13.9.0):
+  - RNSVG (13.10.0):
     - React-Core
   - RNVectorIcons (9.2.0):
     - React-Core
@@ -531,7 +528,6 @@ DEPENDENCIES:
   - "react-native-ldk (from `../node_modules/@synonymdev/react-native-ldk`)"
   - react-native-randombytes (from `../node_modules/react-native-randombytes`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
-  - react-native-tcp-socket (from `../node_modules/react-native-tcp-socket`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -624,8 +620,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-randombytes"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
-  react-native-tcp-socket:
-    :path: "../node_modules/react-native-tcp-socket"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -713,7 +707,6 @@ SPEC CHECKSUMS:
   react-native-ldk: dcf18b998cb115ed2228fd09268b9b45d8fb5036
   react-native-randombytes: 421f1c7d48c0af8dbcd471b0324393ebf8fe7846
   react-native-safe-area-context: b8979f5eda6ed5903d4dbc885be3846ea3daa753
-  react-native-tcp-socket: e724380c910c2e704816ec817ed28f1342246ff7
   React-perflogger: 2d505bbe298e3b7bacdd9e542b15535be07220f6
   React-RCTActionSheet: 0e96e4560bd733c9b37efbf68f5b1a47615892fb
   React-RCTAnimation: fd138e26f120371c87e406745a27535e2c8a04ef
@@ -728,14 +721,14 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: c5c89f8f543842dd864b63ded1b0bbb9c9445328
   ReactCommon: dbfbe2f7f3c5ce4ce44f43f2fd0d5950d1eb67c5
   ReactNativeUiLib: 511a5eb03809a0b27f6aefa2b4d6f7c2d6ae4053
-  RNCAsyncStorage: ddc4ee162bfd41b0d2c68bf2d95acd81dd7f1f93
+  RNCAsyncStorage: f47fe18526970a69c34b548883e1aeceb115e3e1
   RNCClipboard: 3f0451a8100393908bea5c5c5b16f96d45f30bfc
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: dec4645026e7401a0899f2846d864403478ff6a5
   RNKeychain: ff836453cba46938e0e9e4c22e43d43fa2c90333
   RNReanimated: 9976fbaaeb8a188c36026154c844bf374b3b7eeb
-  RNScreens: 68fd1060f57dd1023880bf4c05d74784b5392789
-  RNSVG: 53c661b76829783cdaf9b7a57258f3d3b4c28315
+  RNScreens: 50ffe2fa2342eabb2d0afbe19f7c1af286bc7fb3
+  RNSVG: 80584470ff1ffc7994923ea135a3e5ad825546b9
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   Yoga: d56980c8914db0b51692f55533409e844b66133c

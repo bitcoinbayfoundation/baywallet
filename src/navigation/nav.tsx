@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { CreateInvoice, Wallet, Scan, Receive, Pay } from "../screens/lightning"
 import { Settings, LightningSettings, Channels, NostrSettings } from "../screens/settings"
-import { HomeFeed, Profile, Post } from "../screens/nostr"
+import { HomeFeed, Profile, PostView, PostCreate } from "../screens/nostr"
 import { Welcome, NostrIntroduction, NostrLogin, NostrCreateAccount, NostrProfileSetup, NostrFollowProfiles, LightningIntroduction, CreateLightningWallet, SupStud, VerifyNostrProfile } from "../screens/onboard"
 import { BottomTabBar } from "./bottom-tab-bar"
 /* Dev only */
@@ -41,7 +41,8 @@ export const NostrNavigator = () => {
     <NostrStack.Navigator>
       <NostrStack.Screen options={{ headerShown: false }} name="nostr-home-feed" component={HomeFeed} />
       <NostrStack.Screen options={{ headerShown: false }} name="nostr-profile" component={Profile} />
-      <NostrStack.Screen options={{ headerShown: false }} name="nostr-post" component={Post} />
+      <NostrStack.Screen options={{ headerShown: false }} name="nostr-post" component={PostView} />
+      <NostrStack.Screen options={{ headerShown: true }} name="nostr-post-create" component={PostCreate} />
     </NostrStack.Navigator>
   )
 }

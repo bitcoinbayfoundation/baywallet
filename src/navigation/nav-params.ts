@@ -30,6 +30,7 @@ export type NostrParamList = {
   "nostr-home-feed": undefined
   "nostr-profile": {pubkey: string, profile?: Metadata}
   "nostr-post": {event: Event, profile: Metadata}
+  "nostr-post-create": undefined
 }
 
 /**

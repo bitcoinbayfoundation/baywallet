@@ -13,7 +13,7 @@ type PostProps = {
   route?: RouteProp<NostrParamList, "nostr-post">;
 }
 
-export const Post = observer((props: PostProps) => {
+export const PostView = observer((props: PostProps) => {
   const navigation = useNavigation<PostScreenProps>()
   const { event, profile } = props.route.params
 

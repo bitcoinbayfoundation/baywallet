@@ -9,7 +9,7 @@ import { useDataStore } from "../../store";
 import { BaseComponent, Loading } from "../../components";
 import { useHomeFeed } from "../../hooks/nostr";
 import { Event } from "nostr-tools"
-import { FeedPost } from "../../components/nostr";
+import { FeedPost, BaseComponentWithPost } from "../../components/nostr";
 
 type HomeFeedProps = NativeStackNavigationProp<NostrParamList, "nostr-home-feed">
 
@@ -20,7 +20,7 @@ export const HomeFeed = observer(() => {
   if (!feed && !feedEnded) return <BaseComponent><Loading /></BaseComponent>
 
   return (
-    <BaseComponent>
+    <BaseComponentWithPost navigation={navigation}>
       <ScrollView>
         <View flex row>
           <View flex>
@@ -37,7 +37,7 @@ export const HomeFeed = observer(() => {
           </View>
         </View>
       </ScrollView>
-    </BaseComponent>
+    </BaseComponentWithPost>
   )
 })
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BaseComponent, Button } from "../../components";
 import { Avatar, TextField, View } from "react-native-ui-lib";
 import { usePostNote } from "../../hooks/nostr/use-post-note";
@@ -18,6 +18,12 @@ export const PostCreate = () => {
     navigation.navigate("nostr-home-feed")
   }
 
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <Button label="Post" onPress={async () => await post()} props={{ avoidInnerPadding: true, avoidMinWidth: true }} style={{ paddingHorizontal: 20 }} disabled={content === ""} />
+    })
+  }, [content])
+
   return (
     <BaseComponent>
       <View style={{ marginTop: 20, marginHorizontal: 10 }}>
@@ -32,7 +38,6 @@ export const PostCreate = () => {
           maxLength={300}
         />
       </View>
-      <Button label="Post" onPress={async () => await post()} props={{ fullWidth: true }} style={{ position: "absolute", bottom: 10, width: "95%" }} />
     </BaseComponent>
   )
 }

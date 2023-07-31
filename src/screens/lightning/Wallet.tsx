@@ -37,7 +37,7 @@ export const Wallet = observer(() => {
 
 const styles = StyleSheet.create({
   balance: {
-    marginTop: "25%"
+    marginTop: "15%"
   },
   walletButtons: {
     marginTop: "10%"

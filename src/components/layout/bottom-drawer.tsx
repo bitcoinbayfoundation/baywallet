@@ -76,7 +76,7 @@ export const BottomDrawer = ({ children }: Props) => {
         height: height,
         borderRadius: 25,
         position: "absolute",
-        bottom: -height + 40,
+        bottom: -height + 80,
         alignItems: "center",
         borderWidth: 1,
         transform: [{ translateY: y }],

@@ -19,13 +19,11 @@ export const toastConfig = {
 }
 export const BayWalletProvider = ({ children }) => {
   return (
-    <BaseComponent>
-      <DataStoreProvider>
-        <StatusBar barStyle="light-content" />
-        {children}
-        <Toast config={toastConfig} />
-      </DataStoreProvider>
-    </BaseComponent>
+    <DataStoreProvider>
+      <StatusBar barStyle="light-content" />
+      {children}
+      <Toast config={toastConfig} />
+    </DataStoreProvider>
   )
 }
 

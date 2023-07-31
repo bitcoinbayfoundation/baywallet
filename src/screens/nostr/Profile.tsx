@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ScrollView } from "react-native";
 import { observer } from "mobx-react";
 import { RouteProp, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { NostrParamList } from "../../navigation";
-import { BaseComponent } from "../../components";
+import { BaseComponent, SmallText } from "../../components";
 import { ProfileInfo, FullPost } from "../../components/nostr";
 import { useSubscribe } from "../../nostr";
 import { relayUrls } from "../../util/config";
 import { Kind } from "nostr-tools";
+import MaterialIcon from "react-native-vector-icons/MaterialIcons";
+import { Colors } from "react-native-ui-lib";
 
 type ProfileScreenProps = NativeStackNavigationProp<NostrParamList, "nostr-profile">
 
@@ -29,10 +31,27 @@ export const Profile = observer((props: ProfileProps) => {
     }]
   })
 
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: () => (
+        <>
+          <SmallText content={profile.name} />
+          {profile.nip05 && (
+            <MaterialIcon
+              name="verified"
+              size={15}
+              color={Colors.primary}
+            />
+          )}
+        </>
+      )
+    })
+  }, [])
+
   return (
     <BaseComponent>
-      <ProfileInfo profile={profile} />
       <ScrollView>
+        <ProfileInfo profile={profile} />
         {events?.map(event => <FullPost key={event.id} metadata={profile} event={event} navigation={navigation} />)}
       </ScrollView >
     </BaseComponent>

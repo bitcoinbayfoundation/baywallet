@@ -12,7 +12,7 @@ type NostrProfile = {
 export const ProfileInfo = ({ profile }: NostrProfile) => {
   return (
     <>
-      <Image source={{ uri: profile.banner }} width={'100%'} height={125} />
+      <Image source={{ uri: profile.banner }} style={{ zIndex: -1 }} width='100%' height={125} />
       <View row right style={styles.action}>
         <Button label="Follow" size='medium' onPress={() => null} />
       </View>
@@ -33,7 +33,7 @@ export const ProfileInfo = ({ profile }: NostrProfile) => {
             </>
           )}
         </View>
-        <Text style={styles.username}>@{profile.username}</Text>
+        <Text style={styles.username}>@{profile.username || profile.name}</Text>
         <Text text70>{profile.about}</Text>
         <View row style={styles.stats}>
           <Text>{45} Following</Text>
@@ -48,8 +48,9 @@ export const ProfileInfo = ({ profile }: NostrProfile) => {
 const styles = StyleSheet.create({
   avatar: {
     position: 'absolute',
-    top: 90,
+    top: 80,
     left: 10,
+    zIndex: 99,
     borderWidth: 4,
     borderRadius: 100,
     borderColor: '#FFF',

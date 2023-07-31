@@ -41,7 +41,7 @@ export const NostrNavigator = () => {
   return (
     <NostrStack.Navigator>
       <NostrStack.Screen options={screenHeaderOptions("Home")} name="nostr-home-feed" component={HomeFeed} />
-      <NostrStack.Screen options={{ headerShown: false }} name="nostr-profile" component={Profile} />
+      <NostrStack.Screen options={screenHeaderOptions("Profile")} name="nostr-profile" component={Profile} />
       <NostrStack.Screen options={screenHeaderOptions("Post")} name="nostr-post" component={PostView} />
       <NostrStack.Screen options={screenHeaderOptions("Create Post")} name="nostr-post-create" component={PostCreate} />
     </NostrStack.Navigator>

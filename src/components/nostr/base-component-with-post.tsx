@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   post: {
     position: 'absolute',
     right: 30,
-    bottom: 15,
+    bottom: 90,
     width: 50,
     color: Colors.text,
   },

@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useRef } from 'react';
+import { Animated, StyleSheet } from 'react-native';
 import { View, Colors, TouchableOpacity, Text } from "react-native-ui-lib"
 import CommunityIcon from "react-native-vector-icons/MaterialCommunityIcons"
 import MaterialIcon from "react-native-vector-icons/MaterialIcons"
@@ -102,6 +102,8 @@ export const BottomTabBar = ({ state, descriptors, navigation }) => {
 
 const styles = StyleSheet.create({
   bottomTab: {
-    backgroundColor: "transparent",
+    position: "absolute",
+    width: "100%",
+    bottom: 25
   }
 })

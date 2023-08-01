@@ -1,14 +1,14 @@
 import React from 'react';
-import { Event } from 'nostr-tools';
+import Image from "react-native-auto-height-image"
 import { Avatar, Colors, Text, View } from 'react-native-ui-lib';
-import { Metadata } from '../../types/nostr';
-import { Pressable, StyleSheet } from 'react-native';
+import { BayWalletPost, Metadata } from '../../types/nostr';
+import { Dimensions, Pressable, StyleSheet } from 'react-native';
 import { formatDate } from '../../util/date';
 import { Engage } from './engagement/engage';
 import MaterialIcon from "react-native-vector-icons/MaterialIcons"
 
 export type PostDetailProps = {
-  event: Event;
+  event: BayWalletPost;
   metadata: Metadata;
   navigation: any;
 };
@@ -19,7 +19,7 @@ export const FullPost = ({
   navigation
 }: PostDetailProps) => {
   const { time, date } = formatDate(event.created_at);
-
+  const { width } = Dimensions.get('window')
   return (
     <View style={styles.post}>
       <View row>
@@ -54,6 +54,7 @@ export const FullPost = ({
       <View style={styles.content}>
         <Text text70>{event.content}</Text>
       </View>
+      {event.imageUrls.length > 0 && <Image source={{ uri: event.imageUrls[0] }} width={width} />}
       <View row style={styles.share}>
         <Engage replyFn={() => null} repostFn={() => null} reactionFn={() => null} />
         <Pressable onPress={() => null}>

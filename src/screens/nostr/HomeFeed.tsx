@@ -38,9 +38,3 @@ export const HomeFeed = observer(() => {
     </BaseComponentWithPost>
   )
 })
-
-const styles = StyleSheet.create({
-  feedContainer: {
-    marginHorizontal: 10
-  }
-})

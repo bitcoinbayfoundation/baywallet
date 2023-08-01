@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
-import { StyleSheet, Pressable } from 'react-native';
+import { StyleSheet, Pressable, Image } from 'react-native';
 import { View, Avatar, Text, Colors } from 'react-native-ui-lib';
 import { Metadata } from '../../types/nostr';
 import { Event } from 'nostr-tools';
 import { TextWithClamp } from '../misc/text-with-clamp';
 import { Engage } from './engagement/engage';
-import { parseMetadata } from '../../util/nostr';
+import { parseBayWalletPost, parseMetadata } from '../../util/nostr';
+import { SmallText } from '../misc';
+import { PostLink } from './post-link';
 
 export type PostProps = {
   event: Event;
@@ -20,6 +22,8 @@ export const FeedPost = ({ event, navigation }: PostProps) => {
     picture: '',
   });
 
+  const bayWalletPost = parseBayWalletPost(event)
+
   useEffect(() => {
     const getProfile = async () => {
       const profile = await axios.get(
@@ -31,6 +35,22 @@ export const FeedPost = ({ event, navigation }: PostProps) => {
     getProfile();
   }, []);
 
+  const body = useMemo(() => {
+    if (bayWalletPost.imageUrls.length > 0) {
+      return (
+        <Image source={{ uri: bayWalletPost.imageUrls[0] }} style={{ width: '100%', height: 200 }} />
+      )
+    } else {
+      return (
+        <TextWithClamp
+          ui={{ text70: true }}
+          numberOfLines={clamp ? 10 : undefined}>
+          {bayWalletPost.content}
+        </TextWithClamp>
+      )
+    }
+  }, [event])
+
   return (
     <>
       <View width="95%" backgroundColor={Colors.screenBG} style={styles.post}>
@@ -39,13 +59,10 @@ export const FeedPost = ({ event, navigation }: PostProps) => {
             <Text>•••</Text>
           </Pressable>
         </View>
-        <Pressable onPress={() => navigation.navigate("nostr-post", { event: event, profile: metadata })}>
-          <TextWithClamp
-            ui={{ text70: true }}
-            numberOfLines={clamp ? 10 : undefined}>
-            {event.content}
-          </TextWithClamp>
+        <Pressable onPress={() => navigation.navigate("nostr-post", { event: bayWalletPost, profile: metadata })}>
+          {body}
         </Pressable>
+        {bayWalletPost.links.length > 0 && <PostLink link={bayWalletPost.links[0]} />}
         <View height={10} />
         <View row centerV spread>
           <Engage

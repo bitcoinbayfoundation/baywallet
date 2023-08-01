@@ -1,6 +1,5 @@
 import { TInvoice } from "@synonymdev/react-native-ldk"
-import { Metadata } from "../types/nostr"
-import { Event } from "nostr-tools"
+import { BayWalletPost, Metadata } from "../types/nostr"
 
 /**
  * Lightning
@@ -29,7 +28,7 @@ export type PayScreenProps = {
 export type NostrParamList = {
   "nostr-home-feed": undefined
   "nostr-profile": {pubkey: string, profile?: Metadata}
-  "nostr-post": {event: Event, profile: Metadata}
+  "nostr-post": {event: BayWalletPost, profile: Metadata}
   "nostr-post-create": undefined
 }
 

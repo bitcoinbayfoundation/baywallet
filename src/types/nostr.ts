@@ -10,6 +10,14 @@ export type NostrKeys = {
 export type BayWalletPost = Event & {
   imageUrls?: string[],
   links?: string[]
+  references?: any[]
+  parentReplies?: Event[],
+  childReplies?: Event[]
+}
+
+export type Replies = {
+  parentReplies: Event[],
+  childReplies: Event[]
 }
 
 export type EventType = {

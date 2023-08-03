@@ -82,7 +82,7 @@
   },
   "jest": {
     "preset": "react-native",
-    "testEnvironment": "jsdom",
+    "testEnvironment": "./test-environment.js",
     "moduleFileExtensions": [
       "ts",
       "tsx",

@@ -17,6 +17,11 @@ describe(`nostr utilities`, () => {
       const metadata = nostr.parseMetadata(mockData.mockProfile.mockRawProfile);
       expect(metadata).toEqual(mockData.mockProfile.mockProfileResult);
     });
+
+    it(`should parse mentions in a post`, () => {
+      const references = nostr.parseMentions(mockData.parseMentions.rawEvent);
+      expect(references).toEqual(mockData.parseMentions.parsedEvent)
+    })
   });
 
   describe(`image urls`, () => {
@@ -30,4 +35,9 @@ describe(`nostr utilities`, () => {
       expect(images.imageUrls).toEqual(mockData.multipleImageUrls.imageUrls);
     });
   });
+
+  describe(`replies`, () => {
+    const orderedReplies = nostr.getOrderedReplies(mockData.orderedReplies.rawEvents.focusedEvent, mockData.orderedReplies.rawEvents.replies)
+    expect(orderedReplies).toEqual(mockData.orderedReplies.replies)
+  })
 });

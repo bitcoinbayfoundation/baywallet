@@ -1,5 +1,5 @@
-import { Event } from "nostr-tools";
-import { BayWalletPost, Metadata } from "../types/nostr";
+import { Event, parseReferences } from "nostr-tools";
+import { BayWalletPost, Metadata, Replies } from "../types/nostr";
 
 export const parseMetadata = (profile: Event): Metadata => {
   const rawContent = JSON.parse(profile.content);
@@ -22,7 +22,15 @@ export const parseMetadata = (profile: Event): Metadata => {
 export const parseBayWalletPost = (event: Event): BayWalletPost => {
   const imageUrls = getImageUrls(event);
   const links = getLinks(imageUrls);
-  return links;
+  const references = parseMentions(event)
+
+  const bayWalletPost = {
+    ...references,
+    ...imageUrls,
+    ...links,
+  }
+  
+  return bayWalletPost;
 }
 
 export const getImageUrls = (event: Event): BayWalletPost => {
@@ -42,7 +50,7 @@ export const getImageUrls = (event: Event): BayWalletPost => {
     return eventWithImageUrls;
 }
 
-export const getLinks = (event: Event) => {
+export const getLinks = (event: Event): BayWalletPost => {
   const urlRegex = /\bhttps?:\/\/\S+(?<!\.jpg|\.jpeg|\.png|\.gif|\.webp)\b/g
   const matches = event.content.match(urlRegex);
 
@@ -57,4 +65,33 @@ export const getLinks = (event: Event) => {
   }
   
   return eventWithLinks;
+}
+
+export const parseMentions = (event: Event) => {
+  const references = parseReferences(event)
+
+  const post: BayWalletPost = {
+    ...event,
+    references: references
+  }
+  return post
+}
+
+export const getOrderedReplies = (focusedEvent: Event, replies: Event[]): Replies => {
+  if (replies.length === 0) return { parentReplies: [], childReplies: []}
+  
+  const focusedCreatedAt = focusedEvent.created_at
+  
+  const parentReplies: Event[] = replies.filter(event => event.created_at < focusedCreatedAt)
+  const childReplies: Event[] = replies.filter(event => event.created_at > focusedCreatedAt)
+
+  parentReplies.sort((a, b) => a.created_at - b.created_at);
+  childReplies.sort((a, b) => a.created_at - b.created_at);
+
+  const postWithReplies = {
+    parentReplies,
+    childReplies
+  }
+
+  return postWithReplies
 }

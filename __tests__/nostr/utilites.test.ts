@@ -37,7 +37,14 @@ describe(`nostr utilities`, () => {
   });
 
   describe(`replies`, () => {
-    const orderedReplies = nostr.getOrderedReplies(mockData.orderedReplies.rawEvents.focusedEvent, mockData.orderedReplies.rawEvents.replies)
-    expect(orderedReplies).toEqual(mockData.orderedReplies.replies)
+    it("parses ordered replies", () => {
+      const orderedReplies = nostr.getOrderedReplies(mockData.orderedReplies.rawEvents.focusedEvent, mockData.orderedReplies.rawEvents.replies)
+      expect(orderedReplies).toEqual(mockData.orderedReplies.replies)
+    })
+
+    it("parse tags", () => {
+      const parseTags = nostr.parseEventTags(mockData.extractEventTags.rawEvent.tags)
+      expect(parseTags).toEqual(mockData.extractEventTags.parsedTags)
+    })
   })
 });

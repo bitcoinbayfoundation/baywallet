@@ -11,8 +11,13 @@ export type BayWalletPost = Event & {
   imageUrls?: string[],
   links?: string[]
   references?: any[]
-  parentReplies?: Event[],
-  childReplies?: Event[]
+  eventTags?: Tags
+}
+
+export type Tags = {
+  eTags: string[],
+  pTags: string[],
+  qTags: string[]
 }
 
 export type Replies = {

@@ -90,6 +90,11 @@ export const parseBayWalletPost = {
       'Rebranded Twitter aka “X” has the new tagline: \n\n“Blaze your glory!”\n\n(Twitter’s previous tagline was “it’s what’s happening”) #twitter #elonmusk #twittermigration #tech #technology #x #musk #technews #news',
     sig: 'a220205e45d4fb13a14e151391e229f81f7afac720cf841be24b56cbef54c54ebf667f613fe1f948b6b76d83785e3589c286cdcc625256d24fee331ee6811f40',
     references: [],
+    eventTags: {
+      eTags: [],
+      pTags: [],
+      qTags: []
+    }
   },
 };
 
@@ -359,5 +364,26 @@ export const orderedReplies = {
         sig: '0d19696dabd9aebe3161d527d88cf339f1f5aa9b0822a2a156fd488ec49c79450db8708aa118ca38e61546b9ed3200b311b1be1028aa173b2830bee6111fc9aa',
       },
     ],
+  },
+};
+
+export const extractEventTags = {
+  rawEvent: {
+    id: 'a858e74558f9f904c6581eb8f6eb67058160db7103666966e5cbfb7c04693b0e',
+    pubkey: 'd679b0f4c94843077301c920480c9d2f2d12c9fa6d10352e134eb1c08229ac9a',
+    created_at: 1691023371,
+    kind: 1,
+    tags: [
+      ['q', 'd11dc884664e64f1fc9a6d0ba9ea38fe1e2d5d831be073338961a81ef0ac6e25'],
+      ['p', '9d3a3132661337c0466b744468cdcc0745707f6cf39e2082134d61b048c04c6c'],
+    ],
+    content:
+      'The Humpty Dance; you’ve got it down, when you appear to be in pain!\n\nI love this band’s name, Digital Underground. nostr:note16ywu3prxfej0rly6d596n63clc0z6hvrr0s8xvufvx5pau9vdcjsd5fnuv',
+    sig: 'd64507bd4010e99bc4b11e1394d1fbee10dade81f78fa0caa04f29ff448161d1b18b776093b6fe37317199f7915f37b4516f08a713d4efe62b8bddb482e2eab9',
+  },
+  parsedTags: {
+    eTags: [],
+    pTags: ["9d3a3132661337c0466b744468cdcc0745707f6cf39e2082134d61b048c04c6c"],
+    qTags: ["d11dc884664e64f1fc9a6d0ba9ea38fe1e2d5d831be073338961a81ef0ac6e25"]
   },
 };

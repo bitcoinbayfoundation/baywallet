@@ -2,8 +2,7 @@
 
 ldk wallet & nostr client for the plebs of tampa, by tampa plebs.
 
-![Bay Wallet](./docs/bay-wallet-logo.jpeg)
-
+<image src="https://cdn.nostr.build/i/c612b980726fcc93ea1258935c803891e084e3095d56a3953c8fc6cb90fd303e.jpg" width="500" height="500">
 ## Description
 
 Bay Wallet is a project spawned from the Tampa BitDevs meetup. The goal of the project is to inspire new Bitcoin developers to work on a Bitcoin project in a collaborative environment with experienced Bitcoin developers.

@@ -2,7 +2,7 @@
 
 ldk wallet & nostr client for the plebs of tampa, by tampa plebs.
 
-![Bitcoin Bay](./docs/bitcoinbay-full.jpeg)
+![Bay Wallet](./docs/bay-wallet-logo.jpeg)
 
 ## Description
 

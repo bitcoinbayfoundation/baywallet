@@ -21,7 +21,7 @@ export const LightningNodeProvider = ({ children }) => {
 			}
 			setNodeStarted(true)
 		}
-		startNode()
+		// startNode()
 	}, [])
 
 	useEffect(() => {

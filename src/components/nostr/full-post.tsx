@@ -48,14 +48,14 @@ export const FullPost = ({
   return (
     <View style={styles(reply).post}>
       <View row>
-        <Avatar onPress={() => navigation.navigate("nostr-profile", { pubkey: event.pubkey, profile: metadata })} source={{ uri: metadata.picture }} />
+        <Avatar onPress={() => navigation.navigate("nostr-profile", { pubkey: event.pubkey, profile: profile })} source={{ uri: profile.picture }} />
         <View style={styles().information} centerV>
-          <Pressable onPress={() => navigation.navigate("nostr-profile", { pubkey: event.pubkey, profile: metadata })}>
+          <Pressable onPress={() => navigation.navigate("nostr-profile", { pubkey: event.pubkey, profile: profile })}>
             <View row centerV>
               <Text text80BO style={styles().displayName}>
-                {metadata.display_name}
+                {profile.display_name}
               </Text>
-              {metadata.nip05 && (
+              {profile.nip05 && (
                 <>
                   <MaterialIcon
                     name="verified"
@@ -63,7 +63,7 @@ export const FullPost = ({
                     color={Colors.primary}
                   />
                   <Text style={styles().nip5}>
-                    {metadata.nip05.split('@')[1]}
+                    {profile.nip05.split('@')[1]}
                   </Text>
                 </>
               )}

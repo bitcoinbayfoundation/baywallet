@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from "react-native-auto-height-image"
 import { Avatar, Colors, Text, View } from 'react-native-ui-lib';
 import { BayWalletPost, Metadata } from '../../types/nostr';
@@ -6,28 +6,53 @@ import { Dimensions, Pressable, StyleSheet } from 'react-native';
 import { formatDate } from '../../util/date';
 import { Engage } from './engagement/engage';
 import MaterialIcon from "react-native-vector-icons/MaterialIcons"
+import { useSubscribe } from '../../nostr';
+import { relayUrls } from '../../util/config';
+import { Kind } from 'nostr-tools';
+import { parseMetadata } from '../../util/nostr';
 
 export type PostDetailProps = {
   event: BayWalletPost;
   metadata: Metadata;
   navigation: any;
+  reply?: boolean
 };
 
 export const FullPost = ({
   event,
   metadata,
-  navigation
+  navigation,
+  reply,
 }: PostDetailProps) => {
   const { time, date } = formatDate(event.created_at);
   const { width } = Dimensions.get('window')
+  const [profile, setMetadata] = useState<Metadata>(metadata);
+
+  const { events } = useSubscribe({
+    relays: relayUrls,
+    filters: [{
+      kinds: [Kind.Metadata],
+      authors: [event.pubkey]
+    }],
+    options: {
+      enabled: !metadata
+    }
+  })
+
+  useEffect(() => {
+    if (events.length === 0) return
+    console.log(events[0])
+    setMetadata(parseMetadata(events[0]))
+  }, [events])
+
   return (
-    <View style={styles.post}>
+    <View style={styles(reply).post}>
       <View row>
         <Avatar onPress={() => navigation.navigate("nostr-profile", { pubkey: event.pubkey, profile: metadata })} source={{ uri: metadata.picture }} />
-        <View style={styles.information} centerV>
+        <View style={styles().information} centerV>
           <Pressable onPress={() => navigation.navigate("nostr-profile", { pubkey: event.pubkey, profile: metadata })}>
             <View row centerV>
-              <Text text80BO style={styles.displayName}>
+              <Text text80BO style={styles().displayName}>
                 {metadata.display_name}
               </Text>
               {metadata.nip05 && (
@@ -37,7 +62,7 @@ export const FullPost = ({
                     size={15}
                     color={Colors.primary}
                   />
-                  <Text style={styles.nip5}>
+                  <Text style={styles().nip5}>
                     {metadata.nip05.split('@')[1]}
                   </Text>
                 </>
@@ -51,11 +76,11 @@ export const FullPost = ({
           </View>
         </View>
       </View>
-      <View style={styles.content}>
+      <View style={styles().content}>
         <Text text70>{event.content}</Text>
       </View>
       {event.imageUrls.length > 0 && <Image source={{ uri: event.imageUrls[0] }} width={width} />}
-      <View row style={styles.share}>
+      <View row style={styles().share}>
         <Engage replyFn={() => null} repostFn={() => null} reactionFn={() => null} />
         <Pressable onPress={() => null}>
           <MaterialIcon
@@ -70,12 +95,13 @@ export const FullPost = ({
 };
 
 const Date = ({ text }: { text: string }) => (
-  <Text style={styles.postDate}>{text}</Text>
+  <Text style={styles().postDate}>{text}</Text>
 );
 
-const styles = StyleSheet.create({
+const styles = (reply?: boolean) => StyleSheet.create({
   post: {
     padding: 10,
+    paddingLeft: reply ? 30 : 10,
   },
   information: {
     paddingLeft: 8,

@@ -7,11 +7,12 @@ import { BayWalletNavigator, OnboardNavigator } from './navigation';
 import { BaseComponent, Loading } from './components';
 import { useDataStore } from './store';
 import { observer } from 'mobx-react';
+import { NDKProvider } from '@nostr-dev-kit/ndk-react';
 
 const AppNavigator = observer(() => {
   const { onboardingStore: { done } } = useDataStore()
 
-  const AppRoot = useCallback(() => {
+ const AppRoot = useCallback(() => {
     if (done === undefined) {
       return (
         <BaseComponent>
@@ -23,9 +24,17 @@ const AppNavigator = observer(() => {
     if (!done) return <OnboardNavigator />
 
     return (
-      <LightningNodeProvider>
-        <BayWalletNavigator />
-      </LightningNodeProvider>
+      <NDKProvider
+        relayUrls={[
+          "wss://relay.damus.io",
+          "wss://relay.snort.social",
+          "wss://purplepag.es",
+        ]}
+      >
+        <LightningNodeProvider>
+          <BayWalletNavigator />
+        </LightningNodeProvider>
+      </NDKProvider>
     )
 
   }, [done])
